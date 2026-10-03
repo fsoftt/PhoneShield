@@ -1,6 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using Tranqui.Api.Endpoints;
+using Tranqui.Contracts.Errors;
 using Tranqui.Contracts.Lookups;
 using Tranqui.Contracts.Reports;
 using Tranqui.Domain.Reputation;
@@ -27,6 +28,7 @@ public sealed class ReportCallTests(TranquiApiFactory factory) : IClassFixture<T
         var response = await ReportAsync(client, new ReportCallRequest("3005556677", ReportVerdictDto.Spam, null));
 
         response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+        (await response.ProblemCodeAsync()).Should().Be(ApiErrorCodes.AccountNotRegistered);
     }
 
     [Fact]

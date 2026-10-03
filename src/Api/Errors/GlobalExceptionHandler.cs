@@ -1,21 +1,23 @@
 using FluentValidation;
 using Tranqui.Application.Errors;
+using Tranqui.Contracts.Errors;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace Tranqui.Api.Errors;
 
 /// <summary>
-/// Maps validation failures to a 400 with per-field errors and anything else to a generic 500.
+/// Maps validation failures to a 400 with per-field errors and anything else to a generic 500. Responses are in
+/// English with a stable <see cref="ApiErrorCodes"/> code; the app shows its own localized message for each code.
 /// Exception messages are never returned to clients, so no PII can leak through error responses.
 /// </summary>
 public sealed partial class GlobalExceptionHandler(
     IProblemDetailsService problemDetailsService,
     ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
 {
-    private const string UnexpectedErrorTitle = "Ocurrió un error inesperado.";
-    private const string ValidationErrorTitle = "La solicitud no es válida.";
-    private const string AccountNotRegisteredTitle = "Registra tu cuenta antes de aportar.";
-    private const string ConsentRequiredTitle = "Primero acepta el permiso para aportar tus contactos.";
+    private const string UnexpectedErrorTitle = "An unexpected error occurred.";
+    private const string ValidationErrorTitle = "The request is not valid.";
+    private const string AccountNotRegisteredTitle = "The account must be registered first.";
+    private const string ConsentRequiredTitle = "The contact upload consent is required.";
 
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
@@ -29,27 +31,27 @@ public sealed partial class GlobalExceptionHandler(
 
         if (exception is AccountNotRegisteredException)
         {
-            return await WriteProblemAsync(httpContext, StatusCodes.Status409Conflict, AccountNotRegisteredTitle);
+            return await WriteProblemAsync(httpContext, StatusCodes.Status409Conflict, AccountNotRegisteredTitle, ApiErrorCodes.AccountNotRegistered);
         }
 
         if (exception is ConsentRequiredException)
         {
-            return await WriteProblemAsync(httpContext, StatusCodes.Status403Forbidden, ConsentRequiredTitle);
+            return await WriteProblemAsync(httpContext, StatusCodes.Status403Forbidden, ConsentRequiredTitle, ApiErrorCodes.ConsentRequired);
         }
 
         LogUnhandledException(exception.GetType().Name);
 
-        return await WriteProblemAsync(httpContext, StatusCodes.Status500InternalServerError, UnexpectedErrorTitle);
+        return await WriteProblemAsync(httpContext, StatusCodes.Status500InternalServerError, UnexpectedErrorTitle, ApiErrorCodes.UnexpectedError);
     }
 
-    private async ValueTask<bool> WriteProblemAsync(HttpContext httpContext, int statusCode, string title)
+    private async ValueTask<bool> WriteProblemAsync(HttpContext httpContext, int statusCode, string title, string code)
     {
         httpContext.Response.StatusCode = statusCode;
 
         return await problemDetailsService.TryWriteAsync(new ProblemDetailsContext
         {
             HttpContext = httpContext,
-            ProblemDetails = { Title = title, Status = statusCode },
+            ProblemDetails = { Title = title, Status = statusCode, Extensions = { [ApiErrorCodes.Field] = code } },
         });
     }
 
@@ -68,6 +70,7 @@ public sealed partial class GlobalExceptionHandler(
             {
                 Title = ValidationErrorTitle,
                 Status = StatusCodes.Status400BadRequest,
+                Extensions = { [ApiErrorCodes.Field] = ApiErrorCodes.ValidationFailed },
             },
         });
     }

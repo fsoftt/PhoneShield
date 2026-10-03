@@ -29,6 +29,18 @@ public static class Texts
 
     public static string ConnectionError => Get(nameof(ConnectionError));
 
+    public static string ErrorInvalidRequest => Get(nameof(ErrorInvalidRequest));
+
+    public static string ErrorAccountNotRegistered => Get(nameof(ErrorAccountNotRegistered));
+
+    public static string ErrorConsentRequired => Get(nameof(ErrorConsentRequired));
+
+    public static string ErrorTooManyRequests => Get(nameof(ErrorTooManyRequests));
+
+    public static string ErrorUnexpected => Get(nameof(ErrorUnexpected));
+
+    public static string ErrorSessionExpired => Get(nameof(ErrorSessionExpired));
+
     public static string FirebaseEmailExists => Get(nameof(FirebaseEmailExists));
 
     public static string FirebaseInvalidEmail => Get(nameof(FirebaseInvalidEmail));

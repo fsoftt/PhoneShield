@@ -9,6 +9,6 @@ internal sealed class AcceptContactUploadValidator : AbstractValidator<AcceptCon
     {
         RuleFor(command => command.AcceptedVersion)
             .Equal(LegalDocuments.CurrentContactUploadVersion)
-            .WithMessage("Debes aceptar la versión vigente del permiso para aportar contactos.");
+            .WithMessage("The current contact upload consent version must be accepted.");
     }
 }

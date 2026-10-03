@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Refit;
+using Tranqui.App.Core.Api;
 using Tranqui.App.Core.Authentication;
 using Tranqui.App.Core.Resources;
 
@@ -33,7 +34,11 @@ public abstract partial class FormViewModel : ObservableObject
         {
             ErrorMessage = exception.Message;
         }
-        catch (Exception exception) when (exception is HttpRequestException or ApiException or TaskCanceledException)
+        catch (ApiException exception)
+        {
+            ErrorMessage = ApiErrorMessages.For(exception);
+        }
+        catch (Exception exception) when (exception is HttpRequestException or TaskCanceledException)
         {
             ErrorMessage = Texts.ConnectionError;
         }

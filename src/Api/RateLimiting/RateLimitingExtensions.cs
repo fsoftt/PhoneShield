@@ -1,5 +1,6 @@
 using System.Threading.RateLimiting;
 using Tranqui.Api.Authentication;
+using Tranqui.Contracts.Errors;
 
 namespace Tranqui.Api.RateLimiting;
 
@@ -8,6 +9,8 @@ public static class RateLimitingExtensions
     public const string LookupPolicy = "lookup";
     public const string ReportPolicy = "report";
     public const string ContactUploadPolicy = "contact-upload";
+
+    private const string TooManyRequestsTitle = "Too many requests. Try again later.";
 
     private static readonly TimeSpan hour = TimeSpan.FromHours(1);
     private static readonly TimeSpan day = TimeSpan.FromDays(1);
@@ -25,6 +28,17 @@ public static class RateLimitingExtensions
         services.AddRateLimiter(limiter =>
         {
             limiter.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+            limiter.OnRejected = async (context, _) =>
+                await context.HttpContext.RequestServices.GetRequiredService<IProblemDetailsService>().WriteAsync(new ProblemDetailsContext
+                {
+                    HttpContext = context.HttpContext,
+                    ProblemDetails =
+                    {
+                        Title = TooManyRequestsTitle,
+                        Status = StatusCodes.Status429TooManyRequests,
+                        Extensions = { [ApiErrorCodes.Field] = ApiErrorCodes.RateLimited },
+                    },
+                });
             limiter.AddPolicy(LookupPolicy, httpContext => RateLimitPartition.Get(
                 UserPartitionKey(httpContext),
                 _ => RateLimiter.CreateChained(

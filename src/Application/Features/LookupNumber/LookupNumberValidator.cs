@@ -9,6 +9,6 @@ internal sealed class LookupNumberValidator : AbstractValidator<LookupNumberQuer
     {
         RuleFor(query => query.PhoneNumber)
             .Must(raw => PhoneNumber.TryParse(raw) is not null)
-            .WithMessage("El número de teléfono no es válido.");
+            .WithMessage("The phone number is not valid.");
     }
 }

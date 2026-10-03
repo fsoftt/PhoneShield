@@ -10,18 +10,18 @@ internal sealed class ReportCallValidator : AbstractValidator<ReportCallCommand>
     {
         RuleFor(command => command.PhoneNumber)
             .Must(raw => PhoneNumber.TryParse(raw) is not null)
-            .WithMessage("El número de teléfono no es válido.");
+            .WithMessage("The phone number is not valid.");
 
         RuleFor(command => command.Verdict).IsInEnum();
 
         RuleFor(command => command.Label)
             .Must(label => CallerName.TryCreate(label) is not null)
             .When(command => !string.IsNullOrWhiteSpace(command.Label))
-            .WithMessage($"La etiqueta debe tener máximo {CallerName.MaxLength} caracteres.");
+            .WithMessage($"The label can have at most {CallerName.MaxLength} characters.");
 
         RuleFor(command => command.Label)
             .Empty()
             .When(command => command.Verdict == ReportVerdict.NotSpam)
-            .WithMessage("Solo los reportes de spam pueden llevar etiqueta.");
+            .WithMessage("Only spam reports can have a label.");
     }
 }

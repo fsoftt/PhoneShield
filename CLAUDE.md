@@ -65,6 +65,7 @@ Dependency direction: `Api` → `Application`/`Infrastructure` → `Domain`; `Ap
 - Small single-purpose classes and methods; no dead or commented-out code; named constants instead of magic numbers/strings (all scoring thresholds included).
 - Handlers stay thin; business rules live in `Domain`.
 - Code, identifiers and commits in English. The app is bilingual: every user-facing string lives in `src/App.Core/Resources/Texts.resx` (Spanish, the default and fallback) and `Texts.en.resx` (English), exposed as `Texts.*` properties (use `{x:Static res:Texts.Key}` in XAML and `Texts.Format` for templates). Never hard-code user-facing text; `LocalizationTests` fails if a language misses a key or a placeholder.
+- The API speaks English only. Every problem response carries a stable `code` from `Contracts/Errors/ApiErrorCodes`; the app maps codes (or, failing that, the HTTP status) to localized text in `App.Core/Api/ApiErrorMessages` and never shows the API's English title.
 - The website (`website/`) is bilingual too: Spanish at the root, English under `/en/` with the same paths.
 - UI: every state conveys meaning with icon + text, never color alone; WCAG AA contrast; 48dp touch targets; TalkBack labels.
 

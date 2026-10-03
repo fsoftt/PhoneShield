@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.DependencyInjection;
 using Tranqui.Api.Endpoints;
+using Tranqui.Contracts.Errors;
 using Tranqui.Contracts.Lookups;
 using Tranqui.Domain.PhoneNumbers;
 using Tranqui.Domain.Reputation;
@@ -34,6 +35,7 @@ public sealed class LookupNumberTests(TranquiApiFactory factory) : IClassFixture
         var response = await PostAsync(NewToken(), "123");
 
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        (await response.ProblemCodeAsync()).Should().Be(ApiErrorCodes.ValidationFailed);
     }
 
     [Fact]
@@ -103,6 +105,7 @@ public sealed class LookupNumberTests(TranquiApiFactory factory) : IClassFixture
         var response = await PostAsync(token, "3001112233");
 
         response.StatusCode.Should().Be(HttpStatusCode.TooManyRequests);
+        (await response.ProblemCodeAsync()).Should().Be(ApiErrorCodes.RateLimited);
     }
 
     private static IEnumerable<string?> Contributions(string? name, int count) => Enumerable.Repeat(name, count);

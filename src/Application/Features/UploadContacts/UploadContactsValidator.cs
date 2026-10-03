@@ -10,6 +10,6 @@ internal sealed class UploadContactsValidator : AbstractValidator<UploadContacts
         RuleFor(command => command.Contacts)
             .NotEmpty()
             .Must(contacts => contacts.Count <= ContactUploadRules.MaxContactsPerBatch)
-            .WithMessage($"Envía como máximo {ContactUploadRules.MaxContactsPerBatch} contactos por lote.");
+            .WithMessage($"A batch can have at most {ContactUploadRules.MaxContactsPerBatch} contacts.");
     }
 }
