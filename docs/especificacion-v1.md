@@ -21,6 +21,7 @@ Estado: **borrador de decisiones** — fuente de verdad para empezar a construir
 | Reporte de spam | Después de la llamada, no durante |
 | Llamada bloqueada | Se rechaza y se notifica al usuario con los detalles |
 | País inicial | Colombia (región por defecto `CO`, ley 1581 de 2012) |
+| Idiomas | Español (por defecto) e inglés, en la app y en el sitio web; la app sigue el idioma del teléfono |
 | Licencia | AGPL-3.0 para todo el repositorio |
 | Presupuesto | Mínimo: todo lo elegido tiene plan gratuito o cuesta pocos dólares al mes (§9) |
 | Proceso | Sin pipeline de agentes; ramas + PR + CI |
@@ -200,7 +201,7 @@ Dependencias: `Api → Application/Infrastructure → Domain`; `App → Contract
 - Paleta: primario `#0F4C81` (en oscuro `#7DB3E8`), acento `#14B8A6`, fondo oscuro `#0F172A`. Estados: verde `#1E7B34`, azul `#1D5FB8`, rojo `#C0262D`, naranja `#B45309` (todos ≥ 4.5:1 con texto blanco).
 - Ícono + texto en cada estado (nunca solo color); soporte de TalkBack y de tamaño de fuente del sistema.
 - Áreas táctiles de al menos 48 dp; popup legible de un vistazo (nombre ≥ 20 sp).
-- Todo el texto en español (es-CO) desde el inicio, en archivos de recursos para traducir después.
+- Todo el texto en archivos de recursos: español (por defecto) e inglés.
 
 ---
 

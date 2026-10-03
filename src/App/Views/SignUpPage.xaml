@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:res="clr-namespace:Tranqui.App.Core.Resources;assembly=Tranqui.App.Core"
              xmlns:vm="clr-namespace:Tranqui.App.Core.ViewModels;assembly=Tranqui.App.Core"
              x:Class="Tranqui.App.Views.SignUpPage"
              x:DataType="vm:SignUpViewModel"
-             Title="Crear cuenta">
+             Title="{x:Static res:Texts.SignUpTitle}">
 
   <ScrollView>
     <VerticalStackLayout Style="{StaticResource Form}">
-      <Label Text="Crea tu cuenta" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level1" />
-      <Label Text="Tu número de teléfono no se vincula a tu cuenta."
+      <Label Text="{x:Static res:Texts.SignUpHeading}" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level1" />
+      <Label Text="{x:Static res:Texts.PhoneNotLinked}"
              Style="{StaticResource SubHeadline}" />
 
       <Entry Text="{Binding Email}"
-             Placeholder="Correo"
+             Placeholder="{x:Static res:Texts.EmailPlaceholder}"
              Keyboard="Email"
              IsSpellCheckEnabled="False"
              AutomationId="SignUpEmail"
-             SemanticProperties.Description="Correo electrónico" />
+             SemanticProperties.Description="{x:Static res:Texts.EmailDescription}" />
       <Entry Text="{Binding Password}"
-             Placeholder="Contraseña (mínimo 8 caracteres)"
+             Placeholder="{x:Static res:Texts.PasswordMinPlaceholder}"
              IsPassword="True"
              AutomationId="SignUpPassword"
-             SemanticProperties.Description="Contraseña, mínimo 8 caracteres" />
+             SemanticProperties.Description="{x:Static res:Texts.PasswordMinPlaceholder}" />
       <Entry Text="{Binding ConfirmPassword}"
-             Placeholder="Repite la contraseña"
+             Placeholder="{x:Static res:Texts.ConfirmPasswordPlaceholder}"
              IsPassword="True"
              AutomationId="SignUpConfirmPassword"
-             SemanticProperties.Description="Repite la contraseña" />
+             SemanticProperties.Description="{x:Static res:Texts.ConfirmPasswordPlaceholder}" />
 
       <HorizontalStackLayout Spacing="8">
         <CheckBox IsChecked="{Binding AcceptedTerms}"
                   AutomationId="SignUpAcceptTerms"
-                  SemanticProperties.Description="Acepto los términos y la política de tratamiento de datos" />
-        <Label Text="Acepto los términos y la política de tratamiento de datos."
+                  SemanticProperties.Description="{x:Static res:Texts.AcceptTermsLabel}" />
+        <Label Text="{x:Static res:Texts.AcceptTermsLabel}"
                VerticalOptions="Center"
                LineBreakMode="WordWrap"
                MaximumWidthRequest="360" />
@@ -43,7 +44,7 @@
              Style="{StaticResource ErrorMessage}"
              IsVisible="{Binding ErrorMessage, Converter={StaticResource HasText}}" />
 
-      <Button Text="Crear cuenta"
+      <Button Text="{x:Static res:Texts.SignUpTitle}"
               Command="{Binding SignUpCommand}"
               IsEnabled="{Binding IsNotBusy}"
               AutomationId="SignUpButton" />

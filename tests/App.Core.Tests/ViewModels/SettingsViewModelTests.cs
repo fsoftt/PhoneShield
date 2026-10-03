@@ -64,7 +64,7 @@ public sealed class SettingsViewModelTests
         await viewModel.StartContributingCommand.ExecuteAsync(null);
 
         viewModel.IsContributing.Should().BeTrue();
-        viewModel.InfoMessage.Should().StartWith("¡Gracias!");
+        viewModel.InfoMessage.Should().Be(Texts.Format(Texts.ContributionStartedFormat, 0));
     }
 
     [Fact]

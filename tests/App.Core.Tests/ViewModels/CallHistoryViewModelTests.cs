@@ -41,7 +41,7 @@ public sealed class CallHistoryViewModelTests
         await api.Received(1).ReportCallAsync(new ReportCallRequest(Number, ReportVerdictDto.Spam, "Spam Claro"), Arg.Any<CancellationToken>());
         await history.Received(1).SetVerdictAsync(unknownCall.Id, ReportVerdictDto.Spam);
         entry.CanReport.Should().BeFalse();
-        entry.Summary.Should().Contain("Reportaste spam");
+        entry.Summary.Should().Be(Texts.Format(Texts.HistoryReportedSpamFormat, Texts.HistoryUnknown));
         viewModel.InfoMessage.Should().Be(Texts.ReportSent);
     }
 
@@ -90,7 +90,7 @@ public sealed class CallHistoryViewModelTests
     {
         var entry = new CallHistoryEntry(unknownCall with { BlockReason = BlockReason.CommunitySpam });
 
-        entry.Summary.Should().Be("Bloqueada · spam de la comunidad");
+        entry.Summary.Should().Be(Texts.Format(Texts.HistoryBlockedFormat, Texts.BlockReasonCommunitySpam));
     }
 
     private void GivenPromptAnswer(string? answer) =>

@@ -1,5 +1,3 @@
-using System.Globalization;
-using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Tranqui.App.Core.Calls;
@@ -14,8 +12,6 @@ namespace Tranqui.App.Core.ViewModels;
 /// </summary>
 public sealed partial class SettingsViewModel : FormViewModel
 {
-    private static readonly CompositeFormat contributionStarted = CompositeFormat.Parse(Texts.ContributionStartedFormat);
-
     private readonly IScreeningSettingsStore store;
     private readonly ContactContributionService contribution;
     private readonly IProtectionPermissions permissions;
@@ -73,7 +69,7 @@ public sealed partial class SettingsViewModel : FormViewModel
         {
             var accepted = await contribution.StartAsync(CancellationToken.None);
             IsContributing = true;
-            InfoMessage = string.Format(CultureInfo.CurrentCulture, contributionStarted, accepted);
+            InfoMessage = Texts.Format(Texts.ContributionStartedFormat, accepted);
         });
     }
 

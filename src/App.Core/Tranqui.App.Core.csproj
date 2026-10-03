@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <!-- Texts.resx holds Spanish; other languages are satellite assemblies (Texts.en.resx). -->
+    <NeutralLanguage>es</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>

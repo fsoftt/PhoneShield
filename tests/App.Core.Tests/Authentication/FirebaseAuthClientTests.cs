@@ -1,7 +1,9 @@
+using System.Globalization;
 using System.Net;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Time.Testing;
 using Tranqui.App.Core.Authentication;
+using Tranqui.App.Core.Resources;
 
 namespace Tranqui.App.Core.Tests.Authentication;
 
@@ -25,17 +27,18 @@ public sealed class FirebaseAuthClientTests
     }
 
     [Theory]
-    [InlineData("INVALID_LOGIN_CREDENTIALS", "Correo o contraseña incorrectos.")]
-    [InlineData("WEAK_PASSWORD : Password should be at least 6 characters", "La contraseña debe tener al menos 8 caracteres.")]
-    [InlineData("SOMETHING_NEW", "No pudimos completar la operación. Intenta de nuevo en un momento.")]
-    public async Task SignInAsync_FirebaseError_ThrowsWithSpanishMessage(string firebaseMessage, string expected)
+    [InlineData("INVALID_LOGIN_CREDENTIALS", nameof(Texts.FirebaseWrongCredentials))]
+    [InlineData("WEAK_PASSWORD : Password should be at least 6 characters", nameof(Texts.PasswordTooShort))]
+    [InlineData("SOMETHING_NEW", nameof(Texts.FirebaseUnknownError))]
+    public async Task SignInAsync_FirebaseError_ThrowsWithLocalizedMessage(string firebaseMessage, string expectedTextKey)
     {
         var handler = new StubHttpMessageHandler(HttpStatusCode.BadRequest,
             $$$"""{"error":{"code":400,"message":"{{{firebaseMessage}}}"}}""");
 
         var act = () => CreateClient(handler).SignInAsync("ana@example.com", "wrong", CancellationToken.None);
 
-        (await act.Should().ThrowAsync<FirebaseAuthException>()).Which.Message.Should().Be(expected);
+        (await act.Should().ThrowAsync<FirebaseAuthException>()).Which.Message
+            .Should().Be(Texts.ResourceManager.GetString(expectedTextKey, CultureInfo.CurrentUICulture));
     }
 
     [Fact]

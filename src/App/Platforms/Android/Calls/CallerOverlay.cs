@@ -8,6 +8,7 @@ using Android.Widget;
 using AColor = Android.Graphics.Color;
 using AView = Android.Views.View;
 using Tranqui.App.Core.Calls;
+using Tranqui.App.Core.Resources;
 
 namespace Tranqui.App.Calls;
 
@@ -45,7 +46,7 @@ internal sealed class CallerOverlay(Context context)
         var actions = new LinearLayout(context) { Orientation = global::Android.Widget.Orientation.Horizontal };
         if (card.Names.Count > 1)
         {
-            actions.AddView(Button("Otro nombre", () =>
+            actions.AddView(Button(Texts.OverlayAnotherName, () =>
             {
                 nameIndex = (nameIndex + 1) % card.Names.Count;
                 title.Text = $"{CallerCardStyle.Symbol(card.State)} {card.Names[nameIndex]}";
@@ -54,14 +55,14 @@ internal sealed class CallerOverlay(Context context)
 
         if (card.Number is not null && card.State != CallerCardState.KnownContact)
         {
-            actions.AddView(Button("Bloquear", () =>
+            actions.AddView(Button(Texts.Block, () =>
             {
                 onBlock();
-                subtitle.Text = "Bloqueado. Las próximas llamadas de este número no sonarán.";
+                subtitle.Text = Texts.NumberBlocked;
             }));
         }
 
-        actions.AddView(Button("Cerrar", Dismiss));
+        actions.AddView(Button(Texts.Close, Dismiss));
         layout.AddView(actions);
 
         var parameters = new WindowManagerLayoutParams(
