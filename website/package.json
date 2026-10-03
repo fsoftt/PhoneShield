@@ -9,5 +9,8 @@
   "private": true,
   "devDependencies": {
     "vitepress": "^1.6.4"
+  },
+  "dependencies": {
+    "firebase": "^12.19.0"
   }
 }

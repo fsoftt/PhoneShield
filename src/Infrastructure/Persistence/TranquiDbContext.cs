@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Tranqui.Domain.Abstractions;
+using Tranqui.Domain.Appeals;
 using Tranqui.Domain.Reputation;
 using Tranqui.Domain.Users;
 
@@ -12,6 +13,12 @@ public sealed class TranquiDbContext(DbContextOptions<TranquiDbContext> options)
     public DbSet<SpamReport> SpamReports => Set<SpamReport>();
 
     public DbSet<ContactContribution> ContactContributions => Set<ContactContribution>();
+
+    public DbSet<Appeal> Appeals => Set<Appeal>();
+
+    public DbSet<SmsVerificationRequest> SmsVerificationRequests => Set<SmsVerificationRequest>();
+
+    public DbSet<HiddenNumber> HiddenNumbers => Set<HiddenNumber>();
 
     async Task IUnitOfWork.SaveChangesAsync(CancellationToken cancellationToken) =>
         await SaveChangesAsync(cancellationToken);

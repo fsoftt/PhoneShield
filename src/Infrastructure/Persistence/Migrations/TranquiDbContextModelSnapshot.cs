@@ -22,6 +22,92 @@ namespace Tranqui.Infrastructure.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Tranqui.Domain.Appeals.Appeal", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("ContactEmail")
+                        .HasMaxLength(254)
+                        .HasColumnType("character varying(254)")
+                        .HasColumnName("contact_email");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)")
+                        .HasColumnName("kind");
+
+                    b.Property<byte[]>("PhoneHash")
+                        .IsRequired()
+                        .HasColumnType("bytea")
+                        .HasColumnName("phone_hash");
+
+                    b.Property<string>("Reason")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("reason");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_appeals");
+
+                    b.HasIndex("PhoneHash", "CreatedAt")
+                        .HasDatabaseName("ix_appeals_phone_hash_created_at");
+
+                    b.ToTable("appeals", (string)null);
+                });
+
+            modelBuilder.Entity("Tranqui.Domain.Appeals.HiddenNumber", b =>
+                {
+                    b.Property<byte[]>("PhoneHash")
+                        .HasColumnType("bytea")
+                        .HasColumnName("phone_hash");
+
+                    b.Property<DateTimeOffset>("HiddenAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("hidden_at");
+
+                    b.HasKey("PhoneHash")
+                        .HasName("pk_hidden_numbers");
+
+                    b.ToTable("hidden_numbers", (string)null);
+                });
+
+            modelBuilder.Entity("Tranqui.Domain.Appeals.SmsVerificationRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<byte[]>("PhoneHash")
+                        .IsRequired()
+                        .HasColumnType("bytea")
+                        .HasColumnName("phone_hash");
+
+                    b.Property<DateTimeOffset>("RequestedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("requested_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_sms_verification_requests");
+
+                    b.HasIndex("PhoneHash", "RequestedAt")
+                        .HasDatabaseName("ix_sms_verification_requests_phone_hash_requested_at");
+
+                    b.ToTable("sms_verification_requests", (string)null);
+                });
+
             modelBuilder.Entity("Tranqui.Domain.Reputation.ContactContribution", b =>
                 {
                     b.Property<Guid>("Id")

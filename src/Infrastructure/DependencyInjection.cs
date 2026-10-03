@@ -4,9 +4,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Tranqui.Application.Features.LookupNumber;
 using Tranqui.Domain.Abstractions;
+using Tranqui.Domain.Appeals;
 using Tranqui.Domain.PhoneNumbers;
 using Tranqui.Domain.Reputation;
 using Tranqui.Domain.Users;
+using Tranqui.Infrastructure.Appeals;
 using Tranqui.Infrastructure.Persistence;
 using Tranqui.Infrastructure.PhoneNumbers;
 using Tranqui.Infrastructure.Reputation;
@@ -70,5 +72,6 @@ public static class DependencyInjection
         services.AddScoped<IReputationSignalsReader, ReputationSignalsReader>();
         services.AddScoped<ISpamReportRepository, SpamReportRepository>();
         services.AddScoped<IContactContributionRepository, ContactContributionRepository>();
+        services.AddScoped<IAppealRepository, AppealRepository>();
     }
 }

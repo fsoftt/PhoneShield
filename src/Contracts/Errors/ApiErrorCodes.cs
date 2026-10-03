@@ -12,5 +12,6 @@ public static class ApiErrorCodes
     public const string AccountNotRegistered = "account_not_registered";
     public const string ConsentRequired = "consent_required";
     public const string RateLimited = "rate_limited";
+    public const string AppealLimitReached = "appeal_limit_reached";
     public const string UnexpectedError = "unexpected_error";
 }

@@ -1,6 +1,7 @@
 import { h, onMounted } from 'vue'
 import DefaultTheme from 'vitepress/theme'
 import { useData, withBase, type Theme } from 'vitepress'
+import AppealForm from './AppealForm.vue'
 import LanguageSwitch from './LanguageSwitch.vue'
 import { browserLanguage, pathIn, savedChoice } from './languages'
 import './custom.css'
@@ -11,6 +12,9 @@ export default {
     h(DefaultTheme.Layout, null, {
       'nav-bar-content-after': () => h(LanguageSwitch),
     }),
+  enhanceApp({ app }) {
+    app.component('AppealForm', AppealForm)
+  },
   setup() {
     const { page, localeIndex } = useData()
 
