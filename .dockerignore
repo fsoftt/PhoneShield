@@ -1,0 +1,7 @@
+**/bin/
+**/obj/
+.git/
+tests/
+src/App/
+deploy/.env
+*.md
