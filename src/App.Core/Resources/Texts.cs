@@ -283,6 +283,56 @@ public static class Texts
 
     public static string DeleteMyAccount => Get(nameof(DeleteMyAccount));
 
+    public static string InvalidPhoneNumber => Get(nameof(InvalidPhoneNumber));
+
+    public static string FirebaseInvalidCode => Get(nameof(FirebaseInvalidCode));
+
+    public static string FirebaseCodeExpired => Get(nameof(FirebaseCodeExpired));
+
+    public static string ErrorAppealLimitReached => Get(nameof(ErrorAppealLimitReached));
+
+    public static string ErrorAppealAccountTooNew => Get(nameof(ErrorAppealAccountTooNew));
+
+    public static string ErrorDeviceNotTrusted => Get(nameof(ErrorDeviceNotTrusted));
+
+    public static string ErrorPhoneNotVerified => Get(nameof(ErrorPhoneNotVerified));
+
+    public static string AppealOpen => Get(nameof(AppealOpen));
+
+    public static string AppealTitle => Get(nameof(AppealTitle));
+
+    public static string AppealIntro => Get(nameof(AppealIntro));
+
+    public static string AppealPhoneLabel => Get(nameof(AppealPhoneLabel));
+
+    public static string AppealKindHeading => Get(nameof(AppealKindHeading));
+
+    public static string AppealHideNames => Get(nameof(AppealHideNames));
+
+    public static string AppealReviewSpam => Get(nameof(AppealReviewSpam));
+
+    public static string AppealReasonLabel => Get(nameof(AppealReasonLabel));
+
+    public static string AppealEmailLabel => Get(nameof(AppealEmailLabel));
+
+    public static string AppealEmailNote => Get(nameof(AppealEmailNote));
+
+    public static string AppealLimitsNote => Get(nameof(AppealLimitsNote));
+
+    public static string AppealSendCode => Get(nameof(AppealSendCode));
+
+    public static string AppealCodeLabel => Get(nameof(AppealCodeLabel));
+
+    public static string AppealCodeSentFormat => Get(nameof(AppealCodeSentFormat));
+
+    public static string AppealCodeRequired => Get(nameof(AppealCodeRequired));
+
+    public static string AppealSubmit => Get(nameof(AppealSubmit));
+
+    public static string AppealApplied => Get(nameof(AppealApplied));
+
+    public static string AppealPending => Get(nameof(AppealPending));
+
     /// <summary>Formats a localized template such as <see cref="SpamSubtitleFormat"/> with the current culture.</summary>
     public static string Format(string template, params object[] arguments) =>
         string.Format(CultureInfo.CurrentCulture, template, arguments);

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:res="clr-namespace:Tranqui.App.Core.Resources;assembly=Tranqui.App.Core"
+             xmlns:vm="clr-namespace:Tranqui.App.Core.ViewModels;assembly=Tranqui.App.Core"
+             x:Class="Tranqui.App.Views.AppealPage"
+             x:DataType="vm:AppealViewModel"
+             Title="{x:Static res:Texts.AppealTitle}">
+
+  <ScrollView>
+    <VerticalStackLayout Style="{StaticResource Form}">
+      <Label Text="{x:Static res:Texts.AppealTitle}" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level1" />
+      <Label Text="{x:Static res:Texts.AppealIntro}" Style="{StaticResource SubHeadline}" />
+
+      <VerticalStackLayout Spacing="12" IsVisible="{Binding IsDetailsStep}">
+        <Entry Text="{Binding PhoneNumber}"
+               Placeholder="{x:Static res:Texts.AppealPhoneLabel}"
+               Keyboard="Telephone"
+               AutomationId="AppealPhone"
+               SemanticProperties.Description="{x:Static res:Texts.AppealPhoneLabel}" />
+
+        <Label Text="{x:Static res:Texts.AppealKindHeading}" FontAttributes="Bold" SemanticProperties.HeadingLevel="Level2" />
+        <RadioButton GroupName="AppealKind"
+                     IsChecked="True"
+                     Content="{x:Static res:Texts.AppealHideNames}"
+                     AutomationId="AppealHideNames" />
+        <RadioButton GroupName="AppealKind"
+                     IsChecked="{Binding IsReviewSpam}"
+                     Content="{x:Static res:Texts.AppealReviewSpam}"
+                     AutomationId="AppealReviewSpam" />
+
+        <Editor Text="{Binding Reason}"
+                Placeholder="{x:Static res:Texts.AppealReasonLabel}"
+                MaxLength="500"
+                AutoSize="TextChanges"
+                MinimumHeightRequest="96"
+                SemanticProperties.Description="{x:Static res:Texts.AppealReasonLabel}" />
+
+        <VerticalStackLayout Spacing="4" IsVisible="{Binding IsReviewSpam}">
+          <Entry Text="{Binding ContactEmail}"
+                 Placeholder="{x:Static res:Texts.AppealEmailLabel}"
+                 Keyboard="Email"
+                 MaxLength="254"
+                 IsSpellCheckEnabled="False"
+                 SemanticProperties.Description="{x:Static res:Texts.AppealEmailLabel}" />
+          <Label Text="{x:Static res:Texts.AppealEmailNote}" FontSize="13" />
+        </VerticalStackLayout>
+
+        <Label Text="{x:Static res:Texts.AppealLimitsNote}" FontSize="13" />
+        <Button Text="{x:Static res:Texts.AppealSendCode}"
+                Command="{Binding SendCodeCommand}"
+                IsEnabled="{Binding IsNotBusy}"
+                AutomationId="AppealSendCode" />
+      </VerticalStackLayout>
+
+      <VerticalStackLayout Spacing="12" IsVisible="{Binding IsCodeStep}">
+        <Label Text="{Binding CodeSentMessage}" />
+        <Entry Text="{Binding Code}"
+               Placeholder="{x:Static res:Texts.AppealCodeLabel}"
+               Keyboard="Numeric"
+               MaxLength="6"
+               AutomationId="AppealCode"
+               SemanticProperties.Description="{x:Static res:Texts.AppealCodeLabel}" />
+        <Button Text="{x:Static res:Texts.AppealSubmit}"
+                Command="{Binding SubmitCommand}"
+                IsEnabled="{Binding IsNotBusy}"
+                AutomationId="AppealSubmit" />
+      </VerticalStackLayout>
+
+      <Label Text="{Binding ResultMessage}"
+             Style="{StaticResource InfoMessage}"
+             IsVisible="{Binding IsDone}"
+             SemanticProperties.Description="{Binding ResultMessage}" />
+
+      <Label Text="{Binding ErrorMessage}"
+             Style="{StaticResource ErrorMessage}"
+             IsVisible="{Binding ErrorMessage, Converter={StaticResource HasText}}" />
+      <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+    </VerticalStackLayout>
+  </ScrollView>
+
+</ContentPage>

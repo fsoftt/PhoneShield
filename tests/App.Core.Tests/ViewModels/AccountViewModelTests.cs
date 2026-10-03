@@ -33,6 +33,14 @@ public sealed class AccountViewModelTests
     }
 
     [Fact]
+    public async Task OpenAppeal_GoesToTheAppealPage()
+    {
+        await viewModel.OpenAppealCommand.ExecuteAsync(null);
+
+        await navigation.Received(1).GoToAsync(Routes.Appeal);
+    }
+
+    [Fact]
     public async Task DeleteAccount_NotConfirmed_DoesNothing()
     {
         await viewModel.DeleteAccountCommand.ExecuteAsync(null);

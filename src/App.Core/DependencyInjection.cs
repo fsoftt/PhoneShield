@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Refit;
 using Tranqui.App.Core.Accounts;
 using Tranqui.App.Core.Api;
+using Tranqui.App.Core.Appeals;
 using Tranqui.App.Core.Authentication;
 using Tranqui.App.Core.Calls;
 using Tranqui.App.Core.Contacts;
@@ -17,7 +18,8 @@ public static class DependencyInjection
     /// Registers everything except platform services, which the app provides: <see cref="ISecureStore"/>, navigation,
     /// <see cref="IBlockList"/>, <see cref="IDeviceContacts"/>, <see cref="IScreeningSettingsStore"/>,
     /// <see cref="Protection.IProtectionPermissions"/>, <see cref="Dialogs.IDialogService"/>,
-    /// <see cref="IDeviceContactSource"/>, <see cref="IContributionState"/> and <see cref="History.ICallHistory"/>.
+    /// <see cref="IDeviceContactSource"/>, <see cref="IContributionState"/>, <see cref="History.ICallHistory"/> and
+    /// <see cref="IDeviceIntegrity"/>.
     /// </summary>
     public static IServiceCollection AddTranquiCore(this IServiceCollection services, Uri apiBaseAddress, string firebaseApiKey)
     {
@@ -39,6 +41,7 @@ public static class DependencyInjection
         services.AddSingleton<ICallerLookup, CachedCallerLookup>();
         services.AddTransient<CallScreener>();
         services.AddTransient<ContactContributionService>();
+        services.AddTransient<AppealService>();
         services.AddTransient<StartupViewModel>();
         services.AddTransient<SignInViewModel>();
         services.AddTransient<SignUpViewModel>();
@@ -48,6 +51,7 @@ public static class DependencyInjection
         services.AddTransient<BlockedNumbersViewModel>();
         services.AddTransient<AccountViewModel>();
         services.AddTransient<CallHistoryViewModel>();
+        services.AddTransient<AppealViewModel>();
 
         return services;
     }

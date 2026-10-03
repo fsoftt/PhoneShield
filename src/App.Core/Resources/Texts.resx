@@ -141,4 +141,29 @@
   <data name="ShowMyData" xml:space="preserve"><value>Ver qué datos guardamos</value></data>
   <data name="SignOut" xml:space="preserve"><value>Cerrar sesión</value></data>
   <data name="DeleteMyAccount" xml:space="preserve"><value>Borrar mi cuenta</value></data>
+  <data name="InvalidPhoneNumber" xml:space="preserve"><value>Revisa el número: no parece válido.</value></data>
+  <data name="FirebaseInvalidCode" xml:space="preserve"><value>El código no es correcto. Revísalo e inténtalo de nuevo.</value></data>
+  <data name="FirebaseCodeExpired" xml:space="preserve"><value>El código venció. Vuelve a empezar el mes siguiente o escríbenos.</value></data>
+  <data name="ErrorAppealLimitReached" xml:space="preserve"><value>Ya se usó la apelación de este mes para este número, esta cuenta o este teléfono. Cada uno tiene una al mes y tres al año.</value></data>
+  <data name="ErrorAppealAccountTooNew" xml:space="preserve"><value>Tu cuenta debe tener al menos una semana para apelar.</value></data>
+  <data name="ErrorDeviceNotTrusted" xml:space="preserve"><value>No pudimos verificar este teléfono. Usa la app descargada de Google Play en un teléfono sin modificar, o escríbenos.</value></data>
+  <data name="ErrorPhoneNotVerified" xml:space="preserve"><value>No pudimos confirmar que el número es tuyo. Vuelve a intentarlo.</value></data>
+  <data name="AppealOpen" xml:space="preserve"><value>¿Tu número aparece mal?</value></data>
+  <data name="AppealTitle" xml:space="preserve"><value>Apelar por mi número</value></data>
+  <data name="AppealIntro" xml:space="preserve"><value>Demuestra que el número es tuyo con un código por SMS y pide ocultar sus nombres o revisar el marcado como spam.</value></data>
+  <data name="AppealPhoneLabel" xml:space="preserve"><value>Tu número</value></data>
+  <data name="AppealKindHeading" xml:space="preserve"><value>¿Qué necesitas?</value></data>
+  <data name="AppealHideNames" xml:space="preserve"><value>Ocultar los nombres asociados a mi número (se aplica de inmediato; no cambia el marcado como spam)</value></data>
+  <data name="AppealReviewSpam" xml:space="preserve"><value>Mi número no es spam: revisarlo (lo revisa una persona)</value></data>
+  <data name="AppealReasonLabel" xml:space="preserve"><value>Cuéntanos por qué (opcional)</value></data>
+  <data name="AppealEmailLabel" xml:space="preserve"><value>Correo para responderte (opcional)</value></data>
+  <data name="AppealEmailNote" xml:space="preserve"><value>Solo lo usamos para responder esta solicitud y lo borramos al resolverla.</value></data>
+  <data name="AppealLimitsNote" xml:space="preserve"><value>Cada número, cuenta y teléfono tiene un SMS y una apelación al mes, y la cuenta y el teléfono, tres al año. Tu número no queda vinculado a tu cuenta.</value></data>
+  <data name="AppealSendCode" xml:space="preserve"><value>Enviarme el código por SMS</value></data>
+  <data name="AppealCodeLabel" xml:space="preserve"><value>Código de 6 dígitos</value></data>
+  <data name="AppealCodeSentFormat" xml:space="preserve"><value>Enviamos el código a {0}.</value></data>
+  <data name="AppealCodeRequired" xml:space="preserve"><value>Escribe el código de 6 dígitos que te llegó por SMS.</value></data>
+  <data name="AppealSubmit" xml:space="preserve"><value>Enviar apelación</value></data>
+  <data name="AppealApplied" xml:space="preserve"><value>Listo. Ya no mostramos nombres para tu número. Si estaba marcado como spam, eso no cambia.</value></data>
+  <data name="AppealPending" xml:space="preserve"><value>Recibimos tu apelación. Una persona la revisará dentro de los plazos de ley; si dejaste un correo, te responderemos ahí.</value></data>
 </root>

@@ -22,6 +22,10 @@ public static class ApiErrorMessages
             ApiErrorCodes.AccountNotRegistered => Texts.ErrorAccountNotRegistered,
             ApiErrorCodes.ConsentRequired => Texts.ErrorConsentRequired,
             ApiErrorCodes.RateLimited => Texts.ErrorTooManyRequests,
+            ApiErrorCodes.AppealLimitReached => Texts.ErrorAppealLimitReached,
+            ApiErrorCodes.AppealAccountTooNew => Texts.ErrorAppealAccountTooNew,
+            ApiErrorCodes.DeviceNotTrusted => Texts.ErrorDeviceNotTrusted,
+            ApiErrorCodes.PhoneNotVerified => Texts.ErrorPhoneNotVerified,
             ApiErrorCodes.UnexpectedError => Texts.ErrorUnexpected,
             _ => ForStatus(exception.StatusCode),
         };

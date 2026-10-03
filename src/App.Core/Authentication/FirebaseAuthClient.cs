@@ -50,6 +50,21 @@ internal sealed class FirebaseAuthClient(HttpClient httpClient, IOptions<Firebas
     public Task DeleteAccountAsync(string idToken, CancellationToken cancellationToken) =>
         PostAsync<object>("delete", new { idToken }, cancellationToken);
 
+    public async Task<string> SendVerificationCodeAsync(string e164, string playIntegrityToken, CancellationToken cancellationToken)
+    {
+        var body = await PostAsync<SendVerificationCodeResponse>(
+            "sendVerificationCode", new { phoneNumber = e164, playIntegrityToken }, cancellationToken);
+
+        return body.SessionInfo;
+    }
+
+    public async Task<string> SignInWithPhoneNumberAsync(string sessionInfo, string code, CancellationToken cancellationToken)
+    {
+        var body = await PostAsync<PhoneSignInResponse>("signInWithPhoneNumber", new { sessionInfo, code }, cancellationToken);
+
+        return body.IdToken;
+    }
+
     private async Task<AuthSession> PasswordAuthAsync(string method, string email, string password, CancellationToken cancellationToken)
     {
         var body = await PostAsync<PasswordAuthResponse>(
@@ -86,6 +101,10 @@ internal sealed class FirebaseAuthClient(HttpClient httpClient, IOptions<Firebas
         [property: JsonPropertyName("id_token")] string IdToken,
         [property: JsonPropertyName("refresh_token")] string RefreshToken,
         [property: JsonPropertyName("expires_in")] string ExpiresIn);
+
+    private sealed record SendVerificationCodeResponse(string SessionInfo);
+
+    private sealed record PhoneSignInResponse(string IdToken);
 
     private sealed record LookupResponse(IReadOnlyList<LookupUser>? Users);
 

@@ -27,10 +27,12 @@
     <TranquiApiBaseUrl Condition="'$(TranquiApiBaseUrl)' == '' and '$(Configuration)' == 'Debug'">http://10.0.2.2:5254/</TranquiApiBaseUrl>
     <TranquiApiBaseUrl Condition="'$(TranquiApiBaseUrl)' == ''">https://api.example.invalid/</TranquiApiBaseUrl>
     <TranquiFirebaseApiKey Condition="'$(TranquiFirebaseApiKey)' == ''">not-configured</TranquiFirebaseApiKey>
+    <TranquiCloudProjectNumber Condition="'$(TranquiCloudProjectNumber)' == ''">0</TranquiCloudProjectNumber>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyMetadata Include="TranquiApiBaseUrl" Value="$(TranquiApiBaseUrl)" />
     <AssemblyMetadata Include="TranquiFirebaseApiKey" Value="$(TranquiFirebaseApiKey)" />
+    <AssemblyMetadata Include="TranquiCloudProjectNumber" Value="$(TranquiCloudProjectNumber)" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +46,7 @@
     <PackageReference Include="Microsoft.Maui.Controls" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
     <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Xamarin.Google.Android.Play.Integrity" />
   </ItemGroup>
 
   <ItemGroup>

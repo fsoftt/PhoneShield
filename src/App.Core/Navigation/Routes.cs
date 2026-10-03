@@ -8,4 +8,5 @@ public static class Routes
     public const string SignUp = "sign-up";
     public const string VerifyEmail = "//verify-email";
     public const string Home = "//main/home";
+    public const string Appeal = "appeal";
 }

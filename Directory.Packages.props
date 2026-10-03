@@ -29,6 +29,7 @@
   <ItemGroup Label="App">
     <PackageVersion Include="Microsoft.Maui.Controls" Version="10.0.110" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="10.0.12" />
+    <PackageVersion Include="Xamarin.Google.Android.Play.Integrity" Version="1.6.0.4" />
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageVersion Include="Refit.HttpClientFactory" Version="16.3.0" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.12" />

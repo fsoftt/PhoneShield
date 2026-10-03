@@ -1,8 +1,10 @@
 #if DEBUG
 using Microsoft.Extensions.Logging;
 #endif
+using Tranqui.App.Appeals;
 using Tranqui.App.Calls;
 using Tranqui.App.Core;
+using Tranqui.App.Core.Appeals;
 using Tranqui.App.Core.Authentication;
 using Tranqui.App.Core.Calls;
 using Tranqui.App.Core.Contacts;
@@ -39,6 +41,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IDeviceContactSource, AndroidDeviceContactSource>();
         builder.Services.AddSingleton<IContributionState, PreferencesContributionState>();
         builder.Services.AddSingleton<ICallHistory, PreferencesCallHistory>();
+        builder.Services.AddSingleton<IDeviceIntegrity, PlayDeviceIntegrity>();
 
         builder.Services.AddTransient<StartupPage>();
         builder.Services.AddTransient<SignInPage>();
@@ -49,6 +52,7 @@ public static class MauiProgram
         builder.Services.AddTransient<BlockedNumbersPage>();
         builder.Services.AddTransient<SettingsPage>();
         builder.Services.AddTransient<AccountPage>();
+        builder.Services.AddTransient<AppealPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();
