@@ -5,6 +5,7 @@ using Tranqui.App.Calls;
 using Tranqui.App.Core;
 using Tranqui.App.Core.Authentication;
 using Tranqui.App.Core.Calls;
+using Tranqui.App.Core.Contacts;
 using Tranqui.App.Core.Dialogs;
 using Tranqui.App.Core.Navigation;
 using Tranqui.App.Core.Protection;
@@ -34,6 +35,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<IDeviceContacts, AndroidDeviceContacts>();
         builder.Services.AddSingleton<IProtectionPermissions, AndroidProtectionPermissions>();
         builder.Services.AddSingleton<IDialogService, ShellDialogService>();
+        builder.Services.AddSingleton<IDeviceContactSource, AndroidDeviceContactSource>();
+        builder.Services.AddSingleton<IContributionState, PreferencesContributionState>();
 
         builder.Services.AddTransient<StartupPage>();
         builder.Services.AddTransient<SignInPage>();
