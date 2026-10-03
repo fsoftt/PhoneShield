@@ -1,4 +1,4 @@
-# PhoneShield
+# Tranqui
 
 Open-source, privacy-first caller ID and spam blocker: a .NET MAUI Android app + ASP.NET Core API that identifies callers and blocks spam using crowd-sourced, HMAC-hashed data. Initial market: Colombia.
 
@@ -9,11 +9,18 @@ Open-source, privacy-first caller ID and spam blocker: a .NET MAUI Android app +
 - API: ASP.NET Core minimal APIs, `net10.0`. PostgreSQL (EF Core + Npgsql), Redis (cache + rate limiting).
 - App: .NET MAUI, Android only (`net10.0-android`, min API 29). MVVM with `CommunityToolkit.Mvvm`; `CommunityToolkit.Maui`; Refit for HTTP; SQLite for local data.
 - CQRS with MediatR **12.x only** (v13+ is commercially licensed). Validation with FluentValidation via a MediatR pipeline behavior.
-- Auth: Firebase Authentication (email/password, Google, Apple). The API validates the Firebase JWT on every request; the user is identified by the token's `uid`, never by a client-supplied value.
+- Auth: Firebase Authentication (email/password and Google; Apple comes with the future iOS version). The API validates the Firebase JWT on every request; the user is identified by the token's `uid`, never by a client-supplied value.
 - Phone normalization: `libphonenumber-csharp`, E.164, default region `CO`.
 - Logging: Serilog (Console + Seq in dev).
 - Tests: xUnit, FluentAssertions **7.x only** (v8 is commercially licensed), NSubstitute, Testcontainers, NetArchTest.
 - Budget is minimal: prefer free tiers and self-hosted components; flag any paid dependency before adding it.
+
+## Build
+
+- `dotnet build Tranqui.Backend.slnf` / `dotnet test Tranqui.Backend.slnf` — everything except the MAUI app; works without the Android SDK.
+- `dotnet build src/App -f net10.0-android` — needs the `maui-android` workload, JDK 21 and the Android SDK. CI (`.github/workflows/ci.yml`) builds both on every PR.
+- Package versions live only in `Directory.Packages.props` (central package management).
+- Every new required local secret/config value goes into README.md's configuration table in the same PR.
 
 ## Layout
 
@@ -39,7 +46,7 @@ Dependency direction: `Api` → `Application`/`Infrastructure` → `Domain`; `Ap
 
 ## Branding
 
-- Never name, compare to, or describe PhoneShield as a clone/alternative of any third-party product or brand — not in code, identifiers, comments, docs, commits, store listings or UI text. Describe it only by what it does (privacy-first caller ID and spam blocker).
+- Never name, compare to, or describe Tranqui as a clone/alternative of any third-party product or brand — not in code, identifiers, comments, docs, commits, store listings or UI text. Describe it only by what it does (privacy-first caller ID and spam blocker).
 
 ## Coding conventions
 
@@ -55,5 +62,5 @@ Dependency direction: `Api` → `Application`/`Infrastructure` → `Domain`; `Ap
 
 - Never commit to `main`. Work on a branch, open a PR; merging is a human decision.
 - Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`, `chore:`), small commits.
-- Run `dotnet build` and `dotnet test` before every push.
+- Run the backend build and tests before every push.
 - No AI attribution anywhere: no `Co-Authored-By`/session trailers in commits, no "Generated with" lines in PRs, no credit in files or comments. Commits are authored as the repository owner.

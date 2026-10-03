@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-android</TargetFramework>
+    <!-- Android 10 (API 29) is the minimum for CallScreeningService with RoleManager. -->
+    <SupportedOSPlatformVersion>29.0</SupportedOSPlatformVersion>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Tranqui.App</RootNamespace>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <MauiXamlInflator>SourceGen</MauiXamlInflator>
+    <!-- Generated MAUI/XAML code does not follow the repository's documentation rules. -->
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+
+    <ApplicationTitle>Tranqui</ApplicationTitle>
+    <ApplicationId>com.fsoftt.tranqui</ApplicationId>
+    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#0F4C81" />
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#0F4C81" BaseSize="128,128" />
+    <MauiImage Include="Resources\Images\*" />
+    <MauiFont Include="Resources\Fonts\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Contracts\Tranqui.Contracts.csproj" />
+    <ProjectReference Include="..\Domain\Tranqui.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

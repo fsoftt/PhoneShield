@@ -1,0 +1,46 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{csproj,props,targets,xml,xaml,json,yml,yaml,slnx,slnf}]
+indent_size = 2
+
+[*.cs]
+# Braces are mandatory on every if/for/foreach/while.
+csharp_prefer_braces = true:error
+dotnet_diagnostic.IDE0011.severity = error
+
+csharp_style_namespace_declarations = file_scoped:error
+dotnet_diagnostic.IDE0161.severity = error
+
+csharp_style_var_when_type_is_apparent = true:suggestion
+dotnet_style_qualification_for_field = false:error
+dotnet_diagnostic.IDE0003.severity = error
+
+dotnet_diagnostic.IDE0005.severity = error
+
+# Private members never start with an underscore: plain camelCase.
+dotnet_naming_rule.private_members_no_underscore.symbols = private_members
+dotnet_naming_rule.private_members_no_underscore.style = camel_case_no_prefix
+dotnet_naming_rule.private_members_no_underscore.severity = error
+dotnet_naming_symbols.private_members.applicable_kinds = field, property
+dotnet_naming_symbols.private_members.applicable_accessibilities = private
+dotnet_naming_symbols.private_members.required_modifiers =
+dotnet_naming_style.camel_case_no_prefix.capitalization = camel_case
+dotnet_naming_style.camel_case_no_prefix.required_prefix =
+
+dotnet_naming_rule.private_constants_pascal.symbols = private_constants
+dotnet_naming_rule.private_constants_pascal.style = pascal_case
+dotnet_naming_rule.private_constants_pascal.severity = error
+dotnet_naming_symbols.private_constants.applicable_kinds = field
+dotnet_naming_symbols.private_constants.applicable_accessibilities = private
+dotnet_naming_symbols.private_constants.required_modifiers = const
+dotnet_naming_style.pascal_case.capitalization = pascal_case
+
+dotnet_diagnostic.IDE1006.severity = error

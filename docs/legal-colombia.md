@@ -1,4 +1,4 @@
-# Marco legal en Colombia — notas para PhoneShield
+# Marco legal en Colombia — notas para Tranqui
 
 > **Esto no es asesoría legal.** Es un mapa de lo que hay que resolver y una propuesta de cómo hacerlo. Antes del lanzamiento público, un abogado debe revisarlo. Opciones de bajo costo: consultorios jurídicos de universidades (gratuitos) y las guías publicadas por la SIC.
 

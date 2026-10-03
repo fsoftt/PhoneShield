@@ -1,4 +1,4 @@
-# PhoneShield — Especificación v1
+# Tranqui — Especificación v1
 
 Identificador de llamadas y bloqueador de spam open source, orientado a la privacidad. Identifica quién llama y bloquea spam usando datos aportados por la comunidad, sin guardar nunca números de teléfono en texto plano.
 
@@ -10,11 +10,12 @@ Estado: **borrador de decisiones** — fuente de verdad para empezar a construir
 
 | Tema | Decisión |
 |---|---|
+| Marca | **Tranqui** (pendiente verificar disponibilidad) |
 | Plataforma v1 | Solo Android (.NET MAUI, `net10.0-android`, mínimo Android 10 / API 29 por `CallScreeningService` + `RoleManager`) |
 | Backend | ASP.NET Core minimal APIs (.NET 10), PostgreSQL, Redis |
 | Arquitectura | DDD + Clean Architecture + vertical slices + CQRS con MediatR 12.x (última versión Apache-2.0); MVVM en la app |
 | Hash de números | HMAC-SHA256 calculado **en el servidor**, clave secreta versionada fuera de la base de datos |
-| Autenticación | Firebase Authentication: email/contraseña, Google, Apple (ver costo de Apple en §9) |
+| Autenticación | Firebase Authentication: email/contraseña y Google. Apple se agrega con la versión iOS (ahorra US$99/año) |
 | Número del usuario | **No** se vincula a la cuenta |
 | Subida de agenda | Opcional, con consentimiento explícito; la app funciona igual sin ella |
 | Reporte de spam | Después de la llamada, no durante |
@@ -127,7 +128,7 @@ Un número guardado como "Mamá" por muchas personas **no** es spam por defecto 
 
 ### 5.1 Cuenta
 
-- Registro e inicio de sesión con Firebase (email/contraseña con verificación de correo, Google, Apple).
+- Registro e inicio de sesión con Firebase (email/contraseña con verificación de correo, Google). Apple llega con la versión iOS.
 - El servidor valida el JWT de Firebase en cada petición; el usuario se identifica por el `uid` del token, nunca por un valor enviado por el cliente.
 - Borrar cuenta: borra la cuenta de Firebase, los aportes y los reportes (los agregados se recalculan).
 
@@ -194,6 +195,7 @@ Dependencias: `Api → Application/Infrastructure → Domain`; `App → Contract
 ## 8. Diseño visual y accesibilidad
 
 - Material 3, tema claro y oscuro, colores de estado con contraste WCAG AA (4.5:1 para texto).
+- Paleta: primario `#0F4C81` (en oscuro `#7DB3E8`), acento `#14B8A6`, fondo oscuro `#0F172A`. Estados: verde `#1E7B34`, azul `#1D5FB8`, rojo `#C0262D`, naranja `#B45309` (todos ≥ 4.5:1 con texto blanco).
 - Ícono + texto en cada estado (nunca solo color); soporte de TalkBack y de tamaño de fuente del sistema.
 - Áreas táctiles de al menos 48 dp; popup legible de un vistazo (nombre ≥ 20 sp).
 - Todo el texto en español (es-CO) desde el inicio, en archivos de recursos para traducir después.
@@ -209,26 +211,24 @@ Dependencias: `Api → Application/Infrastructure → Domain`; `App → Contract
 | Copias de seguridad (Cloudflare R2, 10 GB) | Gratis |
 | Firebase Authentication (email, Google) | Gratis a este tamaño |
 | Verificación SMS para apelaciones | ~US$0.05 c/u, bajo volumen |
-| Google Play (cuenta de desarrollador) | US$25 una vez |
 | F-Droid | Gratis |
 | Dominio | ~US$10/año |
 | Seq (desarrollo / un usuario) | Gratis |
-| **Sign in with Apple** | **Requiere Apple Developer Program: US$99/año** |
+| Sign in with Apple | Fuera de v1 (requiere Apple Developer Program, US$99/año) |
 
-_Pendiente:_ ¿pagamos los US$99/año para Apple en v1, o lo dejamos para cuando exista la versión iOS? Recomendación: dejarlo para después; email y Google cubren casi todo el mercado Android en Colombia.
+Google Play: ya existe la cuenta de desarrollador.
 
 ---
 
 ## 10. Pendientes
 
-- Apple Sign-In en v1 (costo, §9).
 - Revisión legal por un abogado antes del lanzamiento público (ver `docs/legal-colombia.md`).
-- Nombre definitivo, logo y paleta de la marca.
-- Instalar el SDK de .NET 10 en el entorno de desarrollo en la nube (script de inicio).
+- Verificar que "Tranqui" esté libre (Play Store, marca en la SIC, dominio) y diseñar el logo. Paleta definida en §8.
+- Política de tratamiento de datos y landing page del producto en GitHub Pages (al final de v1).
 
 ## 11. Futuro (fuera de v1)
 
 - OPRF para que el servidor nunca vea los números y para habilitar una lista de spam offline.
-- Versión iOS (Call Directory Extension).
+- Versión iOS (Call Directory Extension) y Sign in with Apple.
 - Builds reproducibles verificables y publicación en F-Droid.
 - Más países.
