@@ -1,11 +1,13 @@
 #if DEBUG
 using Microsoft.Extensions.Logging;
 #endif
+using Tranqui.App.Calls;
 using Tranqui.App.Core;
 using Tranqui.App.Core.Authentication;
+using Tranqui.App.Core.Calls;
 using Tranqui.App.Core.Navigation;
+using Tranqui.App.Core.Protection;
 using Tranqui.App.Services;
-using Tranqui.App.ViewModels;
 using Tranqui.App.Views;
 
 namespace Tranqui.App;
@@ -26,12 +28,15 @@ public static class MauiProgram
         builder.Services.AddTranquiCore(AppSettings.ApiBaseAddress, AppSettings.FirebaseApiKey);
         builder.Services.AddSingleton<ISecureStore, MauiSecureStore>();
         builder.Services.AddSingleton<INavigationService, ShellNavigationService>();
+        builder.Services.AddSingleton<IBlockList, PreferencesBlockList>();
+        builder.Services.AddSingleton<IScreeningSettingsStore, PreferencesScreeningSettingsStore>();
+        builder.Services.AddSingleton<IDeviceContacts, AndroidDeviceContacts>();
+        builder.Services.AddSingleton<IProtectionPermissions, AndroidProtectionPermissions>();
 
         builder.Services.AddTransient<StartupPage>();
         builder.Services.AddTransient<SignInPage>();
         builder.Services.AddTransient<SignUpPage>();
         builder.Services.AddTransient<VerifyEmailPage>();
-        builder.Services.AddTransient<HomeViewModel>();
         builder.Services.AddTransient<HomePage>();
 
 #if DEBUG

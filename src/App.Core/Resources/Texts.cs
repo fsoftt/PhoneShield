@@ -23,4 +23,15 @@ public static class Texts
     public const string UnknownTitle = "Número desconocido";
     public const string UnknownSubtitle = "No tenemos datos de este número.";
     public const string OfflineSubtitle = "Sin conexión: no pudimos consultar este número.";
+
+    public const string StepCallScreeningTitle = "Identificar y filtrar llamadas";
+    public const string StepCallScreeningExplanation = "Permite que Tranqui revise quién llama antes de que suene el teléfono.";
+    public const string StepOverlayTitle = "Mostrar el aviso sobre la llamada";
+    public const string StepOverlayExplanation = "Muestra el aviso de color encima de la pantalla de llamada entrante.";
+    public const string StepContactsTitle = "Reconocer tus contactos";
+    public const string StepContactsExplanation = "Lee tu agenda solo en este teléfono para mostrar en verde a quien ya conoces. No se envía a ningún lado.";
+    public const string StepNotificationsTitle = "Avisarte de llamadas bloqueadas";
+    public const string StepNotificationsExplanation = "Te contamos cuándo bloqueamos una llamada y te preguntamos si fue spam.";
+    public const string ProtectionActive = "Protección activa";
+    public const string ProtectionIncomplete = "Completa estos pasos para activar la protección";
 }

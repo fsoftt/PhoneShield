@@ -34,6 +34,10 @@ Open-source, privacy-first caller ID and spam blocker: a .NET MAUI Android app +
 - `src/Contracts` — DTOs shared by `Api` and `App`.
 - `src/App.Core` — everything in the app that is plain .NET (`net10.0`): ViewModels, the typed API client (Refit), Firebase Auth over its REST API. Testable without the Android SDK; put logic here, not in `src/App`.
 - `src/App` — MAUI shell: XAML views (compiled bindings to `App.Core` ViewModels), platform services, `Platforms/Android`.
+  Call screening lives in `Platforms/Android/Calls`: `TranquiCallScreeningService` asks `App.Core`'s `CallScreener` what to do,
+  then shows `CallerOverlay` (native views over the call screen) or a notification, and the post-call feedback notification.
+  Platform code uses the `Tranqui.App.*` namespaces (not `...Platforms.Android`) to avoid clashing with the global `Android` namespace,
+  and aliases Android types that collide with MAUI ones (`AColor`, `AView`).
 - `tests/` — one project per `src` project, mirroring its structure, plus architecture tests.
 
 Dependency direction: `Api` → `Application`/`Infrastructure` → `Domain`; `App` → `App.Core` → `Contracts` + `Domain`. `Domain` and `Application` never reference EF Core, ASP.NET Core, Redis or Firebase types.
