@@ -15,6 +15,16 @@ public static class ReputationRules
     /// <summary>A name is only shown once this many different people used it (k-anonymity for third-party names).</summary>
     public const int MinimumDistinctContributorsPerName = 3;
 
+    /// <summary>Accounts younger than this vote with reduced weight, which makes fake-account campaigns slower.</summary>
+    public static readonly TimeSpan NewAccountPeriod = TimeSpan.FromDays(7);
+
+    public const double NewAccountVoteWeight = 0.5;
+
+    public const double EstablishedAccountVoteWeight = 1;
+
+    public static double ReporterWeight(TimeSpan accountAge) =>
+        accountAge < NewAccountPeriod ? NewAccountVoteWeight : EstablishedAccountVoteWeight;
+
     /// <summary>
     /// Weight of a vote cast <paramref name="age"/> ago, relative to a fresh one. Age counts whole days only, so votes
     /// from the last 24 hours weigh exactly 1 and thresholds are reachable the moment enough people vote.

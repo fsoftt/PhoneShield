@@ -46,6 +46,7 @@ try
     app.MapHealthChecks(HealthEndpoint).AllowAnonymous();
     app.MapRegisterAccount();
     app.MapLookupNumber();
+    app.MapReportCall();
 
     await app.MigrateDatabaseAsync();
     await app.RunAsync();

@@ -35,4 +35,28 @@ public sealed class SpamReportTests
 
         act.Should().Throw<ArgumentOutOfRangeException>();
     }
+
+    [Fact]
+    public void Revise_ReplacesTheVerdictAndDropsTheLabel()
+    {
+        var report = SpamReport.Create(hash, contributor, ReportVerdict.Spam, 1, label, DateTimeOffset.UtcNow);
+        var revisedAt = DateTimeOffset.UtcNow.AddDays(1);
+
+        report.Revise(ReportVerdict.NotSpam, 0.5, null, revisedAt);
+
+        report.Verdict.Should().Be(ReportVerdict.NotSpam);
+        report.Weight.Should().Be(0.5);
+        report.Label.Should().BeNull();
+        report.ReportedAt.Should().Be(revisedAt);
+    }
+
+    [Fact]
+    public void Revise_NotSpamWithLabel_Throws()
+    {
+        var report = SpamReport.Create(hash, contributor, ReportVerdict.Spam, 1, null, DateTimeOffset.UtcNow);
+
+        var act = () => report.Revise(ReportVerdict.NotSpam, 1, label, DateTimeOffset.UtcNow);
+
+        act.Should().Throw<ArgumentException>();
+    }
 }

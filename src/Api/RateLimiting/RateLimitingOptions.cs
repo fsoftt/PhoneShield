@@ -6,12 +6,21 @@ public sealed class RateLimitingOptions
 
     public LookupLimits Lookup { get; set; } = new();
 
+    public ReportLimits Reports { get; set; } = new();
+
     public sealed class LookupLimits
     {
         private const int DefaultPerHour = 60;
         private const int DefaultPerDay = 300;
 
         public int PerHour { get; set; } = DefaultPerHour;
+
+        public int PerDay { get; set; } = DefaultPerDay;
+    }
+
+    public sealed class ReportLimits
+    {
+        private const int DefaultPerDay = 20;
 
         public int PerDay { get; set; } = DefaultPerDay;
     }

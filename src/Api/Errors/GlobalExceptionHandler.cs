@@ -1,4 +1,5 @@
 using FluentValidation;
+using Tranqui.Application.Errors;
 using Microsoft.AspNetCore.Diagnostics;
 
 namespace Tranqui.Api.Errors;
@@ -13,6 +14,7 @@ public sealed partial class GlobalExceptionHandler(
 {
     private const string UnexpectedErrorTitle = "Ocurrió un error inesperado.";
     private const string ValidationErrorTitle = "La solicitud no es válida.";
+    private const string AccountNotRegisteredTitle = "Registra tu cuenta antes de aportar.";
 
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
@@ -24,13 +26,24 @@ public sealed partial class GlobalExceptionHandler(
             return await WriteValidationProblemAsync(httpContext, validationException);
         }
 
+        if (exception is AccountNotRegisteredException)
+        {
+            return await WriteProblemAsync(httpContext, StatusCodes.Status409Conflict, AccountNotRegisteredTitle);
+        }
+
         LogUnhandledException(exception.GetType().Name);
-        httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+
+        return await WriteProblemAsync(httpContext, StatusCodes.Status500InternalServerError, UnexpectedErrorTitle);
+    }
+
+    private async ValueTask<bool> WriteProblemAsync(HttpContext httpContext, int statusCode, string title)
+    {
+        httpContext.Response.StatusCode = statusCode;
 
         return await problemDetailsService.TryWriteAsync(new ProblemDetailsContext
         {
             HttpContext = httpContext,
-            ProblemDetails = { Title = UnexpectedErrorTitle, Status = StatusCodes.Status500InternalServerError },
+            ProblemDetails = { Title = title, Status = statusCode },
         });
     }
 
