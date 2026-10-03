@@ -2,13 +2,13 @@ using System.Reflection;
 using NetArchTest.Rules;
 using ArchTestResult = NetArchTest.Rules.TestResult;
 
-namespace PhoneShield.Architecture.Tests;
+namespace Tranqui.Architecture.Tests;
 
 public sealed class LayerDependencyTests
 {
-    private const string ApplicationNamespace = "PhoneShield.Application";
-    private const string InfrastructureNamespace = "PhoneShield.Infrastructure";
-    private const string ApiNamespace = "PhoneShield.Api";
+    private const string ApplicationNamespace = "Tranqui.Application";
+    private const string InfrastructureNamespace = "Tranqui.Infrastructure";
+    private const string ApiNamespace = "Tranqui.Api";
 
     private static readonly Assembly domainAssembly = typeof(Domain.AssemblyReference).Assembly;
     private static readonly Assembly applicationAssembly = typeof(Application.AssemblyReference).Assembly;

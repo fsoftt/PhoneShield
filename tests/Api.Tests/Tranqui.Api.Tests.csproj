@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Api\PhoneShield.Api.csproj" />
+    <ProjectReference Include="..\..\src\Api\Tranqui.Api.csproj" />
   </ItemGroup>
 
   <ItemGroup>

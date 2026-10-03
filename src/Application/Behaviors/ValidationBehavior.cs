@@ -1,7 +1,7 @@
 using FluentValidation;
 using MediatR;
 
-namespace PhoneShield.Application.Behaviors;
+namespace Tranqui.Application.Behaviors;
 
 /// <summary>Runs every registered validator for a request before its handler executes.</summary>
 public sealed class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)

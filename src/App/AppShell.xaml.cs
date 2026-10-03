@@ -1,4 +1,4 @@
-namespace PhoneShield.App;
+namespace Tranqui.App;
 
 public partial class AppShell : Shell
 {

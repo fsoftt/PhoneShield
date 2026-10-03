@@ -1,7 +1,7 @@
 using Android.App;
 using Android.Runtime;
 
-namespace PhoneShield.App;
+namespace Tranqui.App;
 
 [Application]
 public class MainApplication : MauiApplication

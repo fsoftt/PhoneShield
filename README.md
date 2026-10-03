@@ -1,4 +1,4 @@
-# PhoneShield
+# Tranqui
 
 Identificador de llamadas y bloqueador de spam **open source y orientado a la privacidad**, para Android, que nunca guarda números de teléfono en texto plano.
 
@@ -21,8 +21,8 @@ Requisitos: SDK de .NET 10, Docker. Para la app: workload `maui-android`, JDK 21
 ```bash
 cp .env.example .env                      # y define POSTGRES_PASSWORD
 docker compose up -d                      # PostgreSQL, Redis y Seq
-dotnet build PhoneShield.Backend.slnf     # backend + tests (sin la app)
-dotnet test PhoneShield.Backend.slnf
+dotnet build Tranqui.Backend.slnf     # backend + tests (sin la app)
+dotnet test Tranqui.Backend.slnf
 dotnet run --project src/Api              # GET /health
 
 dotnet workload install maui-android

@@ -1,8 +1,8 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using PhoneShield.Application.Behaviors;
+using Tranqui.Application.Behaviors;
 
-namespace PhoneShield.Application;
+namespace Tranqui.Application;
 
 public static class DependencyInjection
 {

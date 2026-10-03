@@ -1,4 +1,4 @@
-# PhoneShield — Especificación v1
+# Tranqui — Especificación v1
 
 Identificador de llamadas y bloqueador de spam open source, orientado a la privacidad. Identifica quién llama y bloquea spam usando datos aportados por la comunidad, sin guardar nunca números de teléfono en texto plano.
 
@@ -10,6 +10,7 @@ Estado: **borrador de decisiones** — fuente de verdad para empezar a construir
 
 | Tema | Decisión |
 |---|---|
+| Marca | **Tranqui** (pendiente verificar disponibilidad) |
 | Plataforma v1 | Solo Android (.NET MAUI, `net10.0-android`, mínimo Android 10 / API 29 por `CallScreeningService` + `RoleManager`) |
 | Backend | ASP.NET Core minimal APIs (.NET 10), PostgreSQL, Redis |
 | Arquitectura | DDD + Clean Architecture + vertical slices + CQRS con MediatR 12.x (última versión Apache-2.0); MVVM en la app |
@@ -194,6 +195,7 @@ Dependencias: `Api → Application/Infrastructure → Domain`; `App → Contract
 ## 8. Diseño visual y accesibilidad
 
 - Material 3, tema claro y oscuro, colores de estado con contraste WCAG AA (4.5:1 para texto).
+- Paleta: primario `#0F4C81` (en oscuro `#7DB3E8`), acento `#14B8A6`, fondo oscuro `#0F172A`. Estados: verde `#1E7B34`, azul `#1D5FB8`, rojo `#C0262D`, naranja `#B45309` (todos ≥ 4.5:1 con texto blanco).
 - Ícono + texto en cada estado (nunca solo color); soporte de TalkBack y de tamaño de fuente del sistema.
 - Áreas táctiles de al menos 48 dp; popup legible de un vistazo (nombre ≥ 20 sp).
 - Todo el texto en español (es-CO) desde el inicio, en archivos de recursos para traducir después.
@@ -221,7 +223,7 @@ Google Play: ya existe la cuenta de desarrollador.
 ## 10. Pendientes
 
 - Revisión legal por un abogado antes del lanzamiento público (ver `docs/legal-colombia.md`).
-- Nombre definitivo ("PhoneShield" es provisional, probablemente ocupado), logo y paleta de la marca.
+- Verificar que "Tranqui" esté libre (Play Store, marca en la SIC, dominio) y diseñar el logo. Paleta definida en §8.
 - Política de tratamiento de datos y landing page del producto en GitHub Pages (al final de v1).
 
 ## 11. Futuro (fuera de v1)

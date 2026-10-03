@@ -1,8 +1,8 @@
 using FluentValidation;
 using MediatR;
-using PhoneShield.Application.Behaviors;
+using Tranqui.Application.Behaviors;
 
-namespace PhoneShield.Application.Tests.Behaviors;
+namespace Tranqui.Application.Tests.Behaviors;
 
 public sealed class ValidationBehaviorTests
 {

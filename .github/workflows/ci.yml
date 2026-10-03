@@ -17,9 +17,9 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
-      - run: dotnet restore PhoneShield.Backend.slnf
-      - run: dotnet build PhoneShield.Backend.slnf --no-restore --configuration Release
-      - run: dotnet test PhoneShield.Backend.slnf --no-build --configuration Release
+      - run: dotnet restore Tranqui.Backend.slnf
+      - run: dotnet build Tranqui.Backend.slnf --no-restore --configuration Release
+      - run: dotnet test Tranqui.Backend.slnf --no-build --configuration Release
 
   android:
     name: Android app build
@@ -36,12 +36,12 @@ jobs:
       - run: dotnet workload install maui-android
       - name: Install Android SDK dependencies
         run: >
-          dotnet build src/App/PhoneShield.App.csproj -t:InstallAndroidDependencies
+          dotnet build src/App/Tranqui.App.csproj -t:InstallAndroidDependencies
           -f net10.0-android
           -p:AndroidSdkDirectory=$ANDROID_HOME
           -p:AcceptAndroidSDKLicenses=True
       - run: >
-          dotnet build src/App/PhoneShield.App.csproj
+          dotnet build src/App/Tranqui.App.csproj
           -f net10.0-android
           --configuration Release
           -p:AndroidSdkDirectory=$ANDROID_HOME

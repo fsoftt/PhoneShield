@@ -1,4 +1,4 @@
-# PhoneShield
+# Tranqui
 
 Open-source, privacy-first caller ID and spam blocker: a .NET MAUI Android app + ASP.NET Core API that identifies callers and blocks spam using crowd-sourced, HMAC-hashed data. Initial market: Colombia.
 
@@ -17,7 +17,7 @@ Open-source, privacy-first caller ID and spam blocker: a .NET MAUI Android app +
 
 ## Build
 
-- `dotnet build PhoneShield.Backend.slnf` / `dotnet test PhoneShield.Backend.slnf` — everything except the MAUI app; works without the Android SDK.
+- `dotnet build Tranqui.Backend.slnf` / `dotnet test Tranqui.Backend.slnf` — everything except the MAUI app; works without the Android SDK.
 - `dotnet build src/App -f net10.0-android` — needs the `maui-android` workload, JDK 21 and the Android SDK. CI (`.github/workflows/ci.yml`) builds both on every PR.
 - Package versions live only in `Directory.Packages.props` (central package management).
 - Every new required local secret/config value goes into README.md's configuration table in the same PR.
@@ -46,7 +46,7 @@ Dependency direction: `Api` → `Application`/`Infrastructure` → `Domain`; `Ap
 
 ## Branding
 
-- Never name, compare to, or describe PhoneShield as a clone/alternative of any third-party product or brand — not in code, identifiers, comments, docs, commits, store listings or UI text. Describe it only by what it does (privacy-first caller ID and spam blocker).
+- Never name, compare to, or describe Tranqui as a clone/alternative of any third-party product or brand — not in code, identifiers, comments, docs, commits, store listings or UI text. Describe it only by what it does (privacy-first caller ID and spam blocker).
 
 ## Coding conventions
 

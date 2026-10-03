@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Api/Tranqui.Api.csproj" />
+    <Project Path="src/App/Tranqui.App.csproj" />
+    <Project Path="src/Application/Tranqui.Application.csproj" />
+    <Project Path="src/Contracts/Tranqui.Contracts.csproj" />
+    <Project Path="src/Domain/Tranqui.Domain.csproj" />
+    <Project Path="src/Infrastructure/Tranqui.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Api.Tests/Tranqui.Api.Tests.csproj" />
+    <Project Path="tests/Application.Tests/Tranqui.Application.Tests.csproj" />
+    <Project Path="tests/Architecture.Tests/Tranqui.Architecture.Tests.csproj" />
+  </Folder>
+</Solution>

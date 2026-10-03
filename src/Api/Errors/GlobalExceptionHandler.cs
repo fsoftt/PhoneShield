@@ -1,7 +1,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 
-namespace PhoneShield.Api.Errors;
+namespace Tranqui.Api.Errors;
 
 /// <summary>
 /// Maps validation failures to a 400 with per-field errors and anything else to a generic 500.

@@ -1,6 +1,6 @@
 using System.Globalization;
-using PhoneShield.Api.Errors;
-using PhoneShield.Application;
+using Tranqui.Api.Errors;
+using Tranqui.Application;
 using Serilog;
 
 const string HealthEndpoint = "/health";

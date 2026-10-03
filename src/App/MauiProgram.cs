@@ -1,8 +1,8 @@
 using Microsoft.Extensions.Logging;
-using PhoneShield.App.ViewModels;
-using PhoneShield.App.Views;
+using Tranqui.App.ViewModels;
+using Tranqui.App.Views;
 
-namespace PhoneShield.App;
+namespace Tranqui.App;
 
 public static class MauiProgram
 {

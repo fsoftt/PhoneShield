@@ -11,12 +11,11 @@
     <PackageReference Include="xunit.v3" />
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="FluentAssertions" />
-    <PackageReference Include="NetArchTest.Rules" />
+    <PackageReference Include="NSubstitute" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Api\PhoneShield.Api.csproj" />
-    <ProjectReference Include="..\..\src\Contracts\PhoneShield.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Application\Tranqui.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

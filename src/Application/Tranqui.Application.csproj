@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\PhoneShield.Domain.csproj" />
+    <ProjectReference Include="..\Domain\Tranqui.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
-using PhoneShield.App.ViewModels;
+using Tranqui.App.ViewModels;
 
-namespace PhoneShield.App.Views;
+namespace Tranqui.App.Views;
 
 public partial class HomePage : ContentPage
 {

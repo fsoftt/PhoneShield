@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 
-namespace PhoneShield.App;
+namespace Tranqui.App;
 
 public partial class App : Application
 {

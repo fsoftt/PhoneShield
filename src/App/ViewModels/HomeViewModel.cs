@@ -1,6 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace PhoneShield.App.ViewModels;
+namespace Tranqui.App.ViewModels;
 
 public sealed partial class HomeViewModel : ObservableObject
 {
