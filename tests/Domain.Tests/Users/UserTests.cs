@@ -41,4 +41,49 @@ public sealed class UserTests
 
         act.Should().Throw<ArgumentException>();
     }
+
+    [Fact]
+    public void AcceptContactUpload_CurrentVersion_ActivatesTheConsent()
+    {
+        var user = User.Register(FirebaseUid, LegalDocuments.CurrentTermsVersion, now);
+
+        user.AcceptContactUpload(LegalDocuments.CurrentContactUploadVersion, now);
+
+        user.HasActiveConsent(ConsentType.ContactUpload, LegalDocuments.CurrentContactUploadVersion).Should().BeTrue();
+    }
+
+    [Fact]
+    public void AcceptContactUpload_Twice_KeepsASingleActiveConsent()
+    {
+        var user = User.Register(FirebaseUid, LegalDocuments.CurrentTermsVersion, now);
+
+        user.AcceptContactUpload(LegalDocuments.CurrentContactUploadVersion, now);
+        user.AcceptContactUpload(LegalDocuments.CurrentContactUploadVersion, now.AddDays(1));
+
+        user.Consents.Count(consent => consent.Type == ConsentType.ContactUpload).Should().Be(1);
+    }
+
+    [Fact]
+    public void AcceptContactUpload_OutdatedVersion_Throws()
+    {
+        var user = User.Register(FirebaseUid, LegalDocuments.CurrentTermsVersion, now);
+
+        var act = () => user.AcceptContactUpload("2000-01-01", now);
+
+        act.Should().Throw<ArgumentException>();
+    }
+
+    [Fact]
+    public void RevokeContactUpload_KeepsTheRecordButDeactivatesIt()
+    {
+        var user = User.Register(FirebaseUid, LegalDocuments.CurrentTermsVersion, now);
+        user.AcceptContactUpload(LegalDocuments.CurrentContactUploadVersion, now);
+
+        user.RevokeContactUpload(now.AddDays(1));
+
+        user.HasActiveConsent(ConsentType.ContactUpload, LegalDocuments.CurrentContactUploadVersion).Should().BeFalse();
+        user.Consents.Should().ContainSingle(consent => consent.Type == ConsentType.ContactUpload)
+            .Which.RevokedAt.Should().Be(now.AddDays(1));
+        user.HasActiveConsent(ConsentType.TermsAndPrivacyPolicy, LegalDocuments.CurrentTermsVersion).Should().BeTrue();
+    }
 }

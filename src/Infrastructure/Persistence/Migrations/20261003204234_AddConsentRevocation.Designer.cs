@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tranqui.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using Tranqui.Infrastructure.Persistence;
 namespace Tranqui.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(TranquiDbContext))]
-    partial class TranquiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20261003204234_AddConsentRevocation")]
+    partial class AddConsentRevocation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

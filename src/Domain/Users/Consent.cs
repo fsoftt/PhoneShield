@@ -1,6 +1,6 @@
 namespace Tranqui.Domain.Users;
 
-/// <summary>Immutable record of a user accepting a specific version of a legal text.</summary>
+/// <summary>Record of a user accepting a specific version of a legal text; it is revoked, never deleted.</summary>
 public sealed class Consent
 {
     private Consent()
@@ -22,4 +22,10 @@ public sealed class Consent
     public string Version { get; private set; }
 
     public DateTimeOffset AcceptedAt { get; private set; }
+
+    public DateTimeOffset? RevokedAt { get; private set; }
+
+    public bool IsActive => RevokedAt is null;
+
+    internal void Revoke(DateTimeOffset revokedAt) => RevokedAt ??= revokedAt;
 }

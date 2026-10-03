@@ -15,6 +15,7 @@ public sealed partial class GlobalExceptionHandler(
     private const string UnexpectedErrorTitle = "Ocurrió un error inesperado.";
     private const string ValidationErrorTitle = "La solicitud no es válida.";
     private const string AccountNotRegisteredTitle = "Registra tu cuenta antes de aportar.";
+    private const string ConsentRequiredTitle = "Primero acepta el permiso para aportar tus contactos.";
 
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
@@ -29,6 +30,11 @@ public sealed partial class GlobalExceptionHandler(
         if (exception is AccountNotRegisteredException)
         {
             return await WriteProblemAsync(httpContext, StatusCodes.Status409Conflict, AccountNotRegisteredTitle);
+        }
+
+        if (exception is ConsentRequiredException)
+        {
+            return await WriteProblemAsync(httpContext, StatusCodes.Status403Forbidden, ConsentRequiredTitle);
         }
 
         LogUnhandledException(exception.GetType().Name);

@@ -69,5 +69,6 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IReputationSignalsReader, ReputationSignalsReader>();
         services.AddScoped<ISpamReportRepository, SpamReportRepository>();
+        services.AddScoped<IContactContributionRepository, ContactContributionRepository>();
     }
 }
