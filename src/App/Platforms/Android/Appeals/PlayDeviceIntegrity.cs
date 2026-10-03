@@ -14,17 +14,16 @@ internal sealed class PlayDeviceIntegrity : IDeviceIntegrity
 
     public async Task<string> RequestTokenAsync(string nonce, CancellationToken cancellationToken)
     {
-        var builder = IntegrityTokenRequest.InvokeBuilder().SetNonce(nonce);
+        // The Java builders return the same builder; the bindings only declare it nullable.
+        var builder = IntegrityTokenRequest.InvokeBuilder()!.SetNonce(nonce)!;
         if (AppSettings.CloudProjectNumber > 0)
         {
             builder.SetCloudProjectNumber(AppSettings.CloudProjectNumber);
         }
 
-        var response = await IntegrityManagerFactory.Create(appContext)
-            .RequestIntegrityToken(builder.Build())
-            .AsAsync<IntegrityTokenResponse>()
-            .WaitAsync(cancellationToken);
+        var request = IntegrityManagerFactory.Create(appContext)!.RequestIntegrityToken(builder.Build()!)!;
+        var response = await request.AsAsync<IntegrityTokenResponse>().WaitAsync(cancellationToken);
 
-        return response.Token ?? throw new InvalidOperationException("Play Integrity returned no token.");
+        return response.Token() ?? throw new InvalidOperationException("Play Integrity returned no token.");
     }
 }
