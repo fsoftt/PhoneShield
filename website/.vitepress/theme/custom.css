@@ -1,0 +1,70 @@
+:root {
+  --vp-c-brand-1: #0f4c81;
+  --vp-c-brand-2: #1d5fb8;
+  --vp-c-brand-3: #0b3558;
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(120deg, #0f4c81 20%, #14b8a6);
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, #0f4c8155 50%, #14b8a655 50%);
+  --vp-home-hero-image-filter: blur(56px);
+}
+
+.dark {
+  --vp-c-brand-1: #7db3e8;
+  --vp-c-brand-2: #9cc6ef;
+  --vp-c-brand-3: #5f9fdc;
+}
+
+/* Incoming-call states: color plus symbol plus text, never color alone. */
+.states {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 16px 0 24px;
+}
+
+.states > div {
+  border-radius: 12px;
+  padding: 16px;
+  color: #ffffff;
+}
+
+.states strong {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.state-contact { background: #1e7b34; }
+.state-identified { background: #1d5fb8; }
+.state-spam { background: #c0262d; }
+.state-unknown { background: #b45309; }
+
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  margin: 16px 0 24px;
+}
+
+.stack-grid > div {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  padding: 12px 14px;
+  background: var(--vp-c-bg-soft);
+}
+
+.stack-grid strong {
+  display: block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--vp-c-text-2);
+  margin-bottom: 4px;
+}
+
+.placeholder {
+  background: #fef3c7;
+  color: #78350f;
+  border-radius: 4px;
+  padding: 0 4px;
+}

@@ -486,3 +486,8 @@ src/App/Tranqui.App.local.props
 
 # Production secrets
 deploy/.env
+
+# Website
+website/node_modules/
+website/.vitepress/dist/
+website/.vitepress/cache/
