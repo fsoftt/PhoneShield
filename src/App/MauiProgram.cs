@@ -1,4 +1,6 @@
+#if DEBUG
 using Microsoft.Extensions.Logging;
+#endif
 using Tranqui.App.ViewModels;
 using Tranqui.App.Views;
 

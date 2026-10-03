@@ -1,5 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Tranqui.App;
 
 public partial class App : Application
