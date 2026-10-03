@@ -2,6 +2,12 @@
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
+  <ItemGroup Label="Domain">
+    <PackageVersion Include="libphonenumber-csharp" Version="9.0.40" />
+  </ItemGroup>
+  <ItemGroup Label="Infrastructure">
+    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.12" />
+  </ItemGroup>
   <ItemGroup Label="Application">
     <!-- MediatR 12.x is the last Apache-2.0 major version; 13+ is commercially licensed. Do not upgrade. -->
     <PackageVersion Include="MediatR" Version="12.5.0" />

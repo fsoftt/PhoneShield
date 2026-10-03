@@ -4,4 +4,9 @@
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <!-- Pure library (no I/O): the single source of truth for phone number normalization, shared by Api and App. -->
+    <PackageReference Include="libphonenumber-csharp" />
+  </ItemGroup>
+
 </Project>

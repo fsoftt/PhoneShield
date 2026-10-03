@@ -1,6 +1,7 @@
 using System.Globalization;
 using Tranqui.Api.Errors;
 using Tranqui.Application;
+using Tranqui.Infrastructure;
 using Serilog;
 
 const string HealthEndpoint = "/health";
@@ -20,6 +21,7 @@ try
     builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
     builder.Services.AddHealthChecks();
     builder.Services.AddApplication();
+    builder.Services.AddInfrastructure();
 
     var app = builder.Build();
 

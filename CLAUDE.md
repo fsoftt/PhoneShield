@@ -24,7 +24,7 @@ Open-source, privacy-first caller ID and spam blocker: a .NET MAUI Android app +
 
 ## Layout
 
-- `src/Domain` — aggregates, value objects, scoring and name rules. Organized by aggregate. Depends on nothing.
+- `src/Domain` — aggregates, value objects, scoring and name rules. Organized by aggregate. Depends on no other project; its only package is `libphonenumber-csharp` (pure, no I/O). `PhoneNumber` (normalization) and `IPhoneNumberHasher` live in `Domain/PhoneNumbers`; the HMAC implementation is `Infrastructure/PhoneNumbers/HmacPhoneNumberHasher`. Never normalize or hash anywhere else.
 - `src/Application` — vertical slices at `Features/<FeatureName>/` (command/query, handler, validator, response DTO together). Depends only on `Domain`.
 - `src/Infrastructure` — EF Core, Redis, Firebase Admin, hashing/encryption. Organized by aggregate/technology.
 - `src/Api` — one minimal API endpoint file per slice at `Endpoints/<FeatureName>.cs`.
