@@ -6,13 +6,15 @@ namespace Tranqui.Api.RateLimiting;
 public static class RateLimitingExtensions
 {
     public const string LookupPolicy = "lookup";
+    public const string ReportPolicy = "report";
 
     private static readonly TimeSpan hour = TimeSpan.FromHours(1);
     private static readonly TimeSpan day = TimeSpan.FromDays(1);
 
     /// <summary>
     /// Per-user limits (keyed by the validated Firebase uid), held in memory: the API runs as a single instance.
-    /// Lookups are capped per hour and per day to stop anyone from enumerating numbers to harvest names.
+    /// Lookups are capped per hour and per day to stop anyone from enumerating numbers to harvest names;
+    /// reports are capped per day to slow down coordinated false reporting.
     /// </summary>
     public static IServiceCollection AddTranquiRateLimiting(this IServiceCollection services, IConfiguration configuration)
     {
@@ -23,14 +25,20 @@ public static class RateLimitingExtensions
         {
             limiter.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
             limiter.AddPolicy(LookupPolicy, httpContext => RateLimitPartition.Get(
-                httpContext.User.FindFirst(FirebaseClaims.UserId)?.Value ?? string.Empty,
+                UserPartitionKey(httpContext),
                 _ => RateLimiter.CreateChained(
                     FixedWindow(options.Lookup.PerHour, hour),
                     FixedWindow(options.Lookup.PerDay, day))));
+            limiter.AddPolicy(ReportPolicy, httpContext => RateLimitPartition.Get(
+                UserPartitionKey(httpContext),
+                _ => FixedWindow(options.Reports.PerDay, day)));
         });
 
         return services;
     }
+
+    private static string UserPartitionKey(HttpContext httpContext) =>
+        httpContext.User.FindFirst(FirebaseClaims.UserId)?.Value ?? string.Empty;
 
     private static FixedWindowRateLimiter FixedWindow(int permits, TimeSpan window) =>
         new(new FixedWindowRateLimiterOptions { PermitLimit = permits, Window = window, QueueLimit = 0 });

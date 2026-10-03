@@ -33,6 +33,7 @@ public sealed class TranquiApiFactory : WebApplicationFactory<Program>, IAsyncLi
         builder.UseSetting("Firebase:ProjectId", TestTokens.ProjectId);
         builder.UseSetting("PhoneHashing:CurrentKeyVersion", "1");
         builder.UseSetting("PhoneHashing:Keys:1", Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)));
+        builder.UseSetting("ContributorIds:Key", Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)));
         builder.UseSetting("NameProtection:Key", Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)));
         builder.UseSetting("RateLimiting:Lookup:PerHour", LookupLimitPerHour.ToString(CultureInfo.InvariantCulture));
 

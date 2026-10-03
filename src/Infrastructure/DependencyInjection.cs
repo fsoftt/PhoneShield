@@ -24,6 +24,7 @@ public static class DependencyInjection
 
         AddPhoneHashing(services);
         AddNameProtection(services);
+        AddContributorIds(services);
         AddPersistence(services, configuration);
 
         return services;
@@ -47,6 +48,15 @@ public static class DependencyInjection
         services.AddSingleton<INameProtector, AesGcmNameProtector>();
     }
 
+    private static void AddContributorIds(IServiceCollection services)
+    {
+        services.AddOptions<ContributorIdOptions>()
+            .BindConfiguration(ContributorIdOptions.SectionName)
+            .ValidateOnStart();
+        services.AddSingleton<IValidateOptions<ContributorIdOptions>, ContributorIdOptionsValidator>();
+        services.AddSingleton<IContributorIdProvider, HmacContributorIdProvider>();
+    }
+
     private static void AddPersistence(IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString(DatabaseConnectionStringName)
@@ -58,5 +68,6 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<TranquiDbContext>());
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IReputationSignalsReader, ReputationSignalsReader>();
+        services.AddScoped<ISpamReportRepository, SpamReportRepository>();
     }
 }

@@ -27,4 +27,16 @@ public sealed class ReputationRulesTests
     {
         ReputationRules.DecayFactor(TimeSpan.FromDays(-1)).Should().Be(1);
     }
+
+    [Fact]
+    public void ReporterWeight_NewAccount_IsReduced()
+    {
+        ReputationRules.ReporterWeight(TimeSpan.FromDays(1)).Should().Be(ReputationRules.NewAccountVoteWeight);
+    }
+
+    [Fact]
+    public void ReporterWeight_EstablishedAccount_IsFull()
+    {
+        ReputationRules.ReporterWeight(ReputationRules.NewAccountPeriod).Should().Be(ReputationRules.EstablishedAccountVoteWeight);
+    }
 }

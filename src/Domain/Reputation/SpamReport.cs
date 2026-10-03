@@ -51,6 +51,18 @@ public sealed class SpamReport
     public ProtectedName? Label =>
         LabelCiphertext is null || LabelGroupingKey is null ? null : new ProtectedName(LabelCiphertext, LabelGroupingKey);
 
+    /// <summary>A person changed their mind about a number: their single vote is replaced, never duplicated.</summary>
+    public void Revise(ReportVerdict verdict, double weight, ProtectedName? label, DateTimeOffset reportedAt)
+    {
+        Validate(verdict, weight, label);
+
+        Verdict = verdict;
+        Weight = weight;
+        LabelCiphertext = label?.Ciphertext;
+        LabelGroupingKey = label?.GroupingKey;
+        ReportedAt = reportedAt;
+    }
+
     public static SpamReport Create(
         PhoneHash phoneHash,
         ContributorId contributor,
@@ -61,13 +73,18 @@ public sealed class SpamReport
     {
         ArgumentNullException.ThrowIfNull(phoneHash);
         ArgumentNullException.ThrowIfNull(contributor);
+        Validate(verdict, weight, label);
+
+        return new SpamReport(phoneHash, contributor, verdict, weight, label, reportedAt);
+    }
+
+    private static void Validate(ReportVerdict verdict, double weight, ProtectedName? label)
+    {
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(weight);
 
         if (verdict == ReportVerdict.NotSpam && label is not null)
         {
             throw new ArgumentException("Only spam reports can carry a label.", nameof(label));
         }
-
-        return new SpamReport(phoneHash, contributor, verdict, weight, label, reportedAt);
     }
 }
