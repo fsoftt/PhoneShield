@@ -20,6 +20,9 @@ Open-source, privacy-first caller ID and spam blocker: a .NET MAUI Android app +
 - `dotnet build Tranqui.Backend.slnf` / `dotnet test Tranqui.Backend.slnf` — everything except the MAUI app; works without the Android SDK.
 - `dotnet build src/App -f net10.0-android` — needs the `maui-android` workload, JDK 21 and the Android SDK. CI (`.github/workflows/ci.yml`) builds both on every PR.
 - Package versions live only in `Directory.Packages.props` (central package management).
+- API integration tests (`tests/Api.Tests`) run against a real PostgreSQL via Testcontainers, so Docker must be running. They sign their own Firebase-shaped tokens (`TestTokens`) but keep the production validation rules.
+- Migrations: `dotnet ef migrations add <Name> --project src/Infrastructure --output-dir Persistence/Migrations`; the API applies them on startup.
+- Every endpoint requires an authenticated Firebase user with a verified email (fallback policy); opting out needs an explicit `AllowAnonymous()` and a reason.
 - Every new required local secret/config value goes into README.md's configuration table in the same PR.
 
 ## Layout
