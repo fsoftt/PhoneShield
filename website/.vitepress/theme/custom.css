@@ -68,3 +68,9 @@
   border-radius: 4px;
   padding: 0 4px;
 }
+
+/* The labelled LanguageSwitch in the nav bar replaces VitePress's icon-only translations menu. */
+.VPNavBarTranslations,
+.VPNavScreenTranslations {
+  display: none !important;
+}
