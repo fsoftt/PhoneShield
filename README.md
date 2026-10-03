@@ -2,7 +2,7 @@
 
 Identificador de llamadas y bloqueador de spam **open source y orientado a la privacidad**, para Android, que nunca guarda números de teléfono en texto plano.
 
-> Estado: en diseño. Ver la [especificación v1](docs/especificacion-v1.md) y las [notas legales para Colombia](docs/legal-colombia.md).
+> Estado: en desarrollo. Sitio: https://fsoftt.github.io/Tranqui/ · [especificación v1](docs/especificacion-v1.md) · [notas legales para Colombia](docs/legal-colombia.md).
 
 ## Cómo funciona
 
@@ -65,6 +65,14 @@ Logs estructurados en Seq: http://localhost:8081.
 | `RateLimiting:ContactUploads:BatchesPerDay` | Opcional. Lotes de contactos por usuario (por defecto 20/día, de hasta 500 contactos) | `appsettings.json` / variables de entorno |
 | `PhoneHashing:CurrentKeyVersion` | Versión vigente de la clave de hash (empieza en `1`) | user-secrets / variable de entorno `PhoneHashing__CurrentKeyVersion` |
 | `PhoneHashing:Keys:<versión>` | **Secreto.** Clave HMAC en Base64, mínimo 32 bytes. Todas las versiones desde la 1 deben seguir configuradas. Si se pierde, todos los hashes quedan inservibles: guarda una copia cifrada fuera del servidor | user-secrets / variable de entorno `PhoneHashing__Keys__1` |
+
+## Sitio web
+
+El sitio, en español e inglés (portada, privacidad, política de tratamiento de datos, términos), está en `website/` (VitePress) y se publica en GitHub Pages con cada cambio en `main`:
+
+```bash
+cd website && npm install && npm run dev
+```
 
 ## Despliegue
 
