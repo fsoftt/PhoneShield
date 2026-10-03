@@ -34,12 +34,6 @@ jobs:
 
       - run: npm ci
       - run: npm run build
-        env:
-          # Public values for the appeal form (repository variables, not secrets). Unset: the form shows the email fallback.
-          VITE_TRANQUI_API_URL: ${{ vars.TRANQUI_API_URL }}
-          VITE_FIREBASE_API_KEY: ${{ vars.FIREBASE_API_KEY }}
-          VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.FIREBASE_AUTH_DOMAIN }}
-          VITE_FIREBASE_PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
 
       - uses: actions/upload-pages-artifact@v3
         with:

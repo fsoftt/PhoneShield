@@ -39,7 +39,7 @@ dotnet workload install maui-android
 dotnet build src/App -f net10.0-android   # requiere Android SDK
 ```
 
-La app lee dos valores al compilar (no son secretos). Para desarrollo, crea `src/App/Tranqui.App.local.props` (no se versiona):
+La app lee tres valores al compilar (no son secretos). Para desarrollo, crea `src/App/Tranqui.App.local.props` (no se versiona):
 
 ```xml
 <Project>
@@ -47,6 +47,8 @@ La app lee dos valores al compilar (no son secretos). Para desarrollo, crea `src
     <TranquiFirebaseApiKey>tu-web-api-key-de-firebase</TranquiFirebaseApiKey>
     <!-- Opcional; en Debug por defecto es http://10.0.2.2:5254/ (el API corriendo en tu PC, visto desde el emulador) -->
     <TranquiApiBaseUrl>http://10.0.2.2:5254/</TranquiApiBaseUrl>
+    <!-- Opcional; número del proyecto de Google Cloud para Play Integrity (0 = el vinculado en Play Console) -->
+    <TranquiCloudProjectNumber>0</TranquiCloudProjectNumber>
   </PropertyGroup>
 </Project>
 ```
@@ -63,8 +65,9 @@ Logs estructurados en Seq: http://localhost:8081.
 | `RateLimiting:Lookup:PerHour` / `PerDay` | Opcional. Consultas por usuario (por defecto 60/hora y 300/día) | `appsettings.json` / variables de entorno |
 | `RateLimiting:Reports:PerDay` | Opcional. Reportes por usuario (por defecto 20/día) | `appsettings.json` / variables de entorno |
 | `RateLimiting:ContactUploads:BatchesPerDay` | Opcional. Lotes de contactos por usuario (por defecto 20/día, de hasta 500 contactos) | `appsettings.json` / variables de entorno |
-| `RateLimiting:Appeals:PerHour` | Opcional. Solicitudes de apelación por IP (por defecto 10/hora); aparte, cada número tiene un SMS y una apelación al mes | `appsettings.json` / variables de entorno |
-| `Cors:AllowedOrigins:0` | Origen del sitio web que llama a los endpoints de apelación (ej. `https://fsoftt.github.io`) | variable de entorno `Cors__AllowedOrigins__0` |
+| `RateLimiting:Appeals:PerDay` | Opcional. Llamadas de apelación por usuario, fallidas incluidas (por defecto 10/día); las exitosas las limitan las cuotas por número, cuenta y dispositivo | `appsettings.json` / variables de entorno |
+| `PlayIntegrity:ServiceAccountKey` | **Secreto.** Base64 del JSON de la cuenta de servicio de Google Cloud que decodifica los tokens de Play Integrity. Sin él, las apelaciones se rechazan | user-secrets / variable de entorno `PlayIntegrity__ServiceAccountKey` |
+| `PlayIntegrity:PackageName` | Opcional. Paquete de la app (por defecto `com.fsoftt.tranqui`) | `appsettings.json` / variables de entorno |
 | `PhoneHashing:CurrentKeyVersion` | Versión vigente de la clave de hash (empieza en `1`) | user-secrets / variable de entorno `PhoneHashing__CurrentKeyVersion` |
 | `PhoneHashing:Keys:<versión>` | **Secreto.** Clave HMAC en Base64, mínimo 32 bytes. Todas las versiones desde la 1 deben seguir configuradas. Si se pierde, todos los hashes quedan inservibles: guarda una copia cifrada fuera del servidor | user-secrets / variable de entorno `PhoneHashing__Keys__1` |
 
@@ -76,22 +79,25 @@ El sitio, en español e inglés (portada, privacidad, política de tratamiento d
 cd website && npm install && npm run dev
 ```
 
-### Formulario de apelación
+### Apelaciones
 
-Las personas sin cuenta demuestran que un número es suyo con un SMS de Firebase, desde el sitio (`/guia/apelacion`).
-El API permite **un SMS y una apelación por número cada 30 días**. Para activarlo:
+Se hacen desde la app (**Cuenta → ¿Tu número aparece mal?**); en el sitio solo se explica el canal manual por correo.
+Cada SMS y cada apelación se cuentan contra el número (1 al mes), la cuenta y el dispositivo (1 al mes y 3 al año),
+cada uno por separado con su propio hash con clave. La cuenta debe tener al menos una semana y cada paso exige un
+veredicto de Play Integrity (app reconocida por Google Play en un dispositivo íntegro) con un nonce que amarra la acción,
+el dispositivo y el número. El número se prueba con un inicio de sesión por SMS de Firebase, que la app borra al
+terminar. Para activarlo:
 
-1. En Firebase: plan Blaze (requerido para SMS; los primeros 10 SMS/día son gratis), proveedor **Teléfono** habilitado,
-   `fsoftt.github.io` en dominios autorizados, política de región de SMS solo para Colombia y una alerta de presupuesto.
-2. En GitHub → Settings → Secrets and variables → Actions → **Variables** (son valores públicos, no secretos):
-   `TRANQUI_API_URL`, `FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_PROJECT_ID`. Sin ellas el formulario muestra
-   el correo de contacto.
-3. En el servidor: `WEBSITE_ORIGIN` en `deploy/.env` si el sitio no está en `https://fsoftt.github.io`.
+1. Firebase: plan Blaze (requerido para SMS; los primeros 10 SMS/día son gratis), proveedor **Teléfono** habilitado,
+   política de región de SMS solo para Colombia y una alerta de presupuesto.
+2. Play Console → Integridad de la app: vincular un proyecto de Google Cloud y activar la Play Integrity API (cuota
+   gratuita de 10 000 solicitudes/día). Registrar la huella SHA-256 de firma de la app en Firebase.
+3. Google Cloud: crear una cuenta de servicio con acceso a la Play Integrity API, descargar su clave JSON y configurarla
+   en base64 como `PlayIntegrity:ServiceAccountKey` (`PLAY_INTEGRITY_SERVICE_ACCOUNT_KEY` en `deploy/.env`).
 
-Límite honesto: la clave web de Firebase es pública, así que alguien decidido podría pedirle SMS a Firebase sin pasar
-por nuestro API. Lo mitigan reCAPTCHA, la política de región y las cuotas de Firebase; nuestro API igual acepta solo
-una apelación por número al mes. Las apelaciones `ReviewSpam` quedan pendientes en la tabla `appeals` para revisión
-manual en la v1.
+Como Play Integrity solo reconoce la app instalada desde Google Play, las compilaciones de desarrollo y otras tiendas no
+pueden apelar desde la app; para ellas queda el canal manual. Las apelaciones `ReviewSpam` quedan pendientes en la tabla
+`appeals` para revisión manual en la v1.
 
 ## Despliegue
 
