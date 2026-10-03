@@ -1,22 +1,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useData, withBase } from 'vitepress'
+import { pathIn, saveChoice, type Language } from './languages'
 
-// Same page in the other language: English pages mirror the Spanish paths under /en/.
 const { page, localeIndex } = useData()
 
-const isEnglish = computed(() => localeIndex.value === 'en')
-const label = computed(() => (isEnglish.value ? 'Español' : 'English'))
-const lang = computed(() => (isEnglish.value ? 'es' : 'en'))
-const target = computed(() => {
-  const path = page.value.relativePath.replace(/(^|\/)index\.md$/, '$1').replace(/\.md$/, '')
-  const spanishPath = isEnglish.value ? path.replace(/^en\//, '') : path
-  return withBase(isEnglish.value ? `/${spanishPath}` : `/en/${spanishPath}`)
-})
+const other = computed<Language>(() => (localeIndex.value === 'en' ? 'es' : 'en'))
+const label = computed(() => (other.value === 'es' ? 'Español' : 'English'))
+const target = computed(() => withBase(pathIn(other.value, page.value.relativePath)))
 </script>
 
 <template>
-  <a class="language-switch" :href="target" :hreflang="lang" :lang="lang">
+  <a class="language-switch" :href="target" :hreflang="other" :lang="other" @click="saveChoice(other)">
     <span aria-hidden="true">🌐</span> {{ label }}
   </a>
 </template>
