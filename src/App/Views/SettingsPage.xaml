@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:res="clr-namespace:Tranqui.App.Core.Resources;assembly=Tranqui.App.Core"
              xmlns:vm="clr-namespace:Tranqui.App.Core.ViewModels;assembly=Tranqui.App.Core"
-             xmlns:resources="clr-namespace:Tranqui.App.Core.Resources;assembly=Tranqui.App.Core"
              x:Class="Tranqui.App.Views.SettingsPage"
              x:DataType="vm:SettingsViewModel"
-             Title="Ajustes">
+             Title="{x:Static res:Texts.TabSettings}">
 
   <ScrollView>
     <VerticalStackLayout Style="{StaticResource Form}">
-      <Label Text="Bloqueo automático" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level1" />
-      <Label Text="Las llamadas bloqueadas no suenan. Siempre te avisamos con una notificación." />
+      <Label Text="{x:Static res:Texts.AutoBlockHeading}" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level1" />
+      <Label Text="{x:Static res:Texts.AutoBlockIntro}" />
 
       <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
         <VerticalStackLayout>
-          <Label Text="Spam reportado por la comunidad" FontAttributes="Bold" />
-          <Label Text="Números que muchas personas marcaron como spam." FontSize="14" />
+          <Label Text="{x:Static res:Texts.BlockSpamTitle}" FontAttributes="Bold" />
+          <Label Text="{x:Static res:Texts.BlockSpamDetail}" FontSize="14" />
         </VerticalStackLayout>
         <Switch Grid.Column="1" IsToggled="{Binding BlockCommunitySpam}" AutomationId="BlockCommunitySpamSwitch"
-                SemanticProperties.Description="Bloquear spam reportado por la comunidad" />
+                SemanticProperties.Description="{x:Static res:Texts.BlockSpamTitle}" />
       </Grid>
 
       <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
         <VerticalStackLayout>
-          <Label Text="Números privados" FontAttributes="Bold" />
-          <Label Text="Llamadas que ocultan el número." FontSize="14" />
+          <Label Text="{x:Static res:Texts.BlockPrivateTitle}" FontAttributes="Bold" />
+          <Label Text="{x:Static res:Texts.BlockPrivateDetail}" FontSize="14" />
         </VerticalStackLayout>
         <Switch Grid.Column="1" IsToggled="{Binding BlockPrivateNumbers}" AutomationId="BlockPrivateNumbersSwitch"
-                SemanticProperties.Description="Bloquear números privados" />
+                SemanticProperties.Description="{x:Static res:Texts.BlockPrivateTitle}" />
       </Grid>
 
       <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
         <VerticalStackLayout>
-          <Label Text="Llamadas internacionales" FontAttributes="Bold" />
-          <Label Text="Números de fuera de Colombia que no están en tus contactos." FontSize="14" />
+          <Label Text="{x:Static res:Texts.BlockInternationalTitle}" FontAttributes="Bold" />
+          <Label Text="{x:Static res:Texts.BlockInternationalDetail}" FontSize="14" />
         </VerticalStackLayout>
         <Switch Grid.Column="1" IsToggled="{Binding BlockInternational}" AutomationId="BlockInternationalSwitch"
-                SemanticProperties.Description="Bloquear llamadas internacionales" />
+                SemanticProperties.Description="{x:Static res:Texts.BlockInternationalTitle}" />
       </Grid>
 
-      <Label Text="Aportar a la comunidad" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level2" Margin="0,16,0,0" />
-      <Label Text="{x:Static resources:Texts.ContributionExplanation}" FontSize="14" />
+      <Label Text="{x:Static res:Texts.ContributeHeading}" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level2" Margin="0,16,0,0" />
+      <Label Text="{x:Static res:Texts.ContributionExplanation}" FontSize="14" />
 
       <Label Text="{Binding ErrorMessage}"
              Style="{StaticResource ErrorMessage}"
@@ -50,12 +50,12 @@
              IsVisible="{Binding InfoMessage, Converter={StaticResource HasText}}" />
       <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
 
-      <Button Text="Aportar mis contactos"
+      <Button Text="{x:Static res:Texts.StartContributing}"
               Command="{Binding StartContributingCommand}"
               IsVisible="{Binding IsNotContributing}"
               IsEnabled="{Binding IsNotBusy}"
               AutomationId="StartContributingButton" />
-      <Button Text="Dejar de aportar y borrar lo aportado"
+      <Button Text="{x:Static res:Texts.StopContributing}"
               Style="{StaticResource SecondaryButton}"
               Command="{Binding StopContributingCommand}"
               IsVisible="{Binding IsContributing}"

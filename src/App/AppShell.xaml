@@ -2,6 +2,7 @@
 <Shell x:Class="Tranqui.App.AppShell"
        xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:res="clr-namespace:Tranqui.App.Core.Resources;assembly=Tranqui.App.Core"
        xmlns:views="clr-namespace:Tranqui.App.Views"
        Title="Tranqui"
        Shell.FlyoutBehavior="Disabled">
@@ -10,11 +11,11 @@
   <ShellContent Route="sign-in" ContentTemplate="{DataTemplate views:SignInPage}" />
   <ShellContent Route="verify-email" ContentTemplate="{DataTemplate views:VerifyEmailPage}" />
   <TabBar Route="main">
-    <ShellContent Route="home" Title="Inicio" ContentTemplate="{DataTemplate views:HomePage}" />
-    <ShellContent Route="history" Title="Historial" ContentTemplate="{DataTemplate views:CallHistoryPage}" />
-    <ShellContent Route="blocked" Title="Bloqueados" ContentTemplate="{DataTemplate views:BlockedNumbersPage}" />
-    <ShellContent Route="settings" Title="Ajustes" ContentTemplate="{DataTemplate views:SettingsPage}" />
-    <ShellContent Route="account" Title="Cuenta" ContentTemplate="{DataTemplate views:AccountPage}" />
+    <ShellContent Route="home" Title="{x:Static res:Texts.TabHome}" ContentTemplate="{DataTemplate views:HomePage}" />
+    <ShellContent Route="history" Title="{x:Static res:Texts.TabHistory}" ContentTemplate="{DataTemplate views:CallHistoryPage}" />
+    <ShellContent Route="blocked" Title="{x:Static res:Texts.TabBlocked}" ContentTemplate="{DataTemplate views:BlockedNumbersPage}" />
+    <ShellContent Route="settings" Title="{x:Static res:Texts.TabSettings}" ContentTemplate="{DataTemplate views:SettingsPage}" />
+    <ShellContent Route="account" Title="{x:Static res:Texts.TabAccount}" ContentTemplate="{DataTemplate views:AccountPage}" />
   </TabBar>
 
 </Shell>

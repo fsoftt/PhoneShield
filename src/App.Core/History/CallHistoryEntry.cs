@@ -1,6 +1,7 @@
 using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Tranqui.App.Core.Calls;
+using Tranqui.App.Core.Resources;
 using Tranqui.Contracts.Reports;
 
 namespace Tranqui.App.Core.History;
@@ -22,11 +23,13 @@ public sealed partial class CallHistoryEntry(CallRecord record) : ObservableObje
     {
         get
         {
-            var what = Record.BlockReason is null ? StateText(Record.State) : $"Bloqueada · {BlockText(Record.BlockReason.Value)}";
+            var what = Record.BlockReason is null
+                ? StateText(Record.State)
+                : Texts.Format(Texts.HistoryBlockedFormat, BlockText(Record.BlockReason.Value));
             return Record.MyVerdict switch
             {
-                ReportVerdictDto.Spam => $"{what} · Reportaste spam",
-                ReportVerdictDto.NotSpam => $"{what} · Dijiste que no es spam",
+                ReportVerdictDto.Spam => Texts.Format(Texts.HistoryReportedSpamFormat, what),
+                ReportVerdictDto.NotSpam => Texts.Format(Texts.HistoryReportedNotSpamFormat, what),
                 _ => what,
             };
         }
@@ -34,19 +37,19 @@ public sealed partial class CallHistoryEntry(CallRecord record) : ObservableObje
 
     private static string StateText(CallerCardState state) => state switch
     {
-        CallerCardState.KnownContact => "En tus contactos",
-        CallerCardState.Identified => "Identificado por la comunidad",
-        CallerCardState.Spam => "Posible spam",
-        CallerCardState.Offline => "Sin conexión al recibirla",
-        CallerCardState.PrivateNumber => "Número privado",
-        _ => "Número desconocido",
+        CallerCardState.KnownContact => Texts.HistoryKnownContact,
+        CallerCardState.Identified => Texts.HistoryIdentified,
+        CallerCardState.Spam => Texts.HistoryPossibleSpam,
+        CallerCardState.Offline => Texts.HistoryOffline,
+        CallerCardState.PrivateNumber => Texts.HistoryPrivateNumber,
+        _ => Texts.HistoryUnknown,
     };
 
     private static string BlockText(BlockReason reason) => reason switch
     {
-        BlockReason.BlockedByUser => "lo bloqueaste tú",
-        BlockReason.CommunitySpam => "spam de la comunidad",
-        BlockReason.PrivateNumber => "número privado",
-        _ => "internacional",
+        BlockReason.BlockedByUser => Texts.BlockReasonByUser,
+        BlockReason.CommunitySpam => Texts.BlockReasonCommunitySpam,
+        BlockReason.PrivateNumber => Texts.BlockReasonPrivate,
+        _ => Texts.BlockReasonInternational,
     };
 }

@@ -3,6 +3,7 @@ using Android.App;
 using Android.Content;
 using Android.Graphics.Drawables;
 using Tranqui.App.Core.Calls;
+using Tranqui.App.Core.Resources;
 using Tranqui.Domain.PhoneNumbers;
 using AColor = Android.Graphics.Color;
 using AndroidResource = Android.Resource;
@@ -31,20 +32,20 @@ internal sealed class CallNotifications(Context context)
             return;
         }
 
-        manager.CreateNotificationChannel(new NotificationChannel(IncomingChannelId, "Llamadas entrantes", NotificationImportance.High));
-        manager.CreateNotificationChannel(new NotificationChannel(BlockedChannelId, "Llamadas bloqueadas", NotificationImportance.Default));
-        manager.CreateNotificationChannel(new NotificationChannel(FeedbackChannelId, "¿Cómo fue la llamada?", NotificationImportance.Low));
+        manager.CreateNotificationChannel(new NotificationChannel(IncomingChannelId, Texts.ChannelIncoming, NotificationImportance.High));
+        manager.CreateNotificationChannel(new NotificationChannel(BlockedChannelId, Texts.ChannelBlocked, NotificationImportance.Default));
+        manager.CreateNotificationChannel(new NotificationChannel(FeedbackChannelId, Texts.ChannelFeedback, NotificationImportance.Low));
     }
 
     public void ShowBlocked(ScreeningDecision decision)
     {
-        var title = $"Bloqueamos una llamada de {decision.Card.Number?.Masked ?? decision.Card.Title}";
+        var title = Texts.Format(Texts.BlockedCallTitleFormat, decision.Card.Number?.Masked ?? decision.Card.Title);
         var reason = decision.BlockReason switch
         {
-            BlockReason.BlockedByUser => "Tú bloqueaste este número.",
-            BlockReason.CommunitySpam => $"La comunidad lo reportó como spam: {decision.Card.Title}.",
-            BlockReason.PrivateNumber => "Bloqueas los números privados.",
-            BlockReason.International => "Bloqueas las llamadas internacionales.",
+            BlockReason.BlockedByUser => Texts.BlockedBecauseYouBlocked,
+            BlockReason.CommunitySpam => Texts.Format(Texts.BlockedBecauseSpamFormat, decision.Card.Title),
+            BlockReason.PrivateNumber => Texts.BlockedBecausePrivate,
+            BlockReason.International => Texts.BlockedBecauseInternational,
             _ => decision.Card.Subtitle,
         };
 
@@ -61,9 +62,9 @@ internal sealed class CallNotifications(Context context)
     public void AskForFeedback(PhoneNumber number)
     {
         var id = NewId();
-        var builder = NewBuilder(FeedbackChannelId, "¿Cómo fue esta llamada?", $"Del número {number.Masked}. Tu respuesta ayuda a otros.")
-            .AddAction(FeedbackAction(CallFeedbackReceiver.ActionSpam, "Es spam", number, id, requestCode: id * 2))
-            .AddAction(FeedbackAction(CallFeedbackReceiver.ActionNotSpam, "No es spam", number, id, requestCode: (id * 2) + 1));
+        var builder = NewBuilder(FeedbackChannelId, Texts.FeedbackTitle, Texts.Format(Texts.FeedbackTextFormat, number.Masked))
+            .AddAction(FeedbackAction(CallFeedbackReceiver.ActionSpam, Texts.FeedbackSpam, number, id, requestCode: id * 2))
+            .AddAction(FeedbackAction(CallFeedbackReceiver.ActionNotSpam, Texts.FeedbackNotSpam, number, id, requestCode: (id * 2) + 1));
 
         manager?.Notify(id, builder.Build());
     }

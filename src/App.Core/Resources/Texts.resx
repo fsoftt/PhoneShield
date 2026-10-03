@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from one catalog with both languages. Keep keys identical in every Texts.*.resx file. -->
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="EmailRequired" xml:space="preserve"><value>Escribe tu correo.</value></data>
+  <data name="PasswordRequired" xml:space="preserve"><value>Escribe tu contraseña.</value></data>
+  <data name="PasswordTooShort" xml:space="preserve"><value>La contraseña debe tener al menos 8 caracteres.</value></data>
+  <data name="PasswordsDoNotMatch" xml:space="preserve"><value>Las contraseñas no coinciden.</value></data>
+  <data name="TermsRequired" xml:space="preserve"><value>Debes aceptar los términos y la política de tratamiento de datos.</value></data>
+  <data name="PasswordResetSent" xml:space="preserve"><value>Si el correo tiene una cuenta, te enviamos un enlace para cambiar la contraseña.</value></data>
+  <data name="VerificationSent" xml:space="preserve"><value>Te enviamos un nuevo correo de verificación.</value></data>
+  <data name="EmailNotVerifiedYet" xml:space="preserve"><value>Aún no vemos tu correo verificado. Abre el enlace que te enviamos y vuelve a intentarlo.</value></data>
+  <data name="ConnectionError" xml:space="preserve"><value>No pudimos conectarnos. Revisa tu conexión e intenta de nuevo.</value></data>
+  <data name="FirebaseEmailExists" xml:space="preserve"><value>Ya existe una cuenta con ese correo. Inicia sesión.</value></data>
+  <data name="FirebaseInvalidEmail" xml:space="preserve"><value>El correo no es válido.</value></data>
+  <data name="FirebaseWrongCredentials" xml:space="preserve"><value>Correo o contraseña incorrectos.</value></data>
+  <data name="FirebaseUserDisabled" xml:space="preserve"><value>Esta cuenta está deshabilitada.</value></data>
+  <data name="FirebaseTooManyAttempts" xml:space="preserve"><value>Demasiados intentos. Espera unos minutos e intenta de nuevo.</value></data>
+  <data name="FirebaseSessionExpired" xml:space="preserve"><value>Tu sesión expiró. Inicia sesión de nuevo.</value></data>
+  <data name="FirebaseSignInAgain" xml:space="preserve"><value>Por seguridad, inicia sesión de nuevo para continuar.</value></data>
+  <data name="FirebaseUnknownError" xml:space="preserve"><value>No pudimos completar la operación. Intenta de nuevo en un momento.</value></data>
+  <data name="PrivateNumberTitle" xml:space="preserve"><value>Número privado</value></data>
+  <data name="PrivateNumberSubtitle" xml:space="preserve"><value>Quien llama ocultó su número.</value></data>
+  <data name="KnownContactSubtitle" xml:space="preserve"><value>Está en tus contactos.</value></data>
+  <data name="KnownContactButSpamSubtitle" xml:space="preserve"><value>Está en tus contactos. La comunidad lo reportó como spam.</value></data>
+  <data name="SpamTitle" xml:space="preserve"><value>Posible spam</value></data>
+  <data name="SpamSubtitleFormat" xml:space="preserve"><value>Reportado por {0} personas.</value></data>
+  <data name="IdentifiedSubtitle" xml:space="preserve"><value>Así lo conoce la comunidad.</value></data>
+  <data name="UnknownTitle" xml:space="preserve"><value>Número desconocido</value></data>
+  <data name="UnknownSubtitle" xml:space="preserve"><value>No tenemos datos de este número.</value></data>
+  <data name="OfflineSubtitle" xml:space="preserve"><value>Sin conexión: no pudimos consultar este número.</value></data>
+  <data name="StepCallScreeningTitle" xml:space="preserve"><value>Identificar y filtrar llamadas</value></data>
+  <data name="StepCallScreeningExplanation" xml:space="preserve"><value>Permite que Tranqui revise quién llama antes de que suene el teléfono.</value></data>
+  <data name="StepOverlayTitle" xml:space="preserve"><value>Mostrar el aviso sobre la llamada</value></data>
+  <data name="StepOverlayExplanation" xml:space="preserve"><value>Muestra el aviso de color encima de la pantalla de llamada entrante.</value></data>
+  <data name="StepContactsTitle" xml:space="preserve"><value>Reconocer tus contactos</value></data>
+  <data name="StepContactsExplanation" xml:space="preserve"><value>Lee tu agenda solo en este teléfono para mostrar en verde a quien ya conoces. No se envía a ningún lado.</value></data>
+  <data name="StepNotificationsTitle" xml:space="preserve"><value>Avisarte de llamadas bloqueadas</value></data>
+  <data name="StepNotificationsExplanation" xml:space="preserve"><value>Te contamos cuándo bloqueamos una llamada y te preguntamos si fue spam.</value></data>
+  <data name="ProtectionActive" xml:space="preserve"><value>Protección activa</value></data>
+  <data name="ProtectionIncomplete" xml:space="preserve"><value>Completa estos pasos para activar la protección</value></data>
+  <data name="Done" xml:space="preserve"><value>Listo</value></data>
+  <data name="Enable" xml:space="preserve"><value>Activar</value></data>
+  <data name="DeleteAccountTitle" xml:space="preserve"><value>¿Borrar tu cuenta?</value></data>
+  <data name="DeleteAccountMessage" xml:space="preserve"><value>Borraremos tu cuenta, tus reportes y los contactos que aportaste. No se puede deshacer.</value></data>
+  <data name="DeleteAccountAccept" xml:space="preserve"><value>Borrar</value></data>
+  <data name="Cancel" xml:space="preserve"><value>Cancelar</value></data>
+  <data name="MyDataSummaryFormat" xml:space="preserve"><value>Cuenta creada el {0:d}. Reportes enviados: {1}. Contactos aportados: {2}.</value></data>
+  <data name="NoBlockedNumbers" xml:space="preserve"><value>No has bloqueado ningún número.</value></data>
+  <data name="ContributionExplanation" xml:space="preserve"><value>Si aportas tu agenda, ayudas a identificar llamadas. Enviamos números y nombres por una conexión cifrada; guardamos los números solo como un código (hash) y los nombres cifrados. Un nombre solo se muestra si varias personas lo guardaron igual, y nombres como "Mamá" o "Amor" nunca se usan. Puedes dejar de aportar y borrar todo cuando quieras.</value></data>
+  <data name="ContributionStartedFormat" xml:space="preserve"><value>¡Gracias! Aportaste {0} contactos.</value></data>
+  <data name="ContributionStopped" xml:space="preserve"><value>Dejaste de aportar y borramos los contactos que habías aportado.</value></data>
+  <data name="ContactsPermissionNeeded" xml:space="preserve"><value>Para aportar tus contactos, Tranqui necesita permiso para leerlos.</value></data>
+  <data name="SpamLabelTitle" xml:space="preserve"><value>Reportar spam</value></data>
+  <data name="SpamLabelMessage" xml:space="preserve"><value>Opcional: ¿cómo lo llamarías? Por ejemplo "Spam Claro" o "Cobranzas".</value></data>
+  <data name="SpamLabelPlaceholder" xml:space="preserve"><value>Etiqueta (opcional)</value></data>
+  <data name="Send" xml:space="preserve"><value>Enviar</value></data>
+  <data name="ReportSent" xml:space="preserve"><value>Gracias, tu reporte ayuda a otros.</value></data>
+  <data name="NumberBlocked" xml:space="preserve"><value>Bloqueado. Las próximas llamadas de este número no sonarán.</value></data>
+  <data name="HistoryKnownContact" xml:space="preserve"><value>En tus contactos</value></data>
+  <data name="HistoryIdentified" xml:space="preserve"><value>Identificado por la comunidad</value></data>
+  <data name="HistoryPossibleSpam" xml:space="preserve"><value>Posible spam</value></data>
+  <data name="HistoryOffline" xml:space="preserve"><value>Sin conexión al recibirla</value></data>
+  <data name="HistoryPrivateNumber" xml:space="preserve"><value>Número privado</value></data>
+  <data name="HistoryUnknown" xml:space="preserve"><value>Número desconocido</value></data>
+  <data name="HistoryBlockedFormat" xml:space="preserve"><value>Bloqueada · {0}</value></data>
+  <data name="HistoryReportedSpamFormat" xml:space="preserve"><value>{0} · Reportaste spam</value></data>
+  <data name="HistoryReportedNotSpamFormat" xml:space="preserve"><value>{0} · Dijiste que no es spam</value></data>
+  <data name="BlockReasonByUser" xml:space="preserve"><value>lo bloqueaste tú</value></data>
+  <data name="BlockReasonCommunitySpam" xml:space="preserve"><value>spam de la comunidad</value></data>
+  <data name="BlockReasonPrivate" xml:space="preserve"><value>número privado</value></data>
+  <data name="BlockReasonInternational" xml:space="preserve"><value>internacional</value></data>
+  <data name="ChannelIncoming" xml:space="preserve"><value>Llamadas entrantes</value></data>
+  <data name="ChannelBlocked" xml:space="preserve"><value>Llamadas bloqueadas</value></data>
+  <data name="ChannelFeedback" xml:space="preserve"><value>¿Cómo fue la llamada?</value></data>
+  <data name="BlockedCallTitleFormat" xml:space="preserve"><value>Bloqueamos una llamada de {0}</value></data>
+  <data name="BlockedBecauseYouBlocked" xml:space="preserve"><value>Tú bloqueaste este número.</value></data>
+  <data name="BlockedBecauseSpamFormat" xml:space="preserve"><value>La comunidad lo reportó como spam: {0}.</value></data>
+  <data name="BlockedBecausePrivate" xml:space="preserve"><value>Bloqueas los números privados.</value></data>
+  <data name="BlockedBecauseInternational" xml:space="preserve"><value>Bloqueas las llamadas internacionales.</value></data>
+  <data name="FeedbackTitle" xml:space="preserve"><value>¿Cómo fue esta llamada?</value></data>
+  <data name="FeedbackTextFormat" xml:space="preserve"><value>Del número {0}. Tu respuesta ayuda a otros.</value></data>
+  <data name="FeedbackSpam" xml:space="preserve"><value>Es spam</value></data>
+  <data name="FeedbackNotSpam" xml:space="preserve"><value>No es spam</value></data>
+  <data name="OverlayAnotherName" xml:space="preserve"><value>Otro nombre</value></data>
+  <data name="Block" xml:space="preserve"><value>Bloquear</value></data>
+  <data name="Close" xml:space="preserve"><value>Cerrar</value></data>
+  <data name="Loading" xml:space="preserve"><value>Cargando</value></data>
+  <data name="AppTagline" xml:space="preserve"><value>Identifica llamadas y bloquea spam sin exponer tus contactos.</value></data>
+  <data name="EmailPlaceholder" xml:space="preserve"><value>Correo</value></data>
+  <data name="EmailDescription" xml:space="preserve"><value>Correo electrónico</value></data>
+  <data name="PasswordPlaceholder" xml:space="preserve"><value>Contraseña</value></data>
+  <data name="SignInButton" xml:space="preserve"><value>Ingresar</value></data>
+  <data name="ForgotPassword" xml:space="preserve"><value>Olvidé mi contraseña</value></data>
+  <data name="CreateAccountLink" xml:space="preserve"><value>Crear una cuenta</value></data>
+  <data name="SignUpTitle" xml:space="preserve"><value>Crear cuenta</value></data>
+  <data name="SignUpHeading" xml:space="preserve"><value>Crea tu cuenta</value></data>
+  <data name="PhoneNotLinked" xml:space="preserve"><value>Tu número de teléfono no se vincula a tu cuenta.</value></data>
+  <data name="PasswordMinPlaceholder" xml:space="preserve"><value>Contraseña (mínimo 8 caracteres)</value></data>
+  <data name="ConfirmPasswordPlaceholder" xml:space="preserve"><value>Repite la contraseña</value></data>
+  <data name="AcceptTermsLabel" xml:space="preserve"><value>Acepto los términos y la política de tratamiento de datos.</value></data>
+  <data name="VerifyEmailHeading" xml:space="preserve"><value>Verifica tu correo</value></data>
+  <data name="VerifyEmailSentPrefix" xml:space="preserve"><value>Te enviamos un enlace a </value></data>
+  <data name="VerifyEmailSentSuffix" xml:space="preserve"><value>. Ábrelo y vuelve aquí.</value></data>
+  <data name="AlreadyVerified" xml:space="preserve"><value>Ya lo verifiqué</value></data>
+  <data name="ResendEmail" xml:space="preserve"><value>Reenviar el correo</value></data>
+  <data name="UseAnotherAccount" xml:space="preserve"><value>Usar otra cuenta</value></data>
+  <data name="TabHome" xml:space="preserve"><value>Inicio</value></data>
+  <data name="TabHistory" xml:space="preserve"><value>Historial</value></data>
+  <data name="TabBlocked" xml:space="preserve"><value>Bloqueados</value></data>
+  <data name="TabSettings" xml:space="preserve"><value>Ajustes</value></data>
+  <data name="TabAccount" xml:space="preserve"><value>Cuenta</value></data>
+  <data name="HistoryHeading" xml:space="preserve"><value>Llamadas recientes</value></data>
+  <data name="HistoryRetentionNote" xml:space="preserve"><value>Se guardan solo en este teléfono durante 30 días.</value></data>
+  <data name="HistoryEmpty" xml:space="preserve"><value>Aún no hay llamadas revisadas por Tranqui.</value></data>
+  <data name="ClearHistory" xml:space="preserve"><value>Borrar historial</value></data>
+  <data name="BlockedHeading" xml:space="preserve"><value>Números bloqueados</value></data>
+  <data name="Unblock" xml:space="preserve"><value>Desbloquear</value></data>
+  <data name="AutoBlockHeading" xml:space="preserve"><value>Bloqueo automático</value></data>
+  <data name="AutoBlockIntro" xml:space="preserve"><value>Las llamadas bloqueadas no suenan. Siempre te avisamos con una notificación.</value></data>
+  <data name="BlockSpamTitle" xml:space="preserve"><value>Spam reportado por la comunidad</value></data>
+  <data name="BlockSpamDetail" xml:space="preserve"><value>Números que muchas personas marcaron como spam.</value></data>
+  <data name="BlockPrivateTitle" xml:space="preserve"><value>Números privados</value></data>
+  <data name="BlockPrivateDetail" xml:space="preserve"><value>Llamadas que ocultan el número.</value></data>
+  <data name="BlockInternationalTitle" xml:space="preserve"><value>Llamadas internacionales</value></data>
+  <data name="BlockInternationalDetail" xml:space="preserve"><value>Números de fuera de Colombia que no están en tus contactos.</value></data>
+  <data name="ContributeHeading" xml:space="preserve"><value>Aportar a la comunidad</value></data>
+  <data name="StartContributing" xml:space="preserve"><value>Aportar mis contactos</value></data>
+  <data name="StopContributing" xml:space="preserve"><value>Dejar de aportar y borrar lo aportado</value></data>
+  <data name="AccountHeading" xml:space="preserve"><value>Tu cuenta</value></data>
+  <data name="AccountPrivacyNote" xml:space="preserve"><value>Tu número de teléfono no está vinculado a tu cuenta. Los números que aportas se guardan solo como un código cifrado (hash).</value></data>
+  <data name="ShowMyData" xml:space="preserve"><value>Ver qué datos guardamos</value></data>
+  <data name="SignOut" xml:space="preserve"><value>Cerrar sesión</value></data>
+  <data name="DeleteMyAccount" xml:space="preserve"><value>Borrar mi cuenta</value></data>
+</root>

@@ -1,5 +1,3 @@
-using System.Globalization;
-using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Tranqui.App.Core.Api;
@@ -17,8 +15,6 @@ public sealed partial class AccountViewModel(
     IDialogService dialogs,
     INavigationService navigation) : FormViewModel
 {
-    private static readonly CompositeFormat myDataSummary = CompositeFormat.Parse(Texts.MyDataSummaryFormat);
-
     public string? Email => authService.Email;
 
     [ObservableProperty]
@@ -28,8 +24,8 @@ public sealed partial class AccountViewModel(
     private Task ShowMyDataAsync() => RunAsync(async () =>
     {
         var data = await api.ExportMyDataAsync(CancellationToken.None);
-        MyDataSummary = string.Format(
-            CultureInfo.CurrentCulture, myDataSummary, data.CreatedAt.LocalDateTime, data.SpamReportCount, data.ContactContributionCount);
+        MyDataSummary = Texts.Format(
+            Texts.MyDataSummaryFormat, data.CreatedAt.LocalDateTime, data.SpamReportCount, data.ContactContributionCount);
     });
 
     [RelayCommand]

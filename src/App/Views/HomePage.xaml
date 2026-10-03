@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:res="clr-namespace:Tranqui.App.Core.Resources;assembly=Tranqui.App.Core"
              xmlns:vm="clr-namespace:Tranqui.App.Core.ViewModels;assembly=Tranqui.App.Core"
              xmlns:protection="clr-namespace:Tranqui.App.Core.Protection;assembly=Tranqui.App.Core"
              x:Class="Tranqui.App.Views.HomePage"
@@ -25,11 +26,11 @@
                          TextColor="{StaticResource StateKnownContact}"
                          FontSize="18"
                          IsVisible="{Binding IsDone}"
-                         SemanticProperties.Description="Listo" />
+                         SemanticProperties.Description="{x:Static res:Texts.Done}" />
                   <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" />
                 </HorizontalStackLayout>
                 <Label Text="{Binding Explanation}" FontSize="14" />
-                <Button Text="Activar"
+                <Button Text="{x:Static res:Texts.Enable}"
                         Command="{Binding EnableCommand}"
                         IsVisible="{Binding IsPending}"
                         SemanticProperties.Hint="{Binding Title}" />

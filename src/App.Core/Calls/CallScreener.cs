@@ -1,5 +1,3 @@
-using System.Globalization;
-using System.Text;
 using Tranqui.App.Core.Resources;
 using Tranqui.Contracts.Lookups;
 using Tranqui.Domain.PhoneNumbers;
@@ -18,8 +16,6 @@ public sealed class CallScreener(
 {
     /// <summary>Colombia: the launch market. Calls from other country codes count as international.</summary>
     public const int HomeCountryCode = 57;
-
-    private static readonly CompositeFormat spamSubtitle = CompositeFormat.Parse(Texts.SpamSubtitleFormat);
 
     public async Task<ScreeningDecision> ScreenAsync(string? rawNumber, CancellationToken cancellationToken)
     {
@@ -80,7 +76,7 @@ public sealed class CallScreener(
             CallerStatusDto.Spam => new CallerCard(
                 CallerCardState.Spam,
                 response.DisplayName ?? Texts.SpamTitle,
-                string.Format(CultureInfo.CurrentCulture, spamSubtitle, response.SpamReportCount),
+                Texts.Format(Texts.SpamSubtitleFormat, response.SpamReportCount),
                 names,
                 number,
                 CommunityFlagsAsSpam: true),
