@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Tranqui.App.Views.StartupPage"
+             Shell.NavBarIsVisible="False">
+
+  <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="24">
+    <Image Source="shield.png" HeightRequest="96" WidthRequest="96" SemanticProperties.Description="Tranqui" />
+    <ActivityIndicator IsRunning="True" SemanticProperties.Description="Cargando" />
+  </VerticalStackLayout>
+
+</ContentPage>

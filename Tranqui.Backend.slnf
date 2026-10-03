@@ -3,11 +3,13 @@
     "path": "Tranqui.slnx",
     "projects": [
       "src/Api/Tranqui.Api.csproj",
+      "src/App.Core/Tranqui.App.Core.csproj",
       "src/Application/Tranqui.Application.csproj",
       "src/Contracts/Tranqui.Contracts.csproj",
       "src/Domain/Tranqui.Domain.csproj",
       "src/Infrastructure/Tranqui.Infrastructure.csproj",
       "tests/Api.Tests/Tranqui.Api.Tests.csproj",
+      "tests/App.Core.Tests/Tranqui.App.Core.Tests.csproj",
       "tests/Application.Tests/Tranqui.Application.Tests.csproj",
       "tests/Architecture.Tests/Tranqui.Architecture.Tests.csproj",
       "tests/Domain.Tests/Tranqui.Domain.Tests.csproj",

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Tranqui.App.Core.ViewModels;assembly=Tranqui.App.Core"
+             x:Class="Tranqui.App.Views.SignInPage"
+             x:DataType="vm:SignInViewModel"
+             Shell.NavBarIsVisible="False">
+
+  <ScrollView>
+    <VerticalStackLayout Style="{StaticResource Form}">
+      <Image Source="shield.png" HeightRequest="72" WidthRequest="72" SemanticProperties.Description="Tranqui" />
+      <Label Text="Tranqui" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level1" />
+      <Label Text="Identifica llamadas y bloquea spam sin exponer tus contactos."
+             Style="{StaticResource SubHeadline}" />
+
+      <Entry Text="{Binding Email}"
+             Placeholder="Correo"
+             Keyboard="Email"
+             IsSpellCheckEnabled="False"
+             AutomationId="SignInEmail"
+             SemanticProperties.Description="Correo electrónico" />
+      <Entry Text="{Binding Password}"
+             Placeholder="Contraseña"
+             IsPassword="True"
+             AutomationId="SignInPassword"
+             SemanticProperties.Description="Contraseña" />
+
+      <Label Text="{Binding ErrorMessage}"
+             Style="{StaticResource ErrorMessage}"
+             IsVisible="{Binding ErrorMessage, Converter={StaticResource HasText}}" />
+      <Label Text="{Binding InfoMessage}"
+             Style="{StaticResource InfoMessage}"
+             IsVisible="{Binding InfoMessage, Converter={StaticResource HasText}}" />
+
+      <Button Text="Ingresar"
+              Command="{Binding SignInCommand}"
+              IsEnabled="{Binding IsNotBusy}"
+              AutomationId="SignInButton" />
+      <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+      <Button Text="Olvidé mi contraseña"
+              Style="{StaticResource LinkButton}"
+              Command="{Binding ForgotPasswordCommand}"
+              IsEnabled="{Binding IsNotBusy}" />
+      <Button Text="Crear una cuenta"
+              Style="{StaticResource SecondaryButton}"
+              Command="{Binding GoToSignUpCommand}"
+              AutomationId="GoToSignUpButton" />
+    </VerticalStackLayout>
+  </ScrollView>
+
+</ContentPage>

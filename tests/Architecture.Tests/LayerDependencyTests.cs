@@ -13,6 +13,7 @@ public sealed class LayerDependencyTests
     private static readonly Assembly domainAssembly = typeof(Domain.AssemblyReference).Assembly;
     private static readonly Assembly applicationAssembly = typeof(Application.AssemblyReference).Assembly;
     private static readonly Assembly contractsAssembly = typeof(Contracts.AssemblyReference).Assembly;
+    private static readonly Assembly appCoreAssembly = typeof(App.Core.DependencyInjection).Assembly;
 
     private static readonly string[] frameworkNamespaces =
     [
@@ -60,6 +61,17 @@ public sealed class LayerDependencyTests
     public void Contracts_DoNotDependOnAnyOtherLayer()
     {
         var result = Types.InAssembly(contractsAssembly)
+            .ShouldNot()
+            .HaveDependencyOnAny(ApplicationNamespace, InfrastructureNamespace, ApiNamespace)
+            .GetResult();
+
+        result.IsSuccessful.Should().BeTrue(FailingTypes(result));
+    }
+
+    [Fact]
+    public void AppCore_NeverDependsOnServerLayers()
+    {
+        var result = Types.InAssembly(appCoreAssembly)
             .ShouldNot()
             .HaveDependencyOnAny(ApplicationNamespace, InfrastructureNamespace, ApiNamespace)
             .GetResult();
