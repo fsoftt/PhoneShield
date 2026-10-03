@@ -16,16 +16,22 @@ Identificador de llamadas y bloqueador de spam **open source y orientado a la pr
 
 ## Desarrollo local
 
-Requisitos: SDK de .NET 10, Docker. Para la app: workload `maui-android`, JDK 21 y Android SDK.
+Requisitos: SDK de .NET 10, Docker (también para los tests de integración, que levantan PostgreSQL con Testcontainers). Para la app: workload `maui-android`, JDK 21 y Android SDK.
 
 ```bash
 cp .env.example .env                      # y define POSTGRES_PASSWORD
 docker compose up -d                      # PostgreSQL, Redis y Seq
+dotnet tool restore                       # dotnet-ef para migraciones
+dotnet user-secrets set "ConnectionStrings:Postgres" "Host=localhost;Database=tranqui;Username=tranqui;Password=<POSTGRES_PASSWORD>" --project src/Api
+dotnet user-secrets set "Firebase:ProjectId" "<id-del-proyecto-firebase>" --project src/Api
 dotnet user-secrets set "PhoneHashing:CurrentKeyVersion" "1" --project src/Api
 dotnet user-secrets set "PhoneHashing:Keys:1" "$(openssl rand -base64 32)" --project src/Api
 dotnet build Tranqui.Backend.slnf     # backend + tests (sin la app)
 dotnet test Tranqui.Backend.slnf
-dotnet run --project src/Api              # GET /health
+dotnet run --project src/Api              # aplica migraciones al arrancar; GET /health
+
+# Nueva migración tras cambiar el modelo:
+dotnet ef migrations add <Nombre> --project src/Infrastructure --output-dir Persistence/Migrations
 
 dotnet workload install maui-android
 dotnet build src/App -f net10.0-android   # requiere Android SDK
@@ -36,6 +42,8 @@ Logs estructurados en Seq: http://localhost:8081.
 | Configuración | Para qué | Dónde |
 |---|---|---|
 | `POSTGRES_PASSWORD` | Contraseña de PostgreSQL local | `.env` (no se versiona) |
+| `ConnectionStrings:Postgres` | Conexión a PostgreSQL (incluye la contraseña) | user-secrets / variable de entorno `ConnectionStrings__Postgres` |
+| `Firebase:ProjectId` | ID del proyecto de Firebase; el API solo acepta tokens emitidos para ese proyecto | user-secrets / variable de entorno `Firebase__ProjectId` |
 | `PhoneHashing:CurrentKeyVersion` | Versión vigente de la clave de hash (empieza en `1`) | user-secrets / variable de entorno `PhoneHashing__CurrentKeyVersion` |
 | `PhoneHashing:Keys:<versión>` | **Secreto.** Clave HMAC en Base64, mínimo 32 bytes. Todas las versiones desde la 1 deben seguir configuradas. Si se pierde, todos los hashes quedan inservibles: guarda una copia cifrada fuera del servidor | user-secrets / variable de entorno `PhoneHashing__Keys__1` |
 
