@@ -11,6 +11,7 @@
   <ShellContent Route="verify-email" ContentTemplate="{DataTemplate views:VerifyEmailPage}" />
   <TabBar Route="main">
     <ShellContent Route="home" Title="Inicio" ContentTemplate="{DataTemplate views:HomePage}" />
+    <ShellContent Route="history" Title="Historial" ContentTemplate="{DataTemplate views:CallHistoryPage}" />
     <ShellContent Route="blocked" Title="Bloqueados" ContentTemplate="{DataTemplate views:BlockedNumbersPage}" />
     <ShellContent Route="settings" Title="Ajustes" ContentTemplate="{DataTemplate views:SettingsPage}" />
     <ShellContent Route="account" Title="Cuenta" ContentTemplate="{DataTemplate views:AccountPage}" />
