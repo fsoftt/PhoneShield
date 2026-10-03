@@ -1,6 +1,5 @@
 using Android.App;
 using Android.Telecom;
-using Microsoft.Extensions.DependencyInjection;
 using Tranqui.App.Core.Calls;
 
 namespace Tranqui.App.Calls;
@@ -13,7 +12,7 @@ namespace Tranqui.App.Calls;
 [IntentFilter(new[] { "android.telecom.CallScreeningService" })]
 public sealed class TranquiCallScreeningService : CallScreeningService
 {
-    private static readonly CallResponse allow = new CallResponse.Builder().Build();
+    private static readonly CallResponse allow = new CallResponse.Builder().Build()!;
 
     private CallerOverlay? overlay;
 
@@ -85,8 +84,8 @@ public sealed class TranquiCallScreeningService : CallScreeningService
 
     private static CallResponse Reject() =>
         new CallResponse.Builder()
-            .SetDisallowCall(true)
-            .SetRejectCall(true)
-            .SetSkipNotification(true)
-            .Build();
+            .SetDisallowCall(true)!
+            .SetRejectCall(true)!
+            .SetSkipNotification(true)!
+            .Build()!;
 }

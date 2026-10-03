@@ -12,23 +12,23 @@ internal sealed class AndroidProtectionPermissions : IProtectionPermissions
 {
     private const int CallScreeningRoleRequestCode = 4201;
 
-    private static Context Context => global::Android.App.Application.Context;
+    private static Context appContext => global::Android.App.Application.Context;
 
     public bool IsCallScreeningEnabled =>
-        Context.GetSystemService(Context.RoleService) is RoleManager roles && roles.IsRoleHeld(RoleManager.RoleCallScreening);
+        appContext.GetSystemService(Context.RoleService) is RoleManager roles && roles.IsRoleHeld(RoleManager.RoleCallScreening);
 
-    public bool CanShowOverPhoneApp => Settings.CanDrawOverlays(Context);
+    public bool CanShowOverPhoneApp => Settings.CanDrawOverlays(appContext);
 
     public bool CanReadContacts =>
-        ContextCompat.CheckSelfPermission(Context, global::Android.Manifest.Permission.ReadContacts) == Permission.Granted;
+        ContextCompat.CheckSelfPermission(appContext, global::Android.Manifest.Permission.ReadContacts) == Permission.Granted;
 
     public bool CanNotify =>
-        Context.GetSystemService(Context.NotificationService) is global::Android.App.NotificationManager manager
+        appContext.GetSystemService(Context.NotificationService) is global::Android.App.NotificationManager manager
         && manager.AreNotificationsEnabled();
 
     public Task RequestCallScreeningAsync()
     {
-        if (Context.GetSystemService(Context.RoleService) is RoleManager roles
+        if (appContext.GetSystemService(Context.RoleService) is RoleManager roles
             && roles.IsRoleAvailable(RoleManager.RoleCallScreening)
             && Platform.CurrentActivity is { } activity)
         {
@@ -40,9 +40,9 @@ internal sealed class AndroidProtectionPermissions : IProtectionPermissions
 
     public Task RequestShowOverPhoneAppAsync()
     {
-        var intent = new Intent(Settings.ActionManageOverlayPermission, AndroidUri.Parse($"package:{Context.PackageName}"));
+        var intent = new Intent(Settings.ActionManageOverlayPermission, AndroidUri.Parse($"package:{appContext.PackageName}"));
         intent.AddFlags(ActivityFlags.NewTask);
-        Context.StartActivity(intent);
+        appContext.StartActivity(intent);
 
         return Task.CompletedTask;
     }

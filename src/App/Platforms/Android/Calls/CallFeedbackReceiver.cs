@@ -1,6 +1,4 @@
-using Android.App;
 using Android.Content;
-using Microsoft.Extensions.DependencyInjection;
 using Tranqui.App.Core.Api;
 using Tranqui.Contracts.Reports;
 
