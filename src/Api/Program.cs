@@ -1,8 +1,10 @@
 using System.Globalization;
+using System.Text.Json.Serialization;
 using Tranqui.Api.Authentication;
 using Tranqui.Api.Endpoints;
 using Tranqui.Api.Errors;
 using Tranqui.Api.Persistence;
+using Tranqui.Api.RateLimiting;
 using Tranqui.Application;
 using Tranqui.Infrastructure;
 using Tranqui.Infrastructure.Persistence;
@@ -26,7 +28,10 @@ try
     builder.Services.AddProblemDetails();
     builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
     builder.Services.AddHealthChecks().AddDbContextCheck<TranquiDbContext>();
+    builder.Services.ConfigureHttpJsonOptions(options =>
+        options.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
     builder.Services.AddFirebaseAuthentication(builder.Configuration);
+    builder.Services.AddTranquiRateLimiting(builder.Configuration);
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -36,9 +41,11 @@ try
     app.UseSerilogRequestLogging();
     app.UseAuthentication();
     app.UseAuthorization();
+    app.UseRateLimiter();
 
     app.MapHealthChecks(HealthEndpoint).AllowAnonymous();
     app.MapRegisterAccount();
+    app.MapLookupNumber();
 
     await app.MigrateDatabaseAsync();
     await app.RunAsync();
