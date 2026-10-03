@@ -12,7 +12,7 @@ Estado: **borrador de decisiones** — fuente de verdad para empezar a construir
 |---|---|
 | Marca | **Tranqui** (pendiente verificar disponibilidad) |
 | Plataforma v1 | Solo Android (.NET MAUI, `net10.0-android`, mínimo Android 10 / API 29 por `CallScreeningService` + `RoleManager`) |
-| Backend | ASP.NET Core minimal APIs (.NET 10), PostgreSQL, Redis |
+| Backend | ASP.NET Core minimal APIs (.NET 10), PostgreSQL. Redis solo cuando haya más de una instancia |
 | Arquitectura | DDD + Clean Architecture + vertical slices + CQRS con MediatR 12.x (última versión Apache-2.0); MVVM en la app |
 | Hash de números | HMAC-SHA256 calculado **en el servidor**, clave secreta versionada fuera de la base de datos |
 | Autenticación | Firebase Authentication: email/contraseña y Google. Apple se agrega con la versión iOS (ahorra US$99/año) |
@@ -113,6 +113,8 @@ Regla inicial (todos los umbrales son constantes con nombre, configurables y doc
 spam = (Σ pesoSpam ≥ 5) y (Σ pesoSpam ≥ 2 × (Σ pesoNoSpam + log2(1 + SavedByCount)))
 ```
 
+La edad de cada voto se cuenta en días completos: los votos de las últimas 24 horas pesan 1.
+
 Un número guardado como "Mamá" por muchas personas **no** es spam por defecto (su `SavedByCount` lo protege), pero reportes de spam suficientes y de cuentas confiables pueden superarlo.
 
 ### 4.4 Aporte de agenda
@@ -155,7 +157,7 @@ Un número guardado como "Mamá" por muchas personas **no** es spam por defecto 
 ## 6. Seguridad
 
 - **Claves** (`K_hash`, `K_names`, `K_contrib`): nunca en el repo ni en la base de datos. En v1, secretos de Docker en el servidor, con permisos restringidos y copia de respaldo cifrada fuera del servidor. Rotación documentada (§4.1).
-- **Rate limiting** (Redis, por `uid` y por IP):
+- **Rate limiting** (por `uid` y por IP). En v1 se lleva en memoria del API, porque corre como una sola instancia; Redis se agrega solo si se escala a varias instancias:
 
   | Endpoint | Límite inicial |
   |---|---|
@@ -178,7 +180,7 @@ Un número guardado como "Mamá" por muchas personas **no** es spam por defecto 
 src/
   Domain/          Agregados, value objects (PhoneNumber, PhoneHash), reglas de puntaje y de nombres. Sin dependencias.
   Application/     Vertical slices: Features/<Feature>/ (comando o query, handler, validador, DTO). MediatR 12.x + FluentValidation.
-  Infrastructure/  EF Core (PostgreSQL), Redis, Firebase Admin, hashing/cifrado, Play Integrity.
+  Infrastructure/  EF Core (PostgreSQL), hashing/cifrado, Play Integrity.
   Api/             Un endpoint minimal API por slice. Auth, rate limiting, ProblemDetails, OpenAPI.
   Contracts/       DTOs compartidos entre Api y App.
   App/             .NET MAUI Android. MVVM (CommunityToolkit.Mvvm), Refit, SQLite local.
@@ -187,7 +189,7 @@ tests/             Un proyecto por proyecto de src + tests de arquitectura (NetA
 
 Dependencias: `Api → Application/Infrastructure → Domain`; `App → Contracts + Domain` (solo normalización). `Domain` y `Application` no conocen EF Core, ASP.NET Core ni Redis.
 
-**Librerías:** MediatR 12.x, FluentValidation, EF Core + Npgsql, StackExchange.Redis, FirebaseAdmin, libphonenumber-csharp, Serilog (+ Seq en desarrollo), CommunityToolkit.Mvvm, CommunityToolkit.Maui, Refit, Microsoft.Extensions.Http.Resilience, sqlite-net-pcl.
+**Librerías:** MediatR 12.x, FluentValidation, EF Core + Npgsql, JWT Bearer (tokens de Firebase), libphonenumber-csharp, Serilog (+ Seq en desarrollo), CommunityToolkit.Mvvm, CommunityToolkit.Maui, Refit, Microsoft.Extensions.Http.Resilience, sqlite-net-pcl.
 **Tests:** xUnit, FluentAssertions **7.x** (última versión Apache-2.0; la 8 es comercial), NSubstitute, Testcontainers, NetArchTest, `Microsoft.AspNetCore.Mvc.Testing`.
 
 ---
@@ -206,7 +208,7 @@ Dependencias: `Api → Application/Infrastructure → Domain`; `App → Contract
 
 | Concepto | Costo |
 |---|---|
-| Servidor VPS (API + PostgreSQL + Redis en Docker Compose), ej. Hetzner CX22 | ~US$5/mes |
+| Servidor VPS (API + PostgreSQL en Docker Compose), ej. Hetzner CX22 | ~US$5/mes |
 | Cloudflare (DNS, proxy, Turnstile) | Gratis |
 | Copias de seguridad (Cloudflare R2, 10 GB) | Gratis |
 | Firebase Authentication (email, Google) | Gratis a este tamaño |

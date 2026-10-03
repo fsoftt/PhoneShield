@@ -6,7 +6,7 @@ Open-source, privacy-first caller ID and spam blocker: a .NET MAUI Android app +
 
 ## Stack
 
-- API: ASP.NET Core minimal APIs, `net10.0`. PostgreSQL (EF Core + Npgsql), Redis (cache + rate limiting).
+- API: ASP.NET Core minimal APIs, `net10.0`. PostgreSQL (EF Core + Npgsql). Rate limiting is in-memory (single instance); add Redis only when scaling out.
 - App: .NET MAUI, Android only (`net10.0-android`, min API 29). MVVM with `CommunityToolkit.Mvvm`; `CommunityToolkit.Maui`; Refit for HTTP; SQLite for local data.
 - CQRS with MediatR **12.x only** (v13+ is commercially licensed). Validation with FluentValidation via a MediatR pipeline behavior.
 - Auth: Firebase Authentication (email/password and Google; Apple comes with the future iOS version). The API validates the Firebase JWT on every request; the user is identified by the token's `uid`, never by a client-supplied value.
@@ -29,7 +29,7 @@ Open-source, privacy-first caller ID and spam blocker: a .NET MAUI Android app +
 
 - `src/Domain` — aggregates, value objects, scoring and name rules. Organized by aggregate. Depends on no other project; its only package is `libphonenumber-csharp` (pure, no I/O). `PhoneNumber` (normalization) and `IPhoneNumberHasher` live in `Domain/PhoneNumbers`; the HMAC implementation is `Infrastructure/PhoneNumbers/HmacPhoneNumberHasher`. Never normalize or hash anywhere else.
 - `src/Application` — vertical slices at `Features/<FeatureName>/` (command/query, handler, validator, response DTO together). Depends only on `Domain`.
-- `src/Infrastructure` — EF Core, Redis, Firebase Admin, hashing/encryption. Organized by aggregate/technology.
+- `src/Infrastructure` — EF Core, hashing/encryption, external service clients. Organized by aggregate/technology.
 - `src/Api` — one minimal API endpoint file per slice at `Endpoints/<FeatureName>.cs`.
 - `src/Contracts` — DTOs shared by `Api` and `App`.
 - `src/App` — MAUI app (Views, ViewModels, Services, Platforms/Android).
@@ -42,7 +42,8 @@ Dependency direction: `Api` → `Application`/`Infrastructure` → `Domain`; `Ap
 - Phone numbers are never persisted, logged, traced or returned in errors in plaintext — server-side storage is `HMAC-SHA256(key, E164)` only. Normalization and hashing each live in exactly one place.
 - No PII (numbers, names, emails) in logs, exceptions, metrics or error responses, including as Serilog structured properties. Log templates use named placeholders, never string interpolation.
 - Never persist which user looked up which number.
-- Names are stored encrypted with a per-number derived key and shown only when at least `K = 3` distinct contributors agree.
+- Names are stored encrypted with a per-number derived key (`AesGcmNameProtector`) and shown only when at least `K = 3` distinct contributors agree. Reputation thresholds live only in `Domain/Reputation/ReputationRules`.
+- Phone numbers travel in request bodies, never in URLs (request logging records paths).
 - Secret keys never live in the repo or the database.
 - Lookup, report, contact-upload and public endpoints are rate-limited.
 - Never write user-facing privacy claims stronger than spec §2 allows ("impossible", "anonymous", "irreversible" are banned).

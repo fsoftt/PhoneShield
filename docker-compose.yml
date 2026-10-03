@@ -10,11 +10,6 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-
   seq:
     image: datalust/seq:2025.2
     environment:

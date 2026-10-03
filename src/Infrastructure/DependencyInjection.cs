@@ -2,11 +2,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Tranqui.Application.Features.LookupNumber;
 using Tranqui.Domain.Abstractions;
 using Tranqui.Domain.PhoneNumbers;
+using Tranqui.Domain.Reputation;
 using Tranqui.Domain.Users;
 using Tranqui.Infrastructure.Persistence;
 using Tranqui.Infrastructure.PhoneNumbers;
+using Tranqui.Infrastructure.Reputation;
 using Tranqui.Infrastructure.Users;
 
 namespace Tranqui.Infrastructure;
@@ -20,6 +23,7 @@ public static class DependencyInjection
         services.AddSingleton(TimeProvider.System);
 
         AddPhoneHashing(services);
+        AddNameProtection(services);
         AddPersistence(services, configuration);
 
         return services;
@@ -34,6 +38,15 @@ public static class DependencyInjection
         services.AddSingleton<IPhoneNumberHasher, HmacPhoneNumberHasher>();
     }
 
+    private static void AddNameProtection(IServiceCollection services)
+    {
+        services.AddOptions<NameProtectionOptions>()
+            .BindConfiguration(NameProtectionOptions.SectionName)
+            .ValidateOnStart();
+        services.AddSingleton<IValidateOptions<NameProtectionOptions>, NameProtectionOptionsValidator>();
+        services.AddSingleton<INameProtector, AesGcmNameProtector>();
+    }
+
     private static void AddPersistence(IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString(DatabaseConnectionStringName)
@@ -44,5 +57,6 @@ public static class DependencyInjection
             .UseSnakeCaseNamingConvention());
         services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<TranquiDbContext>());
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IReputationSignalsReader, ReputationSignalsReader>();
     }
 }

@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +15,8 @@ namespace Tranqui.Api.Tests;
 /// </summary>
 public sealed class TranquiApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
+    public const int LookupLimitPerHour = 5;
+
     private readonly PostgreSqlContainer database = new PostgreSqlBuilder("postgres:17-alpine").Build();
 
     public async ValueTask InitializeAsync() => await database.StartAsync();
@@ -30,6 +33,8 @@ public sealed class TranquiApiFactory : WebApplicationFactory<Program>, IAsyncLi
         builder.UseSetting("Firebase:ProjectId", TestTokens.ProjectId);
         builder.UseSetting("PhoneHashing:CurrentKeyVersion", "1");
         builder.UseSetting("PhoneHashing:Keys:1", Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)));
+        builder.UseSetting("NameProtection:Key", Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)));
+        builder.UseSetting("RateLimiting:Lookup:PerHour", LookupLimitPerHour.ToString(CultureInfo.InvariantCulture));
 
         builder.ConfigureServices(services =>
             services.PostConfigure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>
