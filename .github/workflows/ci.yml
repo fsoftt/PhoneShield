@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend build and tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - run: dotnet restore PhoneShield.Backend.slnf
+      - run: dotnet build PhoneShield.Backend.slnf --no-restore --configuration Release
+      - run: dotnet test PhoneShield.Backend.slnf --no-build --configuration Release
+
+  android:
+    name: Android app build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: dotnet workload install maui-android
+      - name: Install Android SDK dependencies
+        run: >
+          dotnet build src/App/PhoneShield.App.csproj -t:InstallAndroidDependencies
+          -f net10.0-android
+          -p:AndroidSdkDirectory=$ANDROID_HOME
+          -p:AcceptAndroidSDKLicenses=True
+      - run: >
+          dotnet build src/App/PhoneShield.App.csproj
+          -f net10.0-android
+          --configuration Release
+          -p:AndroidSdkDirectory=$ANDROID_HOME
