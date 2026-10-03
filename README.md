@@ -68,7 +68,7 @@ Logs estructurados en Seq: http://localhost:8081.
 
 ## Sitio web
 
-El sitio (portada, privacidad, política de tratamiento de datos, términos) está en `website/` (VitePress) y se publica en GitHub Pages con cada cambio en `main`:
+El sitio, en español e inglés (portada, privacidad, política de tratamiento de datos, términos), está en `website/` (VitePress) y se publica en GitHub Pages con cada cambio en `main`:
 
 ```bash
 cd website && npm install && npm run dev
