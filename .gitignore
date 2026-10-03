@@ -480,3 +480,6 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Local app build settings (API URL, Firebase key)
+src/App/Tranqui.App.local.props

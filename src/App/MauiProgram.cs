@@ -1,6 +1,10 @@
 #if DEBUG
 using Microsoft.Extensions.Logging;
 #endif
+using Tranqui.App.Core;
+using Tranqui.App.Core.Authentication;
+using Tranqui.App.Core.Navigation;
+using Tranqui.App.Services;
 using Tranqui.App.ViewModels;
 using Tranqui.App.Views;
 
@@ -19,6 +23,14 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
+        builder.Services.AddTranquiCore(AppSettings.ApiBaseAddress, AppSettings.FirebaseApiKey);
+        builder.Services.AddSingleton<ISecureStore, MauiSecureStore>();
+        builder.Services.AddSingleton<INavigationService, ShellNavigationService>();
+
+        builder.Services.AddTransient<StartupPage>();
+        builder.Services.AddTransient<SignInPage>();
+        builder.Services.AddTransient<SignUpPage>();
+        builder.Services.AddTransient<VerifyEmailPage>();
         builder.Services.AddTransient<HomeViewModel>();
         builder.Services.AddTransient<HomePage>();
 

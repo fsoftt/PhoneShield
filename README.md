@@ -39,6 +39,18 @@ dotnet workload install maui-android
 dotnet build src/App -f net10.0-android   # requiere Android SDK
 ```
 
+La app lee dos valores al compilar (no son secretos). Para desarrollo, crea `src/App/Tranqui.App.local.props` (no se versiona):
+
+```xml
+<Project>
+  <PropertyGroup>
+    <TranquiFirebaseApiKey>tu-web-api-key-de-firebase</TranquiFirebaseApiKey>
+    <!-- Opcional; en Debug por defecto es http://10.0.2.2:5254/ (el API corriendo en tu PC, visto desde el emulador) -->
+    <TranquiApiBaseUrl>http://10.0.2.2:5254/</TranquiApiBaseUrl>
+  </PropertyGroup>
+</Project>
+```
+
 Logs estructurados en Seq: http://localhost:8081.
 
 | Configuración | Para qué | Dónde |

@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/Api/Tranqui.Api.csproj" />
+    <Project Path="src/App.Core/Tranqui.App.Core.csproj" />
     <Project Path="src/App/Tranqui.App.csproj" />
     <Project Path="src/Application/Tranqui.Application.csproj" />
     <Project Path="src/Contracts/Tranqui.Contracts.csproj" />
@@ -9,6 +10,7 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Api.Tests/Tranqui.Api.Tests.csproj" />
+    <Project Path="tests/App.Core.Tests/Tranqui.App.Core.Tests.csproj" />
     <Project Path="tests/Application.Tests/Tranqui.Application.Tests.csproj" />
     <Project Path="tests/Architecture.Tests/Tranqui.Architecture.Tests.csproj" />
     <Project Path="tests/Domain.Tests/Tranqui.Domain.Tests.csproj" />

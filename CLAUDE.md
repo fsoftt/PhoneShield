@@ -32,10 +32,11 @@ Open-source, privacy-first caller ID and spam blocker: a .NET MAUI Android app +
 - `src/Infrastructure` — EF Core, hashing/encryption, external service clients. Organized by aggregate/technology.
 - `src/Api` — one minimal API endpoint file per slice at `Endpoints/<FeatureName>.cs`.
 - `src/Contracts` — DTOs shared by `Api` and `App`.
-- `src/App` — MAUI app (Views, ViewModels, Services, Platforms/Android).
+- `src/App.Core` — everything in the app that is plain .NET (`net10.0`): ViewModels, the typed API client (Refit), Firebase Auth over its REST API. Testable without the Android SDK; put logic here, not in `src/App`.
+- `src/App` — MAUI shell: XAML views (compiled bindings to `App.Core` ViewModels), platform services, `Platforms/Android`.
 - `tests/` — one project per `src` project, mirroring its structure, plus architecture tests.
 
-Dependency direction: `Api` → `Application`/`Infrastructure` → `Domain`; `App` → `Contracts` + `Domain`. `Domain` and `Application` never reference EF Core, ASP.NET Core, Redis or Firebase types.
+Dependency direction: `Api` → `Application`/`Infrastructure` → `Domain`; `App` → `App.Core` → `Contracts` + `Domain`. `Domain` and `Application` never reference EF Core, ASP.NET Core, Redis or Firebase types.
 
 ## Privacy non-negotiables
 
