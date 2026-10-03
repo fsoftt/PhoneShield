@@ -1,10 +1,8 @@
 using System.Net;
-using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace Tranqui.Api.Tests;
 
-public sealed class HealthEndpointTests(WebApplicationFactory<Program> factory)
-    : IClassFixture<WebApplicationFactory<Program>>
+public sealed class HealthEndpointTests(TranquiApiFactory factory) : IClassFixture<TranquiApiFactory>
 {
     [Fact]
     public async Task Get_Health_ReturnsOk()

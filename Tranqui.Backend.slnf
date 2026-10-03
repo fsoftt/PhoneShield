@@ -2,14 +2,16 @@
   "solution": {
     "path": "Tranqui.slnx",
     "projects": [
-      "src/Domain/Tranqui.Domain.csproj",
-      "src/Application/Tranqui.Application.csproj",
-      "src/Infrastructure/Tranqui.Infrastructure.csproj",
-      "src/Contracts/Tranqui.Contracts.csproj",
       "src/Api/Tranqui.Api.csproj",
-      "tests/Application.Tests/Tranqui.Application.Tests.csproj",
+      "src/Application/Tranqui.Application.csproj",
+      "src/Contracts/Tranqui.Contracts.csproj",
+      "src/Domain/Tranqui.Domain.csproj",
+      "src/Infrastructure/Tranqui.Infrastructure.csproj",
       "tests/Api.Tests/Tranqui.Api.Tests.csproj",
-      "tests/Architecture.Tests/Tranqui.Architecture.Tests.csproj"
+      "tests/Application.Tests/Tranqui.Application.Tests.csproj",
+      "tests/Architecture.Tests/Tranqui.Architecture.Tests.csproj",
+      "tests/Domain.Tests/Tranqui.Domain.Tests.csproj",
+      "tests/Infrastructure.Tests/Tranqui.Infrastructure.Tests.csproj"
     ]
   }
 }

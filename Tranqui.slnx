@@ -11,5 +11,7 @@
     <Project Path="tests/Api.Tests/Tranqui.Api.Tests.csproj" />
     <Project Path="tests/Application.Tests/Tranqui.Application.Tests.csproj" />
     <Project Path="tests/Architecture.Tests/Tranqui.Architecture.Tests.csproj" />
+    <Project Path="tests/Domain.Tests/Tranqui.Domain.Tests.csproj" />
+    <Project Path="tests/Infrastructure.Tests/Tranqui.Infrastructure.Tests.csproj" />
   </Folder>
 </Solution>
