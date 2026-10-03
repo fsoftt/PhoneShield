@@ -18,6 +18,7 @@ public sealed partial class GlobalExceptionHandler(
     private const string ValidationErrorTitle = "The request is not valid.";
     private const string AccountNotRegisteredTitle = "The account must be registered first.";
     private const string ConsentRequiredTitle = "The contact upload consent is required.";
+    private const string AppealLimitReachedTitle = "This number already used its appeal for this month.";
 
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
@@ -37,6 +38,11 @@ public sealed partial class GlobalExceptionHandler(
         if (exception is ConsentRequiredException)
         {
             return await WriteProblemAsync(httpContext, StatusCodes.Status403Forbidden, ConsentRequiredTitle, ApiErrorCodes.ConsentRequired);
+        }
+
+        if (exception is AppealLimitReachedException)
+        {
+            return await WriteProblemAsync(httpContext, StatusCodes.Status429TooManyRequests, AppealLimitReachedTitle, ApiErrorCodes.AppealLimitReached);
         }
 
         LogUnhandledException(exception.GetType().Name);

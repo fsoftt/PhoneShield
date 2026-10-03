@@ -18,7 +18,18 @@ public static class TestTokens
         string firebaseUid,
         bool emailVerified = true,
         string audience = ProjectId,
-        DateTime? expires = null)
+        DateTime? expires = null) =>
+        Issue(audience, expires,
+            new Claim("sub", firebaseUid),
+            new Claim("email_verified", emailVerified ? "true" : "false", ClaimValueTypes.Boolean));
+
+    /// <summary>A token from a phone sign-in: Firebase verified the number by SMS; there is no email.</summary>
+    public static string CreateForPhone(string e164) =>
+        Issue(ProjectId, null,
+            new Claim("sub", Guid.NewGuid().ToString("N")),
+            new Claim("phone_number", e164));
+
+    private static string Issue(string audience, DateTime? expires, params Claim[] claims)
     {
         var expiresAt = expires ?? DateTime.UtcNow.Add(lifetime);
 
@@ -26,10 +37,7 @@ public static class TestTokens
         {
             Issuer = Issuer,
             Audience = audience,
-            Subject = new ClaimsIdentity([
-                new Claim("sub", firebaseUid),
-                new Claim("email_verified", emailVerified ? "true" : "false", ClaimValueTypes.Boolean),
-            ]),
+            Subject = new ClaimsIdentity(claims),
             NotBefore = expiresAt - lifetime,
             Expires = expiresAt,
             IssuedAt = expiresAt - lifetime,

@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using Tranqui.Api.Authentication;
 using Tranqui.Api.Endpoints;
 using Tranqui.Api.Errors;
+using Tranqui.Api.Hosting;
 using Tranqui.Api.Persistence;
 using Tranqui.Api.RateLimiting;
 using Tranqui.Application;
@@ -32,13 +33,17 @@ try
         options.SerializerOptions.Converters.Add(new JsonStringEnumConverter()));
     builder.Services.AddFirebaseAuthentication(builder.Configuration);
     builder.Services.AddTranquiRateLimiting(builder.Configuration);
+    builder.Services.AddWebsiteCors(builder.Configuration);
+    builder.Services.AddReverseProxySupport();
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
 
     var app = builder.Build();
 
+    app.UseForwardedHeaders();
     app.UseExceptionHandler();
     app.UseSerilogRequestLogging();
+    app.UseCors();
     app.UseAuthentication();
     app.UseAuthorization();
     app.UseRateLimiter();
@@ -52,6 +57,8 @@ try
     app.MapWithdrawContacts();
     app.MapExportMyData();
     app.MapDeleteAccount();
+    app.MapRequestAppealVerification();
+    app.MapSubmitAppeal();
 
     await app.MigrateDatabaseAsync();
     await app.RunAsync();

@@ -9,6 +9,7 @@ public static class RateLimitingExtensions
     public const string LookupPolicy = "lookup";
     public const string ReportPolicy = "report";
     public const string ContactUploadPolicy = "contact-upload";
+    public const string AppealPolicy = "appeal";
 
     private const string TooManyRequestsTitle = "Too many requests. Try again later.";
 
@@ -50,6 +51,11 @@ public static class RateLimitingExtensions
             limiter.AddPolicy(ContactUploadPolicy, httpContext => RateLimitPartition.Get(
                 UserPartitionKey(httpContext),
                 _ => FixedWindow(options.ContactUploads.BatchesPerDay, day)));
+
+            // Appeals are anonymous until the SMS is verified, so they are limited per client IP instead.
+            limiter.AddPolicy(AppealPolicy, httpContext => RateLimitPartition.Get(
+                httpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
+                _ => FixedWindow(options.Appeals.PerHour, hour)));
         });
 
         return services;

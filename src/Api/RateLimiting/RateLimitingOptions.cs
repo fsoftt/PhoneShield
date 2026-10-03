@@ -10,6 +10,8 @@ public sealed class RateLimitingOptions
 
     public ContactUploadLimits ContactUploads { get; set; } = new();
 
+    public AppealLimits Appeals { get; set; } = new();
+
     public sealed class LookupLimits
     {
         private const int DefaultPerHour = 60;
@@ -33,5 +35,13 @@ public sealed class RateLimitingOptions
         private const int DefaultBatchesPerDay = 20;
 
         public int BatchesPerDay { get; set; } = DefaultBatchesPerDay;
+    }
+
+    public sealed class AppealLimits
+    {
+        /// <summary>Per client IP, for appeal requests; each number still gets one SMS and one appeal per month.</summary>
+        private const int DefaultPerHour = 10;
+
+        public int PerHour { get; set; } = DefaultPerHour;
     }
 }
