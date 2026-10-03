@@ -1,16 +1,44 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:Tranqui.App.ViewModels"
+             xmlns:vm="clr-namespace:Tranqui.App.Core.ViewModels;assembly=Tranqui.App.Core"
+             xmlns:protection="clr-namespace:Tranqui.App.Core.Protection;assembly=Tranqui.App.Core"
              x:Class="Tranqui.App.Views.HomePage"
-             x:DataType="vm:HomeViewModel">
+             x:DataType="vm:HomeViewModel"
+             Title="Tranqui">
 
-  <VerticalStackLayout Padding="24" Spacing="12" VerticalOptions="Center">
-    <Label Text="{Binding Title}"
-           Style="{StaticResource Headline}"
-           SemanticProperties.HeadingLevel="Level1" />
-    <Label Text="{Binding Subtitle}"
-           Style="{StaticResource SubHeadline}" />
-  </VerticalStackLayout>
+  <ScrollView>
+    <VerticalStackLayout Style="{StaticResource Form}">
+      <Image Source="shield.png" HeightRequest="72" WidthRequest="72" SemanticProperties.Description="Tranqui" />
+      <Label Text="{Binding StatusTitle}"
+             Style="{StaticResource Headline}"
+             SemanticProperties.HeadingLevel="Level1"
+             AutomationId="ProtectionStatus" />
+
+      <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Steps}">
+        <BindableLayout.ItemTemplate>
+          <DataTemplate x:DataType="protection:ProtectionStep">
+            <Border Padding="16" StrokeShape="RoundRectangle 12">
+              <VerticalStackLayout Spacing="8">
+                <HorizontalStackLayout Spacing="8">
+                  <Label Text="✓"
+                         TextColor="{StaticResource StateKnownContact}"
+                         FontSize="18"
+                         IsVisible="{Binding IsDone}"
+                         SemanticProperties.Description="Listo" />
+                  <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <Label Text="{Binding Explanation}" FontSize="14" />
+                <Button Text="Activar"
+                        Command="{Binding EnableCommand}"
+                        IsVisible="{Binding IsPending}"
+                        SemanticProperties.Hint="{Binding Title}" />
+              </VerticalStackLayout>
+            </Border>
+          </DataTemplate>
+        </BindableLayout.ItemTemplate>
+      </VerticalStackLayout>
+    </VerticalStackLayout>
+  </ScrollView>
 
 </ContentPage>

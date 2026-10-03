@@ -3,4 +3,9 @@
     <application android:allowBackup="false" android:networkSecurityConfig="@xml/network_security_config" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true"></application>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Read locally to show known contacts in green; never uploaded without the separate contribution consent. -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- The caller card drawn on top of the incoming-call screen. -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 </manifest>
