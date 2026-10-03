@@ -1,6 +1,7 @@
 using Android.App;
 using Android.Telecom;
 using Tranqui.App.Core.Calls;
+using Tranqui.App.Core.History;
 
 namespace Tranqui.App.Calls;
 
@@ -53,6 +54,8 @@ public sealed class TranquiCallScreeningService : CallScreeningService
 
         RespondToCall(callDetails, decision.Reject ? Reject() : allow);
         Present(decision, services);
+        await services.GetRequiredService<ICallHistory>()
+            .AddAsync(CallRecordFactory.From(decision, services.GetRequiredService<TimeProvider>().GetUtcNow()));
     }
 
     private void Present(ScreeningDecision decision, IServiceProvider services)

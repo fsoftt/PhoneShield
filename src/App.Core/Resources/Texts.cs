@@ -50,4 +50,10 @@ public static class Texts
     public const string ContributionStartedFormat = "¡Gracias! Aportaste {0} contactos.";
     public const string ContributionStopped = "Dejaste de aportar y borramos los contactos que habías aportado.";
     public const string ContactsPermissionNeeded = "Para aportar tus contactos, Tranqui necesita permiso para leerlos.";
+
+    public const string SpamLabelTitle = "Reportar spam";
+    public const string SpamLabelMessage = "Opcional: ¿cómo lo llamarías? Por ejemplo \"Spam Claro\" o \"Cobranzas\".";
+    public const string SpamLabelPlaceholder = "Etiqueta (opcional)";
+    public const string ReportSent = "Gracias, tu reporte ayuda a otros.";
+    public const string NumberBlocked = "Bloqueado. Las próximas llamadas de este número no sonarán.";
 }
