@@ -13,5 +13,8 @@ public static class ApiErrorCodes
     public const string ConsentRequired = "consent_required";
     public const string RateLimited = "rate_limited";
     public const string AppealLimitReached = "appeal_limit_reached";
+    public const string AppealAccountTooNew = "appeal_account_too_new";
+    public const string DeviceNotTrusted = "device_not_trusted";
+    public const string PhoneNotVerified = "phone_not_verified";
     public const string UnexpectedError = "unexpected_error";
 }

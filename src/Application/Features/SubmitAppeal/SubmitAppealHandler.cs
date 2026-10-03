@@ -1,5 +1,6 @@
 using MediatR;
 using Tranqui.Application.Abstractions;
+using Tranqui.Application.Appeals;
 using Tranqui.Application.Errors;
 using Tranqui.Domain.Abstractions;
 using Tranqui.Domain.Appeals;
@@ -8,25 +9,22 @@ using Tranqui.Domain.PhoneNumbers;
 namespace Tranqui.Application.Features.SubmitAppeal;
 
 internal sealed class SubmitAppealHandler(
-    IVerifiedPhone verifiedPhone,
-    IPhoneNumberHasher hasher,
+    IPhoneProofValidator phoneProofs,
+    AppealGate gate,
     IAppealRepository appeals,
     IUnitOfWork unitOfWork,
     TimeProvider timeProvider) : IRequestHandler<SubmitAppealCommand, AppealStatus>
 {
     public async Task<AppealStatus> Handle(SubmitAppealCommand request, CancellationToken cancellationToken)
     {
-        var phoneNumber = PhoneNumber.TryParse(verifiedPhone.E164)
-            ?? throw new InvalidOperationException("Firebase verified a number that cannot be parsed.");
-        var phoneHash = hasher.Hash(phoneNumber);
+        var phoneNumber = PhoneNumber.TryParse(await phoneProofs.VerifiedNumberAsync(request.PhoneProof, cancellationToken))
+            ?? throw new PhoneNotVerifiedException();
+        var deviceId = DeviceId.TryParse(request.DeviceId)
+            ?? throw new InvalidOperationException("The validator guarantees a valid device id.");
+
+        var phoneHash = await gate.ConsumeAsync(AppealAction.Appeal, phoneNumber, deviceId, request.IntegrityToken, cancellationToken);
+
         var now = timeProvider.GetUtcNow();
-
-        var recent = await appeals.CountAppealsSinceAsync(phoneHash, now - AppealRules.LimitWindow, cancellationToken);
-        if (recent >= AppealRules.AppealsPerWindow)
-        {
-            throw new AppealLimitReachedException();
-        }
-
         var appeal = Appeal.File(phoneHash, request.Kind, request.Reason, request.ContactEmail, now);
         appeals.AddAppeal(appeal);
 

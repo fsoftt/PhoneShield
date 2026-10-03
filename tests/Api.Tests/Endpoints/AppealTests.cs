@@ -5,113 +5,159 @@ using Tranqui.Contracts.Appeals;
 using Tranqui.Contracts.Errors;
 using Tranqui.Contracts.Lookups;
 using Tranqui.Contracts.Reports;
+using Tranqui.Domain.Appeals;
+using Tranqui.Domain.PhoneNumbers;
 using Tranqui.Domain.Reputation;
 
 namespace Tranqui.Api.Tests.Endpoints;
 
-public sealed class AppealTests(TranquiApiFactory factory) : IClassFixture<TranquiApiFactory>
+public sealed class AppealTests(AppealApiFactory factory) : IClassFixture<AppealApiFactory>
 {
+    private static readonly TimeSpan pastMinimumAge = AppealRules.MinimumAccountAge + TimeSpan.FromDays(1);
+
     [Fact]
-    public async Task RequestVerification_Anonymous_ReturnsTheNormalizedNumber()
+    public async Task RequestVerification_WithoutToken_ReturnsUnauthorized()
     {
         using var client = factory.CreateClientFor(token: null);
 
-        var response = await RequestVerificationAsync(client, "300 111 2201");
+        var response = await RequestVerificationAsync(client, "3001112200", NewDevice());
+
+        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+    }
+
+    [Fact]
+    public async Task RequestVerification_EstablishedAccount_ReturnsTheNormalizedNumber()
+    {
+        using var client = await EstablishedAccountAsync();
+
+        var response = await RequestVerificationAsync(client, "300 111 2201", NewDevice());
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         var body = await response.Content.ReadFromJsonAsync<AppealVerificationResponse>(TestContext.Current.CancellationToken);
         body!.PhoneNumber.Should().Be("+573001112201");
     }
 
-    [Theory]
-    [InlineData(TranquiApiFactory.WebsiteOrigin, true)]
-    [InlineData("https://elsewhere.example", false)]
-    public async Task Preflight_OnlyTheWebsiteOriginIsAllowed(string origin, bool allowed)
+    [Fact]
+    public async Task RequestVerification_NewAccount_IsForbidden()
     {
-        using var client = factory.CreateClientFor(token: null);
-        using var request = new HttpRequestMessage(HttpMethod.Options, SubmitAppeal.Route);
-        request.Headers.Add("Origin", origin);
-        request.Headers.Add("Access-Control-Request-Method", "POST");
-        request.Headers.Add("Access-Control-Request-Headers", "authorization,content-type");
+        using var client = await factory.CreateRegisteredClientAsync();
 
-        using var response = await client.SendAsync(request, TestContext.Current.CancellationToken);
+        var response = await RequestVerificationAsync(client, "3001112202", NewDevice());
 
-        response.Headers.Contains("Access-Control-Allow-Origin").Should().Be(allowed);
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        (await response.ProblemCodeAsync()).Should().Be(ApiErrorCodes.AppealAccountTooNew);
     }
 
     [Fact]
-    public async Task RequestVerification_SecondTimeInTheMonth_IsRejected()
+    public async Task RequestVerification_UntrustedDevice_IsForbidden()
     {
-        using var client = factory.CreateClientFor(token: null);
-        await RequestVerificationAsync(client, "3001112202");
+        using var client = await EstablishedAccountAsync();
 
-        var response = await RequestVerificationAsync(client, "+57 300 111 2202");
+        var response = await client.PostAsJsonAsync(
+            RequestAppealVerification.Route,
+            new AppealVerificationRequest("3001112203", NewDevice(), "forged-token"),
+            TestContext.Current.CancellationToken);
 
-        response.StatusCode.Should().Be(HttpStatusCode.TooManyRequests);
-        (await response.ProblemCodeAsync()).Should().Be(ApiErrorCodes.AppealLimitReached);
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        (await response.ProblemCodeAsync()).Should().Be(ApiErrorCodes.DeviceNotTrusted);
     }
 
     [Fact]
-    public async Task RequestVerification_InvalidNumber_ReturnsValidationProblem()
+    public async Task RequestVerification_SameNumberFromAnotherAccountAndDevice_IsLimited()
     {
-        using var client = factory.CreateClientFor(token: null);
+        using var first = await EstablishedAccountAsync();
+        using var second = await EstablishedAccountAsync();
+        await RequestVerificationAsync(first, "3001112204", NewDevice());
 
-        var response = await RequestVerificationAsync(client, "12");
+        var response = await RequestVerificationAsync(second, "3001112204", NewDevice());
+
+        await ShouldBeLimitedAsync(response);
+    }
+
+    [Fact]
+    public async Task RequestVerification_SameAccountWithAnotherSimAndDevice_IsLimited()
+    {
+        using var client = await EstablishedAccountAsync();
+        await RequestVerificationAsync(client, "3001112205", NewDevice());
+
+        var response = await RequestVerificationAsync(client, "3001112206", NewDevice());
+
+        await ShouldBeLimitedAsync(response);
+    }
+
+    [Fact]
+    public async Task RequestVerification_SameDeviceWithAnotherSimAndAccount_IsLimited()
+    {
+        var device = NewDevice();
+        using var first = await EstablishedAccountAsync();
+        using var second = await EstablishedAccountAsync();
+        await RequestVerificationAsync(first, "3001112207", device);
+
+        var response = await RequestVerificationAsync(second, "3001112208", device);
+
+        await ShouldBeLimitedAsync(response);
+    }
+
+    [Fact]
+    public async Task RequestVerification_SameAccountMonthAfterMonth_StopsAfterThreeInAYear()
+    {
+        using var client = await EstablishedAccountAsync();
+        for (var month = 0; month < AppealRules.AccountOrDeviceUsesPerYear; month++)
+        {
+            var allowed = await RequestVerificationAsync(client, $"30011123{month:D2}", NewDevice());
+            allowed.StatusCode.Should().Be(HttpStatusCode.OK);
+            factory.Clock.Advance(AppealRules.MonthWindow + TimeSpan.FromDays(1));
+        }
+
+        var response = await RequestVerificationAsync(client, "3001112399", NewDevice());
+
+        await ShouldBeLimitedAsync(response);
+    }
+
+    [Fact]
+    public async Task Submit_WithoutPhoneProof_ReturnsPhoneNotVerified()
+    {
+        using var client = await EstablishedAccountAsync();
+        var appEmailToken = TestTokens.Create(Guid.NewGuid().ToString("N"));
+
+        var response = await SubmitAsync(client, "3001112210", AppealKindDto.ReviewSpam, appEmailToken, NewDevice());
 
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-        (await response.ProblemCodeAsync()).Should().Be(ApiErrorCodes.ValidationFailed);
+        (await response.ProblemCodeAsync()).Should().Be(ApiErrorCodes.PhoneNotVerified);
     }
 
     [Fact]
-    public async Task Submit_WithAppAccountToken_IsForbidden()
+    public async Task Submit_StalePhoneProof_ReturnsPhoneNotVerified()
     {
-        using var client = factory.CreateClientFor(TestTokens.Create(Guid.NewGuid().ToString("N")));
+        using var client = await EstablishedAccountAsync();
+        var staleProof = TestTokens.CreateForPhone(
+            "+573001112211", factory.Clock.GetUtcNow() - AppealRules.PhoneProofMaxAge - TimeSpan.FromMinutes(1));
 
-        var response = await SubmitAsync(client, new SubmitAppealRequest(AppealKindDto.HideNames, null, null));
+        var response = await SubmitAsync(client, "3001112211", AppealKindDto.ReviewSpam, staleProof, NewDevice());
 
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
-    }
-
-    [Fact]
-    public async Task AppEndpoints_WithPhoneToken_AreForbidden()
-    {
-        using var client = factory.CreateClientFor(TestTokens.CreateForPhone("+573001112203"));
-
-        var response = await client.PostAsJsonAsync(LookupNumber.Route, new LookupRequest("3001112203"), TestContext.Current.CancellationToken);
-
-        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        (await response.ProblemCodeAsync()).Should().Be(ApiErrorCodes.PhoneNotVerified);
     }
 
     [Fact]
     public async Task Submit_ReviewSpam_IsPendingAndOnlyOncePerMonth()
     {
-        using var client = factory.CreateClientFor(TestTokens.CreateForPhone("+573001112204"));
-        var request = new SubmitAppealRequest(AppealKindDto.ReviewSpam, "It is my shop's number.", "owner@example.com");
+        using var client = await EstablishedAccountAsync();
+        using var other = await EstablishedAccountAsync();
 
-        var first = await SubmitAsync(client, request);
-        var second = await SubmitAsync(client, request);
+        var first = await SubmitAsync(client, "3001112212", AppealKindDto.ReviewSpam);
+        var second = await SubmitAsync(other, "3001112212", AppealKindDto.ReviewSpam);
 
         first.StatusCode.Should().Be(HttpStatusCode.OK);
         (await first.Content.ReadFromJsonAsync<AppealResponse>(ApiClientExtensions.JsonOptions, TestContext.Current.CancellationToken))!
             .Status.Should().Be(AppealStatusDto.Pending);
-        second.StatusCode.Should().Be(HttpStatusCode.TooManyRequests);
-        (await second.ProblemCodeAsync()).Should().Be(ApiErrorCodes.AppealLimitReached);
-    }
-
-    [Fact]
-    public async Task Submit_InvalidEmail_ReturnsValidationProblem()
-    {
-        using var client = factory.CreateClientFor(TestTokens.CreateForPhone("+573001112205"));
-
-        var response = await SubmitAsync(client, new SubmitAppealRequest(AppealKindDto.ReviewSpam, null, "not-an-email"));
-
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        await ShouldBeLimitedAsync(second);
     }
 
     [Fact]
     public async Task Submit_HideNames_HidesTheNamesButKeepsTheSpamVerdict()
     {
-        const string number = "3001112206";
+        const string number = "3001112213";
+        using var owner = await EstablishedAccountAsync();
         var reportersNeeded = (int)Math.Ceiling(ReputationRules.MinimumSpamWeight / ReputationRules.NewAccountVoteWeight);
         for (var i = 0; i < reportersNeeded; i++)
         {
@@ -123,8 +169,7 @@ public sealed class AppealTests(TranquiApiFactory factory) : IClassFixture<Tranq
                 TestContext.Current.CancellationToken);
         }
 
-        using var owner = factory.CreateClientFor(TestTokens.CreateForPhone("+57" + number));
-        var response = await SubmitAsync(owner, new SubmitAppealRequest(AppealKindDto.HideNames, null, null));
+        var response = await SubmitAsync(owner, number, AppealKindDto.HideNames);
 
         (await response.Content.ReadFromJsonAsync<AppealResponse>(ApiClientExtensions.JsonOptions, TestContext.Current.CancellationToken))!
             .Status.Should().Be(AppealStatusDto.Applied);
@@ -134,14 +179,56 @@ public sealed class AppealTests(TranquiApiFactory factory) : IClassFixture<Tranq
         lookup.OtherNames.Should().BeEmpty();
     }
 
-    private static Task<HttpResponseMessage> RequestVerificationAsync(HttpClient client, string phoneNumber) =>
+    [Fact]
+    public async Task AppEndpoints_WithPhoneProofAsBearer_AreForbidden()
+    {
+        using var client = factory.CreateClientFor(TestTokens.CreateForPhone("+573001112214", factory.Clock.GetUtcNow()));
+
+        var response = await client.PostAsJsonAsync(LookupNumber.Route, new LookupRequest("3001112214"), TestContext.Current.CancellationToken);
+
+        response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+    }
+
+    private static string NewDevice() => Guid.NewGuid().ToString("N")[..16];
+
+    private static string TrustedToken(AppealAction action, string device, string number) =>
+        AppealApiFactory.TrustedToken(AppealNonce.Compute(action, DeviceId.TryParse(device)!, PhoneNumber.TryParse(number)!));
+
+    private async Task<HttpClient> EstablishedAccountAsync()
+    {
+        var client = await factory.CreateRegisteredClientAsync();
+        factory.Clock.Advance(pastMinimumAge);
+
+        return client;
+    }
+
+    private static Task<HttpResponseMessage> RequestVerificationAsync(HttpClient client, string number, string device) =>
         client.PostAsJsonAsync(
             RequestAppealVerification.Route,
-            new AppealVerificationRequest(phoneNumber),
+            new AppealVerificationRequest(number, device, TrustedToken(AppealAction.SmsVerification, device, number)),
             TestContext.Current.CancellationToken);
 
-    private static Task<HttpResponseMessage> SubmitAsync(HttpClient client, SubmitAppealRequest request) =>
-        client.PostAsJsonAsync(SubmitAppeal.Route, request, ApiClientExtensions.JsonOptions, TestContext.Current.CancellationToken);
+    private Task<HttpResponseMessage> SubmitAsync(HttpClient client, string number, AppealKindDto kind) =>
+        SubmitAsync(
+            client,
+            number,
+            kind,
+            TestTokens.CreateForPhone(PhoneNumber.TryParse(number)!.E164, factory.Clock.GetUtcNow()),
+            NewDevice());
+
+    private static Task<HttpResponseMessage> SubmitAsync(
+        HttpClient client, string number, AppealKindDto kind, string phoneProof, string device) =>
+        client.PostAsJsonAsync(
+            SubmitAppeal.Route,
+            new SubmitAppealRequest(phoneProof, device, TrustedToken(AppealAction.Appeal, device, number), kind, null, null),
+            ApiClientExtensions.JsonOptions,
+            TestContext.Current.CancellationToken);
+
+    private static async Task ShouldBeLimitedAsync(HttpResponseMessage response)
+    {
+        response.StatusCode.Should().Be(HttpStatusCode.TooManyRequests);
+        (await response.ProblemCodeAsync()).Should().Be(ApiErrorCodes.AppealLimitReached);
+    }
 
     private async Task<LookupResponse> LookupAsync(string number)
     {

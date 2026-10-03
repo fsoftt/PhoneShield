@@ -4,11 +4,9 @@ namespace Tranqui.Domain.Appeals;
 
 public interface IAppealRepository
 {
-    Task<int> CountVerificationsSinceAsync(PhoneHash phoneHash, DateTimeOffset since, CancellationToken cancellationToken);
+    Task<int> CountUsagesSinceAsync(QuotaSubject subject, AppealAction action, DateTimeOffset since, CancellationToken cancellationToken);
 
-    void AddVerification(SmsVerificationRequest request);
-
-    Task<int> CountAppealsSinceAsync(PhoneHash phoneHash, DateTimeOffset since, CancellationToken cancellationToken);
+    void AddUsage(AppealQuotaUsage usage);
 
     void AddAppeal(Appeal appeal);
 

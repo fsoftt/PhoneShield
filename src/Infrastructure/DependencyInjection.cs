@@ -3,12 +3,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Tranqui.Application.Features.LookupNumber;
+using Tranqui.Application.Abstractions;
 using Tranqui.Domain.Abstractions;
 using Tranqui.Domain.Appeals;
 using Tranqui.Domain.PhoneNumbers;
 using Tranqui.Domain.Reputation;
 using Tranqui.Domain.Users;
 using Tranqui.Infrastructure.Appeals;
+using Tranqui.Infrastructure.Integrity;
 using Tranqui.Infrastructure.Persistence;
 using Tranqui.Infrastructure.PhoneNumbers;
 using Tranqui.Infrastructure.Reputation;
@@ -27,6 +29,7 @@ public static class DependencyInjection
         AddPhoneHashing(services);
         AddNameProtection(services);
         AddContributorIds(services);
+        AddPlayIntegrity(services);
         AddPersistence(services, configuration);
 
         return services;
@@ -57,6 +60,13 @@ public static class DependencyInjection
             .ValidateOnStart();
         services.AddSingleton<IValidateOptions<ContributorIdOptions>, ContributorIdOptionsValidator>();
         services.AddSingleton<IContributorIdProvider, HmacContributorIdProvider>();
+        services.AddSingleton<IDeviceKeyProvider, HmacDeviceKeyProvider>();
+    }
+
+    private static void AddPlayIntegrity(IServiceCollection services)
+    {
+        services.AddOptions<PlayIntegrityOptions>().BindConfiguration(PlayIntegrityOptions.SectionName);
+        services.AddSingleton<IDeviceIntegrityVerifier, PlayIntegrityVerifier>();
     }
 
     private static void AddPersistence(IServiceCollection services, IConfiguration configuration)

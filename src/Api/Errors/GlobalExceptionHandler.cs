@@ -18,7 +18,10 @@ public sealed partial class GlobalExceptionHandler(
     private const string ValidationErrorTitle = "The request is not valid.";
     private const string AccountNotRegisteredTitle = "The account must be registered first.";
     private const string ConsentRequiredTitle = "The contact upload consent is required.";
-    private const string AppealLimitReachedTitle = "This number already used its appeal for this month.";
+    private const string AppealLimitReachedTitle = "The number, account or device already used its appeal quota.";
+    private const string AppealAccountTooNewTitle = "The account is too new to appeal.";
+    private const string DeviceNotTrustedTitle = "The device integrity check failed.";
+    private const string PhoneNotVerifiedTitle = "The phone number was not verified.";
 
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
@@ -43,6 +46,21 @@ public sealed partial class GlobalExceptionHandler(
         if (exception is AppealLimitReachedException)
         {
             return await WriteProblemAsync(httpContext, StatusCodes.Status429TooManyRequests, AppealLimitReachedTitle, ApiErrorCodes.AppealLimitReached);
+        }
+
+        if (exception is AppealAccountTooNewException)
+        {
+            return await WriteProblemAsync(httpContext, StatusCodes.Status403Forbidden, AppealAccountTooNewTitle, ApiErrorCodes.AppealAccountTooNew);
+        }
+
+        if (exception is DeviceNotTrustedException)
+        {
+            return await WriteProblemAsync(httpContext, StatusCodes.Status403Forbidden, DeviceNotTrustedTitle, ApiErrorCodes.DeviceNotTrusted);
+        }
+
+        if (exception is PhoneNotVerifiedException)
+        {
+            return await WriteProblemAsync(httpContext, StatusCodes.Status400BadRequest, PhoneNotVerifiedTitle, ApiErrorCodes.PhoneNotVerified);
         }
 
         LogUnhandledException(exception.GetType().Name);

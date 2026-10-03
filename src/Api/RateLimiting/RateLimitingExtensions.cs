@@ -51,11 +51,9 @@ public static class RateLimitingExtensions
             limiter.AddPolicy(ContactUploadPolicy, httpContext => RateLimitPartition.Get(
                 UserPartitionKey(httpContext),
                 _ => FixedWindow(options.ContactUploads.BatchesPerDay, day)));
-
-            // Appeals are anonymous until the SMS is verified, so they are limited per client IP instead.
             limiter.AddPolicy(AppealPolicy, httpContext => RateLimitPartition.Get(
-                httpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
-                _ => FixedWindow(options.Appeals.PerHour, hour)));
+                UserPartitionKey(httpContext),
+                _ => FixedWindow(options.Appeals.PerDay, day)));
         });
 
         return services;

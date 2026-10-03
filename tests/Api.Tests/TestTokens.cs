@@ -23,11 +23,15 @@ public static class TestTokens
             new Claim("sub", firebaseUid),
             new Claim("email_verified", emailVerified ? "true" : "false", ClaimValueTypes.Boolean));
 
-    /// <summary>A token from a phone sign-in: Firebase verified the number by SMS; there is no email.</summary>
-    public static string CreateForPhone(string e164) =>
+    /// <summary>A token from an SMS sign-in: Firebase verified the number; there is no email.</summary>
+    public static string CreateForPhone(string e164, DateTimeOffset signedInAt) =>
         Issue(ProjectId, null,
             new Claim("sub", Guid.NewGuid().ToString("N")),
-            new Claim("phone_number", e164));
+            new Claim("phone_number", e164),
+            new Claim(
+                "auth_time",
+                signedInAt.ToUnixTimeSeconds().ToString(System.Globalization.CultureInfo.InvariantCulture),
+                ClaimValueTypes.Integer64));
 
     private static string Issue(string audience, DateTime? expires, params Claim[] claims)
     {

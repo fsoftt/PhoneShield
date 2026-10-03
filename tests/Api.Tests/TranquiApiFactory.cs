@@ -13,10 +13,9 @@ namespace Tranqui.Api.Tests;
 /// Hosts the API in memory against a real PostgreSQL container, with throwaway secrets and a local token signing key
 /// in place of Google's. Token validation rules (issuer, audience, lifetime, claims) are the production ones.
 /// </summary>
-public sealed class TranquiApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
+public class TranquiApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     public const int LookupLimitPerHour = 5;
-    public const string WebsiteOrigin = "https://website.example";
 
     private readonly PostgreSqlContainer database = new PostgreSqlBuilder("postgres:17-alpine").Build();
 
@@ -26,6 +25,7 @@ public sealed class TranquiApiFactory : WebApplicationFactory<Program>, IAsyncLi
     {
         await base.DisposeAsync();
         await database.DisposeAsync();
+        GC.SuppressFinalize(this);
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -36,7 +36,6 @@ public sealed class TranquiApiFactory : WebApplicationFactory<Program>, IAsyncLi
         builder.UseSetting("PhoneHashing:Keys:1", Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)));
         builder.UseSetting("ContributorIds:Key", Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)));
         builder.UseSetting("NameProtection:Key", Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)));
-        builder.UseSetting("Cors:AllowedOrigins:0", WebsiteOrigin);
         builder.UseSetting("RateLimiting:Lookup:PerHour", LookupLimitPerHour.ToString(CultureInfo.InvariantCulture));
 
         builder.ConfigureServices(services =>

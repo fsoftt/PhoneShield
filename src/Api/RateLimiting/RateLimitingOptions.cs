@@ -39,9 +39,12 @@ public sealed class RateLimitingOptions
 
     public sealed class AppealLimits
     {
-        /// <summary>Per client IP, for appeal requests; each number still gets one SMS and one appeal per month.</summary>
-        private const int DefaultPerHour = 10;
+        /// <summary>
+        /// Appeal calls per user, failed ones included (each costs a Play Integrity check). Successful ones are capped
+        /// far lower by the per-number, per-account and per-device quotas.
+        /// </summary>
+        private const int DefaultPerDay = 10;
 
-        public int PerHour { get; set; } = DefaultPerHour;
+        public int PerDay { get; set; } = DefaultPerDay;
     }
 }
