@@ -14,8 +14,8 @@ public static class DependencyInjection
 {
     /// <summary>
     /// Registers everything except platform services, which the app provides: <see cref="ISecureStore"/>, navigation,
-    /// <see cref="IBlockList"/>, <see cref="IDeviceContacts"/>, <see cref="IScreeningSettingsStore"/> and
-    /// <see cref="Protection.IProtectionPermissions"/>.
+    /// <see cref="IBlockList"/>, <see cref="IDeviceContacts"/>, <see cref="IScreeningSettingsStore"/>,
+    /// <see cref="Protection.IProtectionPermissions"/> and <see cref="Dialogs.IDialogService"/>.
     /// </summary>
     public static IServiceCollection AddTranquiCore(this IServiceCollection services, Uri apiBaseAddress, string firebaseApiKey)
     {
@@ -41,6 +41,9 @@ public static class DependencyInjection
         services.AddTransient<SignUpViewModel>();
         services.AddTransient<VerifyEmailViewModel>();
         services.AddTransient<HomeViewModel>();
+        services.AddTransient<SettingsViewModel>();
+        services.AddTransient<BlockedNumbersViewModel>();
+        services.AddTransient<AccountViewModel>();
 
         return services;
     }
