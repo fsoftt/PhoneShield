@@ -7,8 +7,6 @@ namespace Tranqui.Api.Authentication;
 
 public static class AuthenticationExtensions
 {
-    public const string PhoneVerifiedPolicy = "phone-verified";
-
     private const string FirebaseIssuerPrefix = "https://securetoken.google.com/";
 
     /// <summary>
@@ -42,20 +40,17 @@ public static class AuthenticationExtensions
                 };
             });
 
-        // App endpoints need a verified email account. Appeal tokens come from a throwaway phone sign-in on the
-        // website: they carry phone_number but no verified email, so they can only reach the appeal endpoint.
+        // Every endpoint needs a verified email account. The throwaway SMS sign-in of an appeal has no verified email,
+        // so its token cannot call the API; it only travels as proof inside the appeal body.
         services.AddAuthorizationBuilder()
             .SetFallbackPolicy(new AuthorizationPolicyBuilder()
                 .RequireAuthenticatedUser()
                 .RequireClaim(FirebaseClaims.EmailVerified, FirebaseClaims.True)
-                .Build())
-            .AddPolicy(PhoneVerifiedPolicy, policy => policy
-                .RequireAuthenticatedUser()
-                .RequireClaim(FirebaseClaims.PhoneNumber));
+                .Build());
 
         services.AddHttpContextAccessor();
         services.AddScoped<ICurrentUser, HttpContextCurrentUser>();
-        services.AddScoped<IVerifiedPhone, HttpContextVerifiedPhone>();
+        services.AddSingleton<IPhoneProofValidator, FirebasePhoneProofValidator>();
 
         return services;
     }

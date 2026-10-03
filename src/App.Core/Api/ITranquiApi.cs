@@ -1,5 +1,6 @@
 using Refit;
 using Tranqui.Contracts.Accounts;
+using Tranqui.Contracts.Appeals;
 using Tranqui.Contracts.Contacts;
 using Tranqui.Contracts.Lookups;
 using Tranqui.Contracts.Reports;
@@ -32,4 +33,12 @@ public interface ITranquiApi
 
     [Delete("/v1/contacts")]
     Task<WithdrawContactsResponse> WithdrawContactsAsync(CancellationToken cancellationToken);
+
+    [Post("/v1/appeals/verification-requests")]
+    Task<AppealVerificationResponse> RequestAppealVerificationAsync(
+        [Body] AppealVerificationRequest request,
+        CancellationToken cancellationToken);
+
+    [Post("/v1/appeals")]
+    Task<AppealResponse> SubmitAppealAsync([Body] SubmitAppealRequest request, CancellationToken cancellationToken);
 }

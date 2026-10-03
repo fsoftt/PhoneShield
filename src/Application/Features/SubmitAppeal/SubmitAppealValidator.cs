@@ -7,6 +7,18 @@ internal sealed class SubmitAppealValidator : AbstractValidator<SubmitAppealComm
 {
     public SubmitAppealValidator()
     {
+        RuleFor(command => command.PhoneProof)
+            .NotEmpty()
+            .MaximumLength(AppealRules.PhoneProofMaxLength);
+
+        RuleFor(command => command.DeviceId)
+            .Must(raw => DeviceId.TryParse(raw) is not null)
+            .WithMessage("The device id is not valid.");
+
+        RuleFor(command => command.IntegrityToken)
+            .NotEmpty()
+            .MaximumLength(AppealRules.IntegrityTokenMaxLength);
+
         RuleFor(command => command.Kind).IsInEnum();
 
         RuleFor(command => command.Reason)

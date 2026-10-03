@@ -42,6 +42,39 @@ public sealed class FirebaseAuthClientTests
     }
 
     [Fact]
+    public async Task SendVerificationCodeAsync_SendsTheIntegrityTokenAndReturnsTheSession()
+    {
+        var handler = new StubHttpMessageHandler(HttpStatusCode.OK, """{"sessionInfo":"session"}""");
+
+        var session = await CreateClient(handler).SendVerificationCodeAsync("+573001234567", "integrity", CancellationToken.None);
+
+        session.Should().Be("session");
+        handler.LastRequest!.RequestUri!.ToString().Should().Contain("accounts:sendVerificationCode");
+        handler.LastRequestBody.Should().Contain("573001234567").And.Contain("\"playIntegrityToken\":\"integrity\"");
+    }
+
+    [Fact]
+    public async Task SignInWithPhoneNumberAsync_ReturnsTheIdToken()
+    {
+        var handler = new StubHttpMessageHandler(HttpStatusCode.OK, """{"idToken":"phone-id","phoneNumber":"+573001234567"}""");
+
+        var idToken = await CreateClient(handler).SignInWithPhoneNumberAsync("session", "123456", CancellationToken.None);
+
+        idToken.Should().Be("phone-id");
+        handler.LastRequestBody.Should().Contain("\"sessionInfo\":\"session\"").And.Contain("\"code\":\"123456\"");
+    }
+
+    [Fact]
+    public async Task SignInWithPhoneNumberAsync_WrongCode_ThrowsWithLocalizedMessage()
+    {
+        var handler = new StubHttpMessageHandler(HttpStatusCode.BadRequest, """{"error":{"code":400,"message":"INVALID_CODE"}}""");
+
+        var act = () => CreateClient(handler).SignInWithPhoneNumberAsync("session", "000000", CancellationToken.None);
+
+        (await act.Should().ThrowAsync<FirebaseAuthException>()).Which.Message.Should().Be(Texts.FirebaseInvalidCode);
+    }
+
+    [Fact]
     public async Task RefreshAsync_UsesTheSecureTokenEndpoint()
     {
         var handler = new StubHttpMessageHandler(HttpStatusCode.OK,

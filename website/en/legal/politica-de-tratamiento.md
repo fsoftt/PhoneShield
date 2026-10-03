@@ -25,7 +25,7 @@ This policy complies with Colombia's Law 1581 of 2012 and Decree 1377 of 2013 (c
 | Phone numbers looked up or reported | Only as a code (hash) with a secret key; never the number | Identify calls and detect spam |
 | Names and spam labels | Encrypted with a key derived from each number | Show who is calling |
 | Address book (only if you choose to contribute) | Numbers as codes and encrypted names; personal names ("Mom") are discarded | Identify calls for the community |
-| Review requests for a number ([form](/en/guia/apelacion)) | The number only as a code; Firebase (Google) processes it to send the SMS code and we delete that verification once confirmed; the reason and optional email are deleted once the request is resolved | Verify the number is yours, handle the request and limit it to one per month |
+| Appeals for a number ([how](/en/guia/apelacion)) | The number only as a code; Firebase (Google) processes it to send the SMS code and we delete that verification once confirmed; a phone identifier (ANDROID_ID) and the account, each only as a code and separately; the reason and optional email are deleted once the request is resolved | Verify the number is yours, handle the request and limit use per number, account and phone |
 
 We do **not** use the data for advertising, do **not** sell it and do **not** build profiles.
 

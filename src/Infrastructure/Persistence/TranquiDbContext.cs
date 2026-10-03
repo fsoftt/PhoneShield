@@ -16,7 +16,7 @@ public sealed class TranquiDbContext(DbContextOptions<TranquiDbContext> options)
 
     public DbSet<Appeal> Appeals => Set<Appeal>();
 
-    public DbSet<SmsVerificationRequest> SmsVerificationRequests => Set<SmsVerificationRequest>();
+    public DbSet<AppealQuotaUsage> AppealQuotaUsages => Set<AppealQuotaUsage>();
 
     public DbSet<HiddenNumber> HiddenNumbers => Set<HiddenNumber>();
 

@@ -3,5 +3,14 @@ using Tranqui.Domain.Appeals;
 
 namespace Tranqui.Application.Features.SubmitAppeal;
 
-/// <summary>Filed by the SMS-verified owner of a number; which number comes from the verified token, never the body.</summary>
-public sealed record SubmitAppealCommand(AppealKind Kind, string? Reason, string? ContactEmail) : IRequest<AppealStatus>;
+/// <summary>
+/// Filed from the app by the owner of a number. <see cref="PhoneProof"/> is the ID token of the SMS sign-in; the number
+/// comes from it, never from the client.
+/// </summary>
+public sealed record SubmitAppealCommand(
+    string PhoneProof,
+    string DeviceId,
+    string IntegrityToken,
+    AppealKind Kind,
+    string? Reason,
+    string? ContactEmail) : IRequest<AppealStatus>;

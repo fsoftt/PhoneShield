@@ -68,6 +68,42 @@ namespace Tranqui.Infrastructure.Persistence.Migrations
                     b.ToTable("appeals", (string)null);
                 });
 
+            modelBuilder.Entity("Tranqui.Domain.Appeals.AppealQuotaUsage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)")
+                        .HasColumnName("action");
+
+                    b.Property<byte[]>("SubjectKey")
+                        .IsRequired()
+                        .HasColumnType("bytea")
+                        .HasColumnName("subject_key");
+
+                    b.Property<string>("SubjectKind")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)")
+                        .HasColumnName("subject_kind");
+
+                    b.Property<DateTimeOffset>("UsedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("used_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_appeal_quota_usages");
+
+                    b.HasIndex("SubjectKind", "SubjectKey", "Action", "UsedAt")
+                        .HasDatabaseName("ix_appeal_quota_usages_subject_kind_subject_key_action_used_at");
+
+                    b.ToTable("appeal_quota_usages", (string)null);
+                });
+
             modelBuilder.Entity("Tranqui.Domain.Appeals.HiddenNumber", b =>
                 {
                     b.Property<byte[]>("PhoneHash")
@@ -82,30 +118,6 @@ namespace Tranqui.Infrastructure.Persistence.Migrations
                         .HasName("pk_hidden_numbers");
 
                     b.ToTable("hidden_numbers", (string)null);
-                });
-
-            modelBuilder.Entity("Tranqui.Domain.Appeals.SmsVerificationRequest", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<byte[]>("PhoneHash")
-                        .IsRequired()
-                        .HasColumnType("bytea")
-                        .HasColumnName("phone_hash");
-
-                    b.Property<DateTimeOffset>("RequestedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("requested_at");
-
-                    b.HasKey("Id")
-                        .HasName("pk_sms_verification_requests");
-
-                    b.HasIndex("PhoneHash", "RequestedAt")
-                        .HasDatabaseName("ix_sms_verification_requests_phone_hash_requested_at");
-
-                    b.ToTable("sms_verification_requests", (string)null);
                 });
 
             modelBuilder.Entity("Tranqui.Domain.Reputation.ContactContribution", b =>

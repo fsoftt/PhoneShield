@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using Tranqui.Application.Appeals;
 using Tranqui.Application.Behaviors;
 
 namespace Tranqui.Application;
@@ -16,6 +17,7 @@ public static class DependencyInjection
             config.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
         services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
+        services.AddScoped<AppealGate>();
 
         return services;
     }

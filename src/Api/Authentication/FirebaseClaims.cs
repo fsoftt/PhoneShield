@@ -8,5 +8,8 @@ public static class FirebaseClaims
 
     /// <summary>Present only when Firebase verified a phone number by SMS.</summary>
     public const string PhoneNumber = "phone_number";
+
+    /// <summary>When the user signed in, in Unix seconds (unlike "iat", a token refresh does not move it).</summary>
+    public const string AuthTime = "auth_time";
     public const string True = "true";
 }

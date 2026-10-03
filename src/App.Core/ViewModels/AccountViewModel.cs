@@ -29,6 +29,9 @@ public sealed partial class AccountViewModel(
     });
 
     [RelayCommand]
+    private Task OpenAppealAsync() => navigation.GoToAsync(Routes.Appeal);
+
+    [RelayCommand]
     private Task SignOutAsync()
     {
         authService.SignOut();

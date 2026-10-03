@@ -145,11 +145,11 @@ Un número guardado como "Mamá" por muchas personas **no** es spam por defecto 
 - Privacidad: ver qué se envía, exportar mis datos, borrar cuenta.
 - Apariencia: tema claro/oscuro/sistema.
 
-### 5.3 Apelación y "ocultar mi número" (web pública, sin cuenta)
+### 5.3 Apelación y "ocultar mi número"
 
-- Formulario web en el sitio, con el reCAPTCHA invisible que exige Firebase Phone Auth.
-- **Verificación de propiedad** del número por SMS (Firebase Phone Auth); la cuenta temporal de Firebase se borra apenas termina la verificación, para no dejar el número guardado.
-- **Un SMS y una apelación por número cada 30 días**: antes de pedir el SMS, el sitio llama a `POST /v1/appeals/verification-requests`, que lo registra (por hash) y rechaza el segundo con `appeal_limit_reached`. La apelación (`POST /v1/appeals`) toma el número del token verificado, nunca del cuerpo.
+- **En la app (automática):** requiere una cuenta con al menos 7 días, verificación del dispositivo con **Play Integrity** (app reconocida por Google Play en un dispositivo íntegro, con un nonce que amarra la acción, el dispositivo y el número) y la **verificación de propiedad** del número por SMS (Firebase Phone Auth con el token de Play Integrity en lugar de reCAPTCHA). El usuario temporal de Firebase se borra apenas termina la verificación, para no dejar el número guardado.
+- **Cuotas:** cada SMS y cada apelación se cuentan contra el **número** (1 al mes), la **cuenta** y el **dispositivo** (`ANDROID_ID`; 1 al mes y 3 al año). Así, cambiar de SIM o de cuenta no reinicia el límite. Cada uno se guarda por separado con su propio hash con clave, sin registrar qué cuenta o dispositivo apeló por qué número.
+- **En la web (manual):** el sitio explica el canal por correo para quien no usa la app; una persona revisa y puede pedir pruebas de que el número es suyo. La ley exige un canal sin barreras para los titulares.
 - Acciones: "Este número no es spam" (queda pendiente para revisión manual) y "Ocultar los nombres asociados a mi número" (se aplica de inmediato).
 - Ocultar nombres **no** borra los reportes de spam; un spammer no puede limpiar su número así.
 - Plazos legales en Colombia: consultas 10 días hábiles, reclamos 15 días hábiles (ver `docs/legal-colombia.md`).
@@ -215,6 +215,7 @@ Dependencias: `Api → Application/Infrastructure → Domain`; `App → Contract
 | Copias de seguridad (Cloudflare R2, 10 GB) | Gratis |
 | Firebase Authentication (email, Google) | Gratis a este tamaño |
 | Verificación SMS para apelaciones | Primeros 10 SMS/día gratis (plan Blaze); luego ~US$0.05 c/u |
+| Play Integrity API | Gratis hasta 10 000 solicitudes/día |
 | F-Droid | Gratis |
 | Dominio | ~US$10/año |
 | Seq (desarrollo / un usuario) | Gratis |

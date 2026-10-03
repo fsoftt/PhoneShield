@@ -11,6 +11,7 @@
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.12" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.12" />
     <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
+    <PackageVersion Include="Google.Apis.PlayIntegrity.v1" Version="1.76.0.4270" />
     <PackageVersion Include="EFCore.NamingConventions" Version="10.0.1" />
   </ItemGroup>
   <ItemGroup Label="Application">
@@ -28,6 +29,13 @@
   <ItemGroup Label="App">
     <PackageVersion Include="Microsoft.Maui.Controls" Version="10.0.110" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="10.0.12" />
+    <PackageVersion Include="Xamarin.Google.Android.Play.Integrity" Version="1.6.0.4" />
+    <!-- Play Integrity brings newer AndroidX than MAUI does; these align MAUI's Ktx/companion packages with it. -->
+    <PackageVersion Include="Xamarin.AndroidX.Collection.Ktx" Version="1.6.0.1" />
+    <PackageVersion Include="Xamarin.AndroidX.Fragment.Ktx" Version="1.9.0" />
+    <PackageVersion Include="Xamarin.AndroidX.Lifecycle.LiveData" Version="2.11.0.1" />
+    <PackageVersion Include="Xamarin.AndroidX.Lifecycle.LiveData.Core.Ktx" Version="2.11.0.1" />
+    <PackageVersion Include="Xamarin.AndroidX.Lifecycle.Process" Version="2.11.0.1" />
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageVersion Include="Refit.HttpClientFactory" Version="16.3.0" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.12" />
