@@ -147,9 +147,10 @@ Un número guardado como "Mamá" por muchas personas **no** es spam por defecto 
 
 ### 5.3 Apelación y "ocultar mi número" (web pública, sin cuenta)
 
-- Formulario web con captcha (Cloudflare Turnstile, gratis).
+- Formulario web en el sitio, con el reCAPTCHA invisible que exige Firebase Phone Auth.
 - **Verificación de propiedad** del número por SMS (Firebase Phone Auth); la cuenta temporal de Firebase se borra apenas termina la verificación, para no dejar el número guardado.
-- Acciones: "Este número no es spam" (revisión de los reportes; se congela el estado rojo mientras se revisa) y "Ocultar los nombres asociados a mi número".
+- **Un SMS y una apelación por número cada 30 días**: antes de pedir el SMS, el sitio llama a `POST /v1/appeals/verification-requests`, que lo registra (por hash) y rechaza el segundo con `appeal_limit_reached`. La apelación (`POST /v1/appeals`) toma el número del token verificado, nunca del cuerpo.
+- Acciones: "Este número no es spam" (queda pendiente para revisión manual) y "Ocultar los nombres asociados a mi número" (se aplica de inmediato).
 - Ocultar nombres **no** borra los reportes de spam; un spammer no puede limpiar su número así.
 - Plazos legales en Colombia: consultas 10 días hábiles, reclamos 15 días hábiles (ver `docs/legal-colombia.md`).
 
@@ -213,7 +214,7 @@ Dependencias: `Api → Application/Infrastructure → Domain`; `App → Contract
 | Cloudflare (DNS, proxy, Turnstile) | Gratis |
 | Copias de seguridad (Cloudflare R2, 10 GB) | Gratis |
 | Firebase Authentication (email, Google) | Gratis a este tamaño |
-| Verificación SMS para apelaciones | ~US$0.05 c/u, bajo volumen |
+| Verificación SMS para apelaciones | Primeros 10 SMS/día gratis (plan Blaze); luego ~US$0.05 c/u |
 | F-Droid | Gratis |
 | Dominio | ~US$10/año |
 | Seq (desarrollo / un usuario) | Gratis |

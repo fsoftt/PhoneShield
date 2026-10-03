@@ -1,24 +1,27 @@
 # ¿Tu número aparece mal?
 
-No necesitas tener cuenta ni instalar la app.
+No necesitas tener cuenta ni instalar la app. Solo tienes que demostrar que el número es tuyo con un código que te
+enviamos por SMS.
 
-## Ocultar los nombres asociados a tu número
+## Qué puedes pedir
 
-Si tu número aparece con un nombre que no quieres que se muestre, podemos ocultarlo.
-Ocultar nombres **no** cambia si un número está marcado como spam, para que nadie pueda usarlo para limpiar un número de spam.
+- **Ocultar los nombres asociados a tu número.** Se aplica de inmediato. Ocultar nombres **no** cambia si un número
+  está marcado como spam, para que nadie pueda usarlo para limpiar un número de spam.
+- **"Mi número no es spam".** Una persona revisa cada solicitud y responde dentro de los plazos de la ley colombiana
+  (consultas en 10 días hábiles y reclamos en 15 días hábiles).
 
-## "Mi número no es spam"
+## Solicitud
 
-Si tu número aparece como spam por error, escríbenos. Revisamos cada solicitud a mano y respondemos dentro de los
-plazos de la ley colombiana (consultas en 10 días hábiles y reclamos en 15 días hábiles).
+<AppealForm />
 
-## Cómo pedirlo
+Cada número recibe **un solo SMS y puede hacer una sola solicitud al mes**. Así mantenemos el servicio gratuito y
+evitamos que alguien use el formulario para enviar mensajes a números ajenos.
 
-Por ahora, escribe a <span class="placeholder">[CORREO DE CONTACTO]</span> con:
+Si no te llega el SMS o prefieres no usarlo, escribe a <span class="placeholder">[CORREO DE CONTACTO]</span>.
 
-- el número (con indicativo, por ejemplo +57 300 123 4567),
-- qué quieres: ocultar los nombres o revisar el marcado como spam,
-- si quieres, por qué crees que es un error.
+## Qué hacemos con tus datos
 
-Usamos el número solo para atender tu solicitud y no lo guardamos después de resolverla.
-Pronto habrá un formulario en esta página.
+- El número no se guarda: igual que en el resto de Tranqui, solo guardamos su hash con clave secreta.
+- El código lo envía Firebase (Google), que procesa el número para mandar el SMS. Apenas confirmas el código, borramos
+  la sesión que Firebase crea para verificarlo.
+- Si dejas un correo, lo usamos solo para responder y lo borramos al resolver la solicitud.

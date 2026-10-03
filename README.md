@@ -63,6 +63,8 @@ Logs estructurados en Seq: http://localhost:8081.
 | `RateLimiting:Lookup:PerHour` / `PerDay` | Opcional. Consultas por usuario (por defecto 60/hora y 300/día) | `appsettings.json` / variables de entorno |
 | `RateLimiting:Reports:PerDay` | Opcional. Reportes por usuario (por defecto 20/día) | `appsettings.json` / variables de entorno |
 | `RateLimiting:ContactUploads:BatchesPerDay` | Opcional. Lotes de contactos por usuario (por defecto 20/día, de hasta 500 contactos) | `appsettings.json` / variables de entorno |
+| `RateLimiting:Appeals:PerHour` | Opcional. Solicitudes de apelación por IP (por defecto 10/hora); aparte, cada número tiene un SMS y una apelación al mes | `appsettings.json` / variables de entorno |
+| `Cors:AllowedOrigins:0` | Origen del sitio web que llama a los endpoints de apelación (ej. `https://fsoftt.github.io`) | variable de entorno `Cors__AllowedOrigins__0` |
 | `PhoneHashing:CurrentKeyVersion` | Versión vigente de la clave de hash (empieza en `1`) | user-secrets / variable de entorno `PhoneHashing__CurrentKeyVersion` |
 | `PhoneHashing:Keys:<versión>` | **Secreto.** Clave HMAC en Base64, mínimo 32 bytes. Todas las versiones desde la 1 deben seguir configuradas. Si se pierde, todos los hashes quedan inservibles: guarda una copia cifrada fuera del servidor | user-secrets / variable de entorno `PhoneHashing__Keys__1` |
 
@@ -73,6 +75,23 @@ El sitio, en español e inglés (portada, privacidad, política de tratamiento d
 ```bash
 cd website && npm install && npm run dev
 ```
+
+### Formulario de apelación
+
+Las personas sin cuenta demuestran que un número es suyo con un SMS de Firebase, desde el sitio (`/guia/apelacion`).
+El API permite **un SMS y una apelación por número cada 30 días**. Para activarlo:
+
+1. En Firebase: plan Blaze (requerido para SMS; los primeros 10 SMS/día son gratis), proveedor **Teléfono** habilitado,
+   `fsoftt.github.io` en dominios autorizados, política de región de SMS solo para Colombia y una alerta de presupuesto.
+2. En GitHub → Settings → Secrets and variables → Actions → **Variables** (son valores públicos, no secretos):
+   `TRANQUI_API_URL`, `FIREBASE_API_KEY`, `FIREBASE_AUTH_DOMAIN`, `FIREBASE_PROJECT_ID`. Sin ellas el formulario muestra
+   el correo de contacto.
+3. En el servidor: `WEBSITE_ORIGIN` en `deploy/.env` si el sitio no está en `https://fsoftt.github.io`.
+
+Límite honesto: la clave web de Firebase es pública, así que alguien decidido podría pedirle SMS a Firebase sin pasar
+por nuestro API. Lo mitigan reCAPTCHA, la política de región y las cuotas de Firebase; nuestro API igual acepta solo
+una apelación por número al mes. Las apelaciones `ReviewSpam` quedan pendientes en la tabla `appeals` para revisión
+manual en la v1.
 
 ## Despliegue
 

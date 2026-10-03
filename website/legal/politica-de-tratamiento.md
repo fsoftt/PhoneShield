@@ -24,6 +24,7 @@ Esta política cumple la Ley 1581 de 2012 y el Decreto 1377 de 2013 (compilado e
 | Números de teléfono consultados o reportados | Solo como código (hash) con clave secreta; nunca el número | Identificar llamadas y detectar spam |
 | Nombres y etiquetas de spam | Cifrados con una clave derivada de cada número | Mostrar quién llama |
 | Agenda de contactos (solo si decides aportarla) | Números como código y nombres cifrados; los nombres personales ("Mamá") se descartan | Identificar llamadas para la comunidad |
+| Solicitudes de revisión de un número ([formulario](/guia/apelacion)) | El número solo como código; Firebase (Google) lo procesa para enviar el código por SMS y borramos esa verificación al confirmarla; el motivo y el correo opcional se borran al resolver la solicitud | Verificar que el número es tuyo, atender la solicitud y limitarla a una por mes |
 
 **No** usamos los datos para publicidad, **no** los vendemos y **no** creamos perfiles.
 
