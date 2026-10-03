@@ -18,4 +18,18 @@ internal sealed class SpamReportRepository(TranquiDbContext dbContext) : ISpamRe
     }
 
     public void Add(SpamReport report) => dbContext.SpamReports.Add(report);
+
+    public Task<int> CountForContributorAsync(ContributorId contributor, CancellationToken cancellationToken)
+    {
+        var contributorId = contributor.Value.ToArray();
+
+        return dbContext.SpamReports.CountAsync(report => report.ContributorId == contributorId, cancellationToken);
+    }
+
+    public Task<int> RemoveAllForContributorAsync(ContributorId contributor, CancellationToken cancellationToken)
+    {
+        var contributorId = contributor.Value.ToArray();
+
+        return dbContext.SpamReports.Where(report => report.ContributorId == contributorId).ExecuteDeleteAsync(cancellationToken);
+    }
 }

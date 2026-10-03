@@ -50,6 +50,8 @@ try
     app.MapAcceptContactUpload();
     app.MapUploadContacts();
     app.MapWithdrawContacts();
+    app.MapExportMyData();
+    app.MapDeleteAccount();
 
     await app.MigrateDatabaseAsync();
     await app.RunAsync();
