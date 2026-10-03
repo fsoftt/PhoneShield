@@ -66,6 +66,10 @@ Logs estructurados en Seq: http://localhost:8081.
 | `PhoneHashing:CurrentKeyVersion` | Versión vigente de la clave de hash (empieza en `1`) | user-secrets / variable de entorno `PhoneHashing__CurrentKeyVersion` |
 | `PhoneHashing:Keys:<versión>` | **Secreto.** Clave HMAC en Base64, mínimo 32 bytes. Todas las versiones desde la 1 deben seguir configuradas. Si se pierde, todos los hashes quedan inservibles: guarda una copia cifrada fuera del servidor | user-secrets / variable de entorno `PhoneHashing__Keys__1` |
 
+## Despliegue
+
+Ver [`deploy/README.md`](deploy/README.md): un VPS de ~US$5/mes con Docker Compose (API, PostgreSQL y Caddy con HTTPS automático).
+
 ## Licencia
 
 [AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0.html).
