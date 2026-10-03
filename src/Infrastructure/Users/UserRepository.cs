@@ -10,4 +10,6 @@ internal sealed class UserRepository(TranquiDbContext dbContext) : IUserReposito
         dbContext.Users.FirstOrDefaultAsync(user => user.FirebaseUid == firebaseUid, cancellationToken);
 
     public void Add(User user) => dbContext.Users.Add(user);
+
+    public void Remove(User user) => dbContext.Users.Remove(user);
 }
