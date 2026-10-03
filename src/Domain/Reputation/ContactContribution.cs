@@ -42,6 +42,14 @@ public sealed class ContactContribution
     public ProtectedName? Name =>
         NameCiphertext is null || NameGroupingKey is null ? null : new ProtectedName(NameCiphertext, NameGroupingKey);
 
+    /// <summary>The contributor saved the number under another name (or a personal one) since the last upload.</summary>
+    public void Rename(ProtectedName? name, DateTimeOffset contributedAt)
+    {
+        NameCiphertext = name?.Ciphertext;
+        NameGroupingKey = name?.GroupingKey;
+        ContributedAt = contributedAt;
+    }
+
     public static ContactContribution Create(
         PhoneHash phoneHash,
         ContributorId contributor,

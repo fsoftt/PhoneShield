@@ -7,4 +7,7 @@ namespace Tranqui.Domain.Legal;
 public static class LegalDocuments
 {
     public const string CurrentTermsVersion = "2026-10-03";
+
+    /// <summary>The separate, optional consent to contribute the address book.</summary>
+    public const string CurrentContactUploadVersion = "2026-10-03";
 }

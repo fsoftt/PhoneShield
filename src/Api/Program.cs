@@ -47,6 +47,9 @@ try
     app.MapRegisterAccount();
     app.MapLookupNumber();
     app.MapReportCall();
+    app.MapAcceptContactUpload();
+    app.MapUploadContacts();
+    app.MapWithdrawContacts();
 
     await app.MigrateDatabaseAsync();
     await app.RunAsync();

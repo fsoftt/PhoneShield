@@ -7,6 +7,7 @@ public static class RateLimitingExtensions
 {
     public const string LookupPolicy = "lookup";
     public const string ReportPolicy = "report";
+    public const string ContactUploadPolicy = "contact-upload";
 
     private static readonly TimeSpan hour = TimeSpan.FromHours(1);
     private static readonly TimeSpan day = TimeSpan.FromDays(1);
@@ -32,6 +33,9 @@ public static class RateLimitingExtensions
             limiter.AddPolicy(ReportPolicy, httpContext => RateLimitPartition.Get(
                 UserPartitionKey(httpContext),
                 _ => FixedWindow(options.Reports.PerDay, day)));
+            limiter.AddPolicy(ContactUploadPolicy, httpContext => RateLimitPartition.Get(
+                UserPartitionKey(httpContext),
+                _ => FixedWindow(options.ContactUploads.BatchesPerDay, day)));
         });
 
         return services;
