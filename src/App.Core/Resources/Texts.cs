@@ -34,4 +34,11 @@ public static class Texts
     public const string StepNotificationsExplanation = "Te contamos cuándo bloqueamos una llamada y te preguntamos si fue spam.";
     public const string ProtectionActive = "Protección activa";
     public const string ProtectionIncomplete = "Completa estos pasos para activar la protección";
+
+    public const string DeleteAccountTitle = "¿Borrar tu cuenta?";
+    public const string DeleteAccountMessage = "Borraremos tu cuenta, tus reportes y los contactos que aportaste. No se puede deshacer.";
+    public const string DeleteAccountAccept = "Borrar";
+    public const string Cancel = "Cancelar";
+    public const string MyDataSummaryFormat = "Cuenta creada el {0:d}. Reportes enviados: {1}. Contactos aportados: {2}.";
+    public const string NoBlockedNumbers = "No has bloqueado ningún número.";
 }

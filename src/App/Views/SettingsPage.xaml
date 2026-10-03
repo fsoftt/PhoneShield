@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Tranqui.App.Core.ViewModels;assembly=Tranqui.App.Core"
+             x:Class="Tranqui.App.Views.SettingsPage"
+             x:DataType="vm:SettingsViewModel"
+             Title="Ajustes">
+
+  <ScrollView>
+    <VerticalStackLayout Style="{StaticResource Form}">
+      <Label Text="Bloqueo automático" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level1" />
+      <Label Text="Las llamadas bloqueadas no suenan. Siempre te avisamos con una notificación." />
+
+      <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+        <VerticalStackLayout>
+          <Label Text="Spam reportado por la comunidad" FontAttributes="Bold" />
+          <Label Text="Números que muchas personas marcaron como spam." FontSize="14" />
+        </VerticalStackLayout>
+        <Switch Grid.Column="1" IsToggled="{Binding BlockCommunitySpam}" AutomationId="BlockCommunitySpamSwitch"
+                SemanticProperties.Description="Bloquear spam reportado por la comunidad" />
+      </Grid>
+
+      <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+        <VerticalStackLayout>
+          <Label Text="Números privados" FontAttributes="Bold" />
+          <Label Text="Llamadas que ocultan el número." FontSize="14" />
+        </VerticalStackLayout>
+        <Switch Grid.Column="1" IsToggled="{Binding BlockPrivateNumbers}" AutomationId="BlockPrivateNumbersSwitch"
+                SemanticProperties.Description="Bloquear números privados" />
+      </Grid>
+
+      <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+        <VerticalStackLayout>
+          <Label Text="Llamadas internacionales" FontAttributes="Bold" />
+          <Label Text="Números de fuera de Colombia que no están en tus contactos." FontSize="14" />
+        </VerticalStackLayout>
+        <Switch Grid.Column="1" IsToggled="{Binding BlockInternational}" AutomationId="BlockInternationalSwitch"
+                SemanticProperties.Description="Bloquear llamadas internacionales" />
+      </Grid>
+    </VerticalStackLayout>
+  </ScrollView>
+
+</ContentPage>

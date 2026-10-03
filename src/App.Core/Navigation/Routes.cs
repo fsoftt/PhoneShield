@@ -7,5 +7,5 @@ public static class Routes
     public const string SignIn = "//sign-in";
     public const string SignUp = "sign-up";
     public const string VerifyEmail = "//verify-email";
-    public const string Home = "//home";
+    public const string Home = "//main/home";
 }
