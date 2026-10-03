@@ -1,7 +1,9 @@
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using Tranqui.App.Core.Accounts;
+using Tranqui.App.Core.Api;
 using Tranqui.App.Core.Authentication;
+using Tranqui.App.Core.Contacts;
 using Tranqui.App.Core.Navigation;
 using Tranqui.App.Core.ViewModels;
 
@@ -16,7 +18,9 @@ public sealed class StartupViewModelTests
 
     public StartupViewModelTests()
     {
-        viewModel = new StartupViewModel(authService, accountService, navigation);
+        var contribution = new ContactContributionService(
+            Substitute.For<ITranquiApi>(), Substitute.For<IDeviceContactSource>(), Substitute.For<IContributionState>(), TimeProvider.System);
+        viewModel = new StartupViewModel(authService, accountService, contribution, navigation);
     }
 
     [Fact]

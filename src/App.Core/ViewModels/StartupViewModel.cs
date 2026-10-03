@@ -1,5 +1,6 @@
 using Tranqui.App.Core.Accounts;
 using Tranqui.App.Core.Authentication;
+using Tranqui.App.Core.Contacts;
 using Tranqui.App.Core.Navigation;
 
 namespace Tranqui.App.Core.ViewModels;
@@ -8,6 +9,7 @@ namespace Tranqui.App.Core.ViewModels;
 public sealed class StartupViewModel(
     IAuthService authService,
     IAccountService accountService,
+    ContactContributionService contactContribution,
     INavigationService navigation)
 {
     public async Task InitializeAsync()
@@ -36,6 +38,7 @@ public sealed class StartupViewModel(
         }
 
         await accountService.EnsureRegisteredAsync(CancellationToken.None);
+        await contactContribution.SyncIfDueAsync(CancellationToken.None);
         return Routes.Home;
     }
 }

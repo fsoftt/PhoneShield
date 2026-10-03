@@ -41,4 +41,13 @@ public static class Texts
     public const string Cancel = "Cancelar";
     public const string MyDataSummaryFormat = "Cuenta creada el {0:d}. Reportes enviados: {1}. Contactos aportados: {2}.";
     public const string NoBlockedNumbers = "No has bloqueado ningún número.";
+
+    public const string ContributionExplanation =
+        "Si aportas tu agenda, ayudas a identificar llamadas. Enviamos números y nombres por una conexión cifrada; "
+        + "guardamos los números solo como un código (hash) y los nombres cifrados. Un nombre solo se muestra si varias "
+        + "personas lo guardaron igual, y nombres como \"Mamá\" o \"Amor\" nunca se usan. Puedes dejar de aportar y "
+        + "borrar todo cuando quieras.";
+    public const string ContributionStartedFormat = "¡Gracias! Aportaste {0} contactos.";
+    public const string ContributionStopped = "Dejaste de aportar y borramos los contactos que habías aportado.";
+    public const string ContactsPermissionNeeded = "Para aportar tus contactos, Tranqui necesita permiso para leerlos.";
 }
