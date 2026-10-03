@@ -89,4 +89,20 @@ public sealed class SignInViewModelTests
         await authService.Received(1).SendPasswordResetAsync("ana@example.com", Arg.Any<CancellationToken>());
         viewModel.InfoMessage.Should().Be(Texts.PasswordResetSent);
     }
+
+    [Fact]
+    public async Task SignIn_ApiRejects_ShowsTheLocalizedMessageForItsCode()
+    {
+        authService.IsEmailVerifiedAsync(Arg.Any<CancellationToken>()).Returns(true);
+        var apiError = await Refit.ApiException.Create(
+            new HttpRequestMessage(HttpMethod.Post, new Uri("https://api.test/v1/account")),
+            HttpMethod.Post,
+            new HttpResponseMessage(System.Net.HttpStatusCode.TooManyRequests) { Content = new StringContent("""{"code":"rate_limited"}""") },
+            new Refit.RefitSettings());
+        accountService.EnsureRegisteredAsync(Arg.Any<CancellationToken>()).ThrowsAsync(apiError);
+
+        await viewModel.SignInCommand.ExecuteAsync(null);
+
+        viewModel.ErrorMessage.Should().Be(Texts.ErrorTooManyRequests);
+    }
 }

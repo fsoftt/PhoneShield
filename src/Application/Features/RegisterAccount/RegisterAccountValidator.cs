@@ -9,6 +9,6 @@ internal sealed class RegisterAccountValidator : AbstractValidator<RegisterAccou
     {
         RuleFor(command => command.AcceptedTermsVersion)
             .Equal(LegalDocuments.CurrentTermsVersion)
-            .WithMessage("Debes aceptar la versión vigente de los términos y la política de tratamiento de datos.");
+            .WithMessage("The current terms version must be accepted.");
     }
 }

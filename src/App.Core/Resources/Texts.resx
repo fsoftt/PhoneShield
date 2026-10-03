@@ -14,6 +14,12 @@
   <data name="VerificationSent" xml:space="preserve"><value>Te enviamos un nuevo correo de verificación.</value></data>
   <data name="EmailNotVerifiedYet" xml:space="preserve"><value>Aún no vemos tu correo verificado. Abre el enlace que te enviamos y vuelve a intentarlo.</value></data>
   <data name="ConnectionError" xml:space="preserve"><value>No pudimos conectarnos. Revisa tu conexión e intenta de nuevo.</value></data>
+  <data name="ErrorInvalidRequest" xml:space="preserve"><value>Revisa los datos e intenta de nuevo.</value></data>
+  <data name="ErrorAccountNotRegistered" xml:space="preserve"><value>Termina de crear tu cuenta antes de aportar.</value></data>
+  <data name="ErrorConsentRequired" xml:space="preserve"><value>Primero acepta el permiso para aportar tus contactos.</value></data>
+  <data name="ErrorTooManyRequests" xml:space="preserve"><value>Hiciste demasiadas solicitudes. Intenta de nuevo más tarde.</value></data>
+  <data name="ErrorUnexpected" xml:space="preserve"><value>Algo salió mal de nuestro lado. Intenta de nuevo en un momento.</value></data>
+  <data name="ErrorSessionExpired" xml:space="preserve"><value>Tu sesión expiró. Inicia sesión de nuevo.</value></data>
   <data name="FirebaseEmailExists" xml:space="preserve"><value>Ya existe una cuenta con ese correo. Inicia sesión.</value></data>
   <data name="FirebaseInvalidEmail" xml:space="preserve"><value>El correo no es válido.</value></data>
   <data name="FirebaseWrongCredentials" xml:space="preserve"><value>Correo o contraseña incorrectos.</value></data>

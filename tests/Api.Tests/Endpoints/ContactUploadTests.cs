@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using Tranqui.Api.Endpoints;
 using Tranqui.Contracts.Accounts;
 using Tranqui.Contracts.Contacts;
+using Tranqui.Contracts.Errors;
 using Tranqui.Contracts.Lookups;
 using Tranqui.Domain.Legal;
 using Tranqui.Domain.Reputation;
@@ -19,6 +20,7 @@ public sealed class ContactUploadTests(TranquiApiFactory factory) : IClassFixtur
         var response = await UploadAsync(client, new ContactDto("3011112233", "Pizzería Juan"));
 
         response.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        (await response.ProblemCodeAsync()).Should().Be(ApiErrorCodes.ConsentRequired);
     }
 
     [Fact]

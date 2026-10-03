@@ -14,6 +14,12 @@
   <data name="VerificationSent" xml:space="preserve"><value>We sent you a new verification email.</value></data>
   <data name="EmailNotVerifiedYet" xml:space="preserve"><value>Your email is not verified yet. Open the link we sent you and try again.</value></data>
   <data name="ConnectionError" xml:space="preserve"><value>We could not connect. Check your connection and try again.</value></data>
+  <data name="ErrorInvalidRequest" xml:space="preserve"><value>Check the data and try again.</value></data>
+  <data name="ErrorAccountNotRegistered" xml:space="preserve"><value>Finish creating your account before contributing.</value></data>
+  <data name="ErrorConsentRequired" xml:space="preserve"><value>First accept the permission to contribute your contacts.</value></data>
+  <data name="ErrorTooManyRequests" xml:space="preserve"><value>You made too many requests. Try again later.</value></data>
+  <data name="ErrorUnexpected" xml:space="preserve"><value>Something went wrong on our side. Try again in a moment.</value></data>
+  <data name="ErrorSessionExpired" xml:space="preserve"><value>Your session expired. Sign in again.</value></data>
   <data name="FirebaseEmailExists" xml:space="preserve"><value>An account with that email already exists. Sign in.</value></data>
   <data name="FirebaseInvalidEmail" xml:space="preserve"><value>The email is not valid.</value></data>
   <data name="FirebaseWrongCredentials" xml:space="preserve"><value>Wrong email or password.</value></data>
