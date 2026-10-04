@@ -50,6 +50,7 @@ public sealed partial class CallHistoryEntry(CallRecord record) : ObservableObje
         BlockReason.BlockedByUser => Texts.BlockReasonByUser,
         BlockReason.CommunitySpam => Texts.BlockReasonCommunitySpam,
         BlockReason.PrivateNumber => Texts.BlockReasonPrivate,
+        BlockReason.Prefix => Texts.BlockReasonPrefix,
         _ => Texts.BlockReasonInternational,
     };
 }

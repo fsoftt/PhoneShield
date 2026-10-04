@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:res="clr-namespace:Tranqui.App.Core.Resources;assembly=Tranqui.App.Core"
+             xmlns:vm="clr-namespace:Tranqui.App.Core.ViewModels;assembly=Tranqui.App.Core"
+             x:Class="Tranqui.App.Views.MyReportsPage"
+             x:DataType="vm:MyReportsViewModel"
+             Title="{x:Static res:Texts.MyReportsOpen}">
+
+  <Grid RowDefinitions="Auto,Auto,Auto,*" Padding="24" RowSpacing="12">
+    <Label Text="{x:Static res:Texts.MyReportsOpen}" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level1" />
+    <Label Grid.Row="1" Text="{x:Static res:Texts.MyReportsHint}" FontSize="14" />
+    <Label Grid.Row="2"
+           Text="{Binding InfoMessage}"
+           Style="{StaticResource InfoMessage}"
+           IsVisible="{Binding InfoMessage, Converter={StaticResource HasText}}" />
+
+    <CollectionView Grid.Row="3" ItemsSource="{Binding Entries}" AutomationId="MyReportsList">
+      <CollectionView.EmptyView>
+        <Label Text="{x:Static res:Texts.MyReportsEmpty}" HorizontalOptions="Center" Margin="0,32" />
+      </CollectionView.EmptyView>
+      <CollectionView.ItemTemplate>
+        <DataTemplate x:DataType="vm:MyReportEntry">
+          <VerticalStackLayout Padding="0,12" Spacing="4">
+            <Label Text="{Binding Number}" FontSize="18" FontAttributes="Bold" />
+            <Label Text="{Binding VerdictText}" />
+            <Label Text="{Binding ReportedAtText}" FontSize="13" />
+            <Label Text="{x:Static res:Texts.MyReportPending}" FontSize="13" FontAttributes="Italic" IsVisible="{Binding IsPending}" />
+            <FlexLayout Wrap="Wrap" JustifyContent="Start" Margin="0,4,0,0">
+              <Button Text="{x:Static res:Texts.ChangeToSpam}"
+                      Style="{StaticResource SecondaryButton}"
+                      Margin="0,0,8,8"
+                      Command="{Binding ChangeToSpamCommand, Source={RelativeSource AncestorType={x:Type vm:MyReportsViewModel}}, x:DataType=vm:MyReportsViewModel}"
+                      CommandParameter="{Binding .}"
+                      SemanticProperties.Hint="{Binding Number}" />
+              <Button Text="{x:Static res:Texts.ChangeToNotSpam}"
+                      Style="{StaticResource SecondaryButton}"
+                      Margin="0,0,8,8"
+                      Command="{Binding ChangeToNotSpamCommand, Source={RelativeSource AncestorType={x:Type vm:MyReportsViewModel}}, x:DataType=vm:MyReportsViewModel}"
+                      CommandParameter="{Binding .}"
+                      SemanticProperties.Hint="{Binding Number}" />
+              <Button Text="{x:Static res:Texts.WithdrawReport}"
+                      Style="{StaticResource SecondaryButton}"
+                      Margin="0,0,8,8"
+                      Command="{Binding WithdrawCommand, Source={RelativeSource AncestorType={x:Type vm:MyReportsViewModel}}, x:DataType=vm:MyReportsViewModel}"
+                      CommandParameter="{Binding .}"
+                      SemanticProperties.Hint="{Binding Number}" />
+            </FlexLayout>
+          </VerticalStackLayout>
+        </DataTemplate>
+      </CollectionView.ItemTemplate>
+    </CollectionView>
+  </Grid>
+
+</ContentPage>

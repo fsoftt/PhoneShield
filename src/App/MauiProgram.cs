@@ -5,6 +5,7 @@ using Tranqui.App.Appeals;
 using Tranqui.App.Calls;
 using Tranqui.App.Core;
 using Tranqui.App.Core.Appeals;
+using Tranqui.App.Core.Appearance;
 using Tranqui.App.Core.Authentication;
 using Tranqui.App.Core.Calls;
 using Tranqui.App.Core.Contacts;
@@ -12,7 +13,10 @@ using Tranqui.App.Core.Dialogs;
 using Tranqui.App.Core.History;
 using Tranqui.App.Core.Navigation;
 using Tranqui.App.Core.Protection;
+using Tranqui.App.Core.Reports;
+using Tranqui.App.Core.Sync;
 using Tranqui.App.Services;
+using Tranqui.App.Sync;
 using Tranqui.App.Views;
 
 namespace Tranqui.App;
@@ -42,6 +46,10 @@ public static class MauiProgram
         builder.Services.AddSingleton<IContributionState, PreferencesContributionState>();
         builder.Services.AddSingleton<ICallHistory, PreferencesCallHistory>();
         builder.Services.AddSingleton<IDeviceIntegrity, PlayDeviceIntegrity>();
+        builder.Services.AddSingleton<IOutboxStore, PreferencesOutboxStore>();
+        builder.Services.AddSingleton<IBackgroundSync, AndroidBackgroundSync>();
+        builder.Services.AddSingleton<IMyReports, PreferencesMyReports>();
+        builder.Services.AddSingleton<IThemeService, MauiThemeService>();
 
         builder.Services.AddTransient<StartupPage>();
         builder.Services.AddTransient<SignInPage>();
@@ -53,6 +61,7 @@ public static class MauiProgram
         builder.Services.AddTransient<SettingsPage>();
         builder.Services.AddTransient<AccountPage>();
         builder.Services.AddTransient<AppealPage>();
+        builder.Services.AddTransient<MyReportsPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

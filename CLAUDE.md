@@ -33,6 +33,8 @@ Open-source, privacy-first caller ID and spam blocker: a .NET MAUI Android app +
 - `src/Api` — one minimal API endpoint file per slice at `Endpoints/<FeatureName>.cs`.
 - `src/Contracts` — DTOs shared by `Api` and `App`.
 - `src/App.Core` — everything in the app that is plain .NET (`net10.0`): ViewModels, the typed API client (Refit), Firebase Auth over its REST API. Testable without the Android SDK; put logic here, not in `src/App`.
+  App writes are offline-first: reports, withdrawals, blocks and unblocks go through `Sync/Outbox` (stored on the
+  phone, sent in order when there is a connection, flushed by Android's JobScheduler); never call those endpoints directly.
 - `src/App` — MAUI shell: XAML views (compiled bindings to `App.Core` ViewModels), platform services, `Platforms/Android`.
   Call screening lives in `Platforms/Android/Calls`: `TranquiCallScreeningService` asks `App.Core`'s `CallScreener` what to do,
   then shows `CallerOverlay` (native views over the call screen) or a notification, and the post-call feedback notification.

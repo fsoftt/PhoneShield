@@ -2,7 +2,10 @@ using Tranqui.Domain.PhoneNumbers;
 
 namespace Tranqui.App.Core.Calls;
 
-/// <summary>Numbers the user blocked. Kept only on the device; the server never learns them.</summary>
+/// <summary>
+/// Numbers the user blocked, kept on the device. The server only learns a block (as a hash) when the user shares blocks
+/// as a spam signal; see <see cref="BlockingService"/>.
+/// </summary>
 public interface IBlockList
 {
     Task<bool> ContainsAsync(PhoneNumber number);

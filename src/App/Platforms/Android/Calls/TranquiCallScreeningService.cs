@@ -2,6 +2,7 @@ using Android.App;
 using Android.Telecom;
 using Tranqui.App.Core.Calls;
 using Tranqui.App.Core.History;
+using Tranqui.Domain.PhoneNumbers;
 
 namespace Tranqui.App.Calls;
 
@@ -71,7 +72,7 @@ public sealed class TranquiCallScreeningService : CallScreeningService
             overlay ??= new CallerOverlay(this);
             if (overlay.CanShow)
             {
-                overlay.Show(decision.Card, () => _ = services.GetRequiredService<IBlockList>().AddAsync(decision.Card.Number!));
+                overlay.Show(decision.Card, () => _ = services.GetRequiredService<BlockingService>().BlockAsync(decision.Card.Number!));
             }
             else
             {
@@ -82,6 +83,28 @@ public sealed class TranquiCallScreeningService : CallScreeningService
         if (decision.AskForFeedback && decision.Card.Number is not null)
         {
             notifications.AskForFeedback(decision.Card.Number);
+        }
+
+        if (decision.Card is { State: CallerCardState.Offline, Number: { } number })
+        {
+            _ = IdentifyLaterAsync(number, services, notifications);
+        }
+    }
+
+    /// <summary>The lookup did not answer in time: keep trying after the call and say who it was (spec §3.2).</summary>
+    private static async Task IdentifyLaterAsync(
+        PhoneNumber number, IServiceProvider services, CallNotifications notifications)
+    {
+        try
+        {
+            if (await services.GetRequiredService<LateIdentification>().RetryAsync(number, CancellationToken.None) is { } card)
+            {
+                notifications.ShowLateIdentification(card);
+            }
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            // Best effort: the call already happened.
         }
     }
 

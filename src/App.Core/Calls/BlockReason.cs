@@ -6,4 +6,5 @@ public enum BlockReason
     CommunitySpam,
     PrivateNumber,
     International,
+    Prefix,
 }
