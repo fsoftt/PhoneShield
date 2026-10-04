@@ -64,6 +64,7 @@ Logs estructurados en Seq: http://localhost:8081.
 | `ContributorIds:Key` | **Secreto.** Clave en Base64 (mínimo 32 bytes) que convierte cada cuenta en un identificador seudónimo de aportante. Si cambia, los aportes previos ya no se pueden asociar ni retirar | user-secrets / variable de entorno `ContributorIds__Key` |
 | `RateLimiting:Lookup:PerHour` / `PerDay` | Opcional. Consultas por usuario (por defecto 60/hora y 300/día) | `appsettings.json` / variables de entorno |
 | `RateLimiting:Reports:PerDay` | Opcional. Reportes por usuario (por defecto 20/día) | `appsettings.json` / variables de entorno |
+| `RateLimiting:Blocks:PerDay` | Opcional. Bloqueos y desbloqueos enviados por usuario (por defecto 100/día) | `appsettings.json` / variables de entorno |
 | `RateLimiting:ContactUploads:BatchesPerDay` | Opcional. Lotes de contactos por usuario (por defecto 20/día, de hasta 500 contactos) | `appsettings.json` / variables de entorno |
 | `RateLimiting:Appeals:PerDay` | Opcional. Llamadas de apelación por usuario, fallidas incluidas (por defecto 10/día); las exitosas las limitan las cuotas por número, cuenta y dispositivo | `appsettings.json` / variables de entorno |
 | `PlayIntegrity:ServiceAccountKey` | **Secreto.** Base64 del JSON de la cuenta de servicio de Google Cloud que decodifica los tokens de Play Integrity. Sin él, las apelaciones se rechazan | user-secrets / variable de entorno `PlayIntegrity__ServiceAccountKey` |

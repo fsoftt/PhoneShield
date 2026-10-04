@@ -21,7 +21,8 @@ public static class ExportMyData
                         .Select(consent => new ConsentResponse(consent.Type, consent.Version, consent.AcceptedAt, consent.RevokedAt))
                         .ToList(),
                     export.SpamReportCount,
-                    export.ContactContributionCount));
+                    export.ContactContributionCount,
+                    export.BlockCount));
             })
             .WithName(nameof(ExportMyData));
 

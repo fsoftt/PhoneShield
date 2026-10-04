@@ -9,4 +9,8 @@
     <PackageReference Include="libphonenumber-csharp" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Reputation\offensive-words.txt" LogicalName="Tranqui.Domain.Reputation.offensive-words.txt" />
+  </ItemGroup>
+
 </Project>

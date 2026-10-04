@@ -93,7 +93,7 @@ Para llamadas de números que no están en mis contactos: notificación "¿Cómo
 
 - Clave de cifrado por número: `K_name = HKDF(HMAC-SHA256(K_names, E164))`; cifrado AES-256-GCM.
 - Para agrupar nombres iguales sin descifrar: `NameKey = HMAC(K_name, normalizar(nombre))` (minúsculas, sin tildes, espacios colapsados).
-- **Filtro antes de subir (en el teléfono) y al recibir (en el servidor):** se descartan nombres de relación o personales ("mamá", "papá", "amor", "mi vida", "jefe", "ex", "vecina"…), nombres solo con emojis o símbolos, de 1 carácter, o que contengan números de teléfono, y groserías. La lista vive en un archivo de configuración versionado.
+- **Filtro antes de subir (en el teléfono) y al recibir (en el servidor):** se descartan nombres de relación o personales ("mamá", "papá", "amor", "mi vida", "jefe", "ex", "vecina"…), nombres solo con emojis o símbolos, de 1 carácter, o que contengan números de teléfono, y groserías (`Domain/Reputation/offensive-words.txt`, versionado). Las etiquetas de spam ofensivas se descartan; el voto cuenta.
 - **El número sí se sube aunque su nombre se descarte**, como señal de confianza sin nombre (§4.3).
 - Se muestra el nombre con más aportantes distintos (con decaimiento temporal); los demás que superan `K = 3` se pueden ver deslizando, ordenados por aportantes.
 
@@ -104,8 +104,9 @@ Para llamadas de números que no están en mis contactos: notificación "¿Cómo
 | `SavedByCount` | Aportantes distintos que tienen el número en su agenda (con o sin nombre) | Confianza: resta al puntaje de spam |
 | Reportes de spam | Reporte post-llamada, 1 por usuario y número | Suma |
 | Reportes "no es spam" | Reporte post-llamada | Resta |
-| Bloqueos | Usuarios que bloquean el número | Suma (peso bajo) |
-| Reputación del reportante | Antigüedad de la cuenta, Play Integrity, historial de reportes coincidentes con la comunidad | Multiplica el peso de sus votos |
+| Bloqueos | Usuarios que bloquean el número (`POST/DELETE /v1/blocks`) | Suma ×0,25 (`BlockVoteFactor`) |
+| Reputación del reportante | Antigüedad de la cuenta (×0,5 los primeros 7 días) e historial: a diario, sus reportes se comparan con el veredicto asentado (spam o legítimo); con ≥ 5 reportes decididos, multiplicador = 0,25 + 1,25 × acierto (0,25 a 1,5) | Multiplica el peso de sus votos |
+| Ráfagas | Votos del mismo día (UTC) | Cuentan completos hasta 4; el exceso vale ×0,25 (`DailyVoteCap`, `BurstOverflowFactor`) |
 | Decaimiento temporal | Vida media de 90 días | Los números se reasignan; votos viejos pesan menos |
 
 Regla inicial (todos los umbrales son constantes con nombre, configurables y documentadas):
@@ -158,7 +159,7 @@ Un número guardado como "Mamá" por muchas personas **no** es spam por defecto 
 
 - Página en `/admin` del mismo API (sin CORS, con CSP estricta). Acceso: cuenta de Firebase con correo verificado y uid en `BackOffice:AdminUids`.
 - Revisión de "no es spam": quien revisa ve el motivo, el correo y los agregados (estado, reportes, guardados), nunca el número. Aprobar despeja el número (`cleared_numbers`): los reportes de spam hasta ese momento dejan de contar. Aprobar o rechazar borra el motivo y el correo. Muestra el vencimiento legal (15 días hábiles, sin festivos).
-- Retención (`Domain/Retention/RetentionRules`), borrada cada día y a demanda: reportes a los 2 años (8 vidas medias), registros de cuotas de apelación al año, apelaciones resueltas al año de resolverse. Las pendientes nunca se borran solas.
+- Mantenimiento diario: recálculo de la reputación de reportantes (§4.3) y retención (`Domain/Retention/RetentionRules`), también a demanda: reportes a los 2 años (8 vidas medias), registros de cuotas de apelación al año, apelaciones resueltas al año de resolverse. Las pendientes nunca se borran solas.
 
 ---
 

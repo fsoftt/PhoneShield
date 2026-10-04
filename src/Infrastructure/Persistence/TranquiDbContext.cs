@@ -22,6 +22,10 @@ public sealed class TranquiDbContext(DbContextOptions<TranquiDbContext> options)
 
     public DbSet<ClearedNumber> ClearedNumbers => Set<ClearedNumber>();
 
+    public DbSet<BlockSignal> BlockSignals => Set<BlockSignal>();
+
+    public DbSet<ContributorReputation> ContributorReputations => Set<ContributorReputation>();
+
     async Task IUnitOfWork.SaveChangesAsync(CancellationToken cancellationToken) =>
         await SaveChangesAsync(cancellationToken);
 

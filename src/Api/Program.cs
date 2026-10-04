@@ -50,6 +50,9 @@ try
     app.MapRegisterAccount();
     app.MapLookupNumber();
     app.MapReportCall();
+    app.MapWithdrawReport();
+    app.MapBlockNumber();
+    app.MapUnblockNumber();
     app.MapAcceptContactUpload();
     app.MapUploadContacts();
     app.MapWithdrawContacts();

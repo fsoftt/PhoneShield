@@ -54,7 +54,7 @@
   <data name="DeleteAccountMessage" xml:space="preserve"><value>We will delete your account, your reports and the contacts you contributed. This cannot be undone.</value></data>
   <data name="DeleteAccountAccept" xml:space="preserve"><value>Delete</value></data>
   <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
-  <data name="MyDataSummaryFormat" xml:space="preserve"><value>Account created on {0:d}. Reports sent: {1}. Contacts contributed: {2}.</value></data>
+  <data name="MyDataSummaryFormat" xml:space="preserve"><value>Account created on {0:d}. Reports sent: {1}. Contacts contributed: {2}. Blocked numbers counted as a spam signal: {3}.</value></data>
   <data name="NoBlockedNumbers" xml:space="preserve"><value>You have not blocked any number.</value></data>
   <data name="ContributionExplanation" xml:space="preserve"><value>If you contribute your address book, you help identify calls. We send numbers and names over an encrypted connection; we store numbers only as a code (hash) and names encrypted. A name is only shown if several people saved it the same way, and names like "Mom" or "Love" are never used. You can stop contributing and delete everything at any time.</value></data>
   <data name="ContributionStartedFormat" xml:space="preserve"><value>Thank you! You contributed {0} contacts.</value></data>

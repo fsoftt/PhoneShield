@@ -8,7 +8,6 @@ using Tranqui.Contracts.Lookups;
 using Tranqui.Contracts.Reports;
 using Tranqui.Domain.Appeals;
 using Tranqui.Domain.PhoneNumbers;
-using Tranqui.Domain.Reputation;
 
 namespace Tranqui.Api.Tests.Endpoints;
 
@@ -148,7 +147,7 @@ public sealed class BackOfficeTests(AppealApiFactory factory) : IClassFixture<Ap
 
     private async Task ReportSpamUntilFlaggedAsync(string number)
     {
-        var reportersNeeded = (int)Math.Ceiling(ReputationRules.MinimumSpamWeight / ReputationRules.NewAccountVoteWeight);
+        var reportersNeeded = ApiClientExtensions.SameDaySpamReportersNeeded;
         for (var i = 0; i < reportersNeeded; i++)
         {
             using var reporter = await factory.CreateRegisteredClientAsync();

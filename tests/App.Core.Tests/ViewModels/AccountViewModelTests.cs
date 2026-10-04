@@ -25,7 +25,7 @@ public sealed class AccountViewModelTests
     public async Task ShowMyData_SummarizesWhatTheServerKeeps()
     {
         api.ExportMyDataAsync(Arg.Any<CancellationToken>()).Returns(
-            new MyDataResponse(Guid.NewGuid(), DateTimeOffset.UtcNow, [], SpamReportCount: 4, ContactContributionCount: 120));
+            new MyDataResponse(Guid.NewGuid(), DateTimeOffset.UtcNow, [], SpamReportCount: 4, ContactContributionCount: 120, BlockCount: 7));
 
         await viewModel.ShowMyDataCommand.ExecuteAsync(null);
 

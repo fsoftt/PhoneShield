@@ -68,9 +68,9 @@ internal sealed class UploadContactsHandler(
             .Select(entry => new NormalizedContact(entry.Number!, hasher.Hash(entry.Number!), entry.Name))
             .ToList();
 
-    /// <summary>Personal names ("Mamá") are dropped: only the fact that someone saved the number is kept.</summary>
+    /// <summary>Personal ("Mamá") and offensive names are dropped: only the fact that someone saved the number is kept.</summary>
     private ProtectedName? Protect(NormalizedContact contact) =>
-        CallerName.TryCreate(contact.RawName) is { } name && !PersonalNameFilter.IsPersonal(name)
+        CallerName.TryCreate(contact.RawName) is { } name && CallerNameFilter.IsShareable(name)
             ? nameProtector.Protect(contact.Number, name)
             : null;
 

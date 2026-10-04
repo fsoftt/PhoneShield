@@ -29,16 +29,16 @@ public sealed class CallerIdentificationTests
     [Fact]
     public void Evaluate_EnoughSpamReports_IsSpam()
     {
-        var result = CallerIdentification.Evaluate(new ReputationSignals(SpamVotes(5), [], 0), now);
+        var result = CallerIdentification.Evaluate(new ReputationSignals(SpamVotes(sameDayVotesNeeded), [], 0), now);
 
         result.Status.Should().Be(CallerStatus.Spam);
-        result.SpamReportCount.Should().Be(5);
+        result.SpamReportCount.Should().Be(sameDayVotesNeeded);
     }
 
     [Fact]
     public void Evaluate_EnoughSpamReportsFromMinutesAgo_IsSpam()
     {
-        var signals = new ReputationSignals(SpamVotes(5, castAt: now.AddMinutes(-5)), [], 0);
+        var signals = new ReputationSignals(SpamVotes(sameDayVotesNeeded, castAt: now.AddMinutes(-5)), [], 0);
 
         CallerIdentification.Evaluate(signals, now).Status.Should().Be(CallerStatus.Spam);
     }
@@ -107,13 +107,61 @@ public sealed class CallerIdentificationTests
     public void Evaluate_SpamWithLabels_IsSpamAndKeepsTheLabels()
     {
         var label = Name(1);
-        var signals = new ReputationSignals(SpamVotes(5), Votes(label, 3), 0);
+        var signals = new ReputationSignals(SpamVotes(sameDayVotesNeeded), Votes(label, 3), 0);
 
         var result = CallerIdentification.Evaluate(signals, now);
 
         result.Status.Should().Be(CallerStatus.Spam);
         result.RankedNames.Should().ContainSingle().Which.Should().Be(label);
     }
+
+    [Fact]
+    public void Evaluate_BurstOfReportsInOneDay_IsDampened()
+    {
+        var signals = new ReputationSignals(SpamVotes(sameDayVotesNeeded - 1), [], 0);
+
+        CallerIdentification.Evaluate(signals, now).Status.Should().NotBe(CallerStatus.Spam);
+    }
+
+    [Fact]
+    public void Evaluate_ReportsSpreadOverDays_ReachSpamWithFewerVotes()
+    {
+        var votes = SpamVotes(3).Concat(SpamVotes(3, castAt: now.AddDays(-1))).ToList();
+
+        CallerIdentification.Evaluate(new ReputationSignals(votes, [], 0), now).Status.Should().Be(CallerStatus.Spam);
+    }
+
+    [Fact]
+    public void Evaluate_BlocksAddALittleSpamWeight()
+    {
+        var votes = SpamVotes(3).Concat(SpamVotes(1, castAt: now.AddDays(-1))).ToList();
+        var withoutBlocks = new ReputationSignals(votes, [], 0);
+        var withBlocks = withoutBlocks with
+        {
+            BlockVotes = Enumerable.Repeat(new BlockVote(FreshWeight, now.AddDays(-2)), 5).ToList(),
+        };
+
+        CallerIdentification.Evaluate(withoutBlocks, now).Status.Should().NotBe(CallerStatus.Spam);
+        CallerIdentification.Evaluate(withBlocks, now).Status.Should().Be(CallerStatus.Spam);
+    }
+
+    [Fact]
+    public void VerdictOf_SavedAndVouchedNumber_IsLegitimate()
+    {
+        var votes = Enumerable.Repeat(new SpamVote(ReportVerdict.NotSpam, FreshWeight, now), 2).ToList();
+
+        CallerIdentification.VerdictOf(new ReputationSignals(votes, [], SavedByCount: 3), now).Should().Be(CommunityVerdict.Legitimate);
+    }
+
+    [Fact]
+    public void VerdictOf_LittleEvidence_IsUndecided()
+    {
+        CallerIdentification.VerdictOf(new ReputationSignals(SpamVotes(2), [], 0), now).Should().Be(CommunityVerdict.Undecided);
+    }
+
+    /// <summary>Fresh reports needed in a single day to flag a number once bursts are dampened.</summary>
+    private static int sameDayVotesNeeded =>
+        Enumerable.Range(1, 100).First(count => ReputationRules.DampenBurst(count * FreshWeight) >= ReputationRules.MinimumSpamWeight);
 
     private static List<SpamVote> SpamVotes(int count, DateTimeOffset? castAt = null) =>
         Enumerable.Repeat(new SpamVote(ReportVerdict.Spam, FreshWeight, castAt ?? now), count).ToList();

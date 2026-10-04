@@ -29,7 +29,10 @@ internal sealed class ReportCallHandler(
         var phoneHash = hasher.Hash(phoneNumber);
         var contributor = contributorIds.FromFirebaseUid(user.FirebaseUid);
         var weight = ReputationRules.ReporterWeight(now - user.CreatedAt);
-        var label = CallerName.TryCreate(request.Label) is { } name ? nameProtector.Protect(phoneNumber, name) : null;
+        // An offensive or personal label is dropped; the vote itself still counts.
+        var label = CallerName.TryCreate(request.Label) is { } name && CallerNameFilter.IsShareable(name)
+            ? nameProtector.Protect(phoneNumber, name)
+            : null;
 
         var existing = await reports.GetAsync(phoneHash, contributor, cancellationToken);
         if (existing is null)

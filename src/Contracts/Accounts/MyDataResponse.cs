@@ -5,6 +5,7 @@ public sealed record MyDataResponse(
     DateTimeOffset CreatedAt,
     IReadOnlyList<ConsentResponse> Consents,
     int SpamReportCount,
-    int ContactContributionCount);
+    int ContactContributionCount,
+    int BlockCount);
 
 public sealed record ConsentResponse(string Type, string Version, DateTimeOffset AcceptedAt, DateTimeOffset? RevokedAt);

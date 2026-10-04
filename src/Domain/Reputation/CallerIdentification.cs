@@ -24,19 +24,45 @@ public sealed record CallerIdentification(
         return new CallerIdentification(status, rankedNames, spamReportCount, signals.SavedByCount);
     }
 
-    private static bool IsSpam(ReputationSignals signals, DateTimeOffset now)
+    /// <summary>The settled verdict, used to rate reporters: spam, clearly legitimate, or not decided yet.</summary>
+    public static CommunityVerdict VerdictOf(ReputationSignals signals, DateTimeOffset now)
     {
-        var spamWeight = DecayedWeight(signals.SpamVotes, ReportVerdict.Spam, now);
-        var notSpamWeight = DecayedWeight(signals.SpamVotes, ReportVerdict.NotSpam, now);
-        var trust = Math.Log2(1 + signals.SavedByCount);
+        ArgumentNullException.ThrowIfNull(signals);
 
-        return spamWeight >= ReputationRules.MinimumSpamWeight
-            && spamWeight >= ReputationRules.SpamDominanceFactor * (notSpamWeight + trust);
+        if (IsSpam(signals, now))
+        {
+            return CommunityVerdict.Spam;
+        }
+
+        return LegitimateEvidence(signals, now) >= ReputationRules.MinimumLegitimateEvidence
+            ? CommunityVerdict.Legitimate
+            : CommunityVerdict.Undecided;
     }
 
-    private static double DecayedWeight(IEnumerable<SpamVote> votes, ReportVerdict verdict, DateTimeOffset now) =>
-        votes.Where(vote => vote.Verdict == verdict)
-            .Sum(vote => vote.Weight * ReputationRules.DecayFactor(now - vote.CastAt));
+    private static bool IsSpam(ReputationSignals signals, DateTimeOffset now)
+    {
+        var spamWeight = SpamWeight(signals, now);
+
+        return spamWeight >= ReputationRules.MinimumSpamWeight
+            && spamWeight >= ReputationRules.SpamDominanceFactor * LegitimateEvidence(signals, now);
+    }
+
+    /// <summary>Spam reports plus blocks at a reduced factor, with same-day bursts dampened.</summary>
+    private static double SpamWeight(ReputationSignals signals, DateTimeOffset now) =>
+        DampenedWeight(
+            signals.SpamVotes.Where(vote => vote.Verdict == ReportVerdict.Spam).Select(vote => (vote.Weight, vote.CastAt))
+                .Concat(signals.BlockVotes.Select(vote => (Weight: vote.Weight * ReputationRules.BlockVoteFactor, vote.CastAt))),
+            now);
+
+    private static double LegitimateEvidence(ReputationSignals signals, DateTimeOffset now) =>
+        DampenedWeight(
+            signals.SpamVotes.Where(vote => vote.Verdict == ReportVerdict.NotSpam).Select(vote => (vote.Weight, vote.CastAt)),
+            now)
+        + Math.Log2(1 + signals.SavedByCount);
+
+    private static double DampenedWeight(IEnumerable<(double Weight, DateTimeOffset CastAt)> votes, DateTimeOffset now) =>
+        votes.GroupBy(vote => vote.CastAt.UtcDateTime.Date)
+            .Sum(day => ReputationRules.DampenBurst(day.Sum(vote => vote.Weight * ReputationRules.DecayFactor(now - vote.CastAt))));
 
     private static List<ProtectedName> RankNames(IEnumerable<NameVote> votes, DateTimeOffset now) =>
         votes.GroupBy(vote => Convert.ToHexString(vote.Name.GroupingKey))

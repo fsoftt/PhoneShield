@@ -24,7 +24,23 @@ internal sealed class ReputationSignalsReader(TranquiDbContext dbContext) : IRep
             .Select(cleared => (DateTimeOffset?)cleared.ClearedAt)
             .FirstOrDefaultAsync(cancellationToken);
 
-        var spamVotes = reports.Select(report => new SpamVote(report.Verdict, report.Weight, report.ReportedAt)).ToList();
+        var reporters = reports.Select(report => report.ContributorId).ToList();
+        var multipliers = (await dbContext.ContributorReputations.AsNoTracking()
+                .Where(reputation => reporters.Contains(reputation.ContributorId))
+                .ToListAsync(cancellationToken))
+            .ToDictionary(reputation => Convert.ToHexString(reputation.ContributorId), reputation => reputation.Multiplier);
+        var blocks = await dbContext.BlockSignals.AsNoTracking()
+            .Where(block => block.PhoneHash == hash)
+            .Select(block => new BlockVote(block.Weight, block.BlockedAt))
+            .ToListAsync(cancellationToken);
+
+        // Each vote counts with its reporter's reliability (1 for reporters without enough history).
+        var spamVotes = reports
+            .Select(report => new SpamVote(
+                report.Verdict,
+                report.Weight * multipliers.GetValueOrDefault(Convert.ToHexString(report.ContributorId), 1),
+                report.ReportedAt))
+            .ToList();
         // The owner asked to hide names: they are never shown, but spam votes and the saved-by count still apply.
         var nameVotes = namesHidden ? [] : contributions
             .Where(contribution => contribution.Name is not null)
@@ -35,7 +51,7 @@ internal sealed class ReputationSignalsReader(TranquiDbContext dbContext) : IRep
                 .Select(report => new NameVote(new ContributorId(report.ContributorId), report.Label!, report.ReportedAt)))
             .ToList();
 
-        var signals = new ReputationSignals(spamVotes, nameVotes, contributions.Count);
+        var signals = new ReputationSignals(spamVotes, nameVotes, contributions.Count) { BlockVotes = blocks };
 
         return clearedAt is { } cleared ? signals.WithSpamClearedBefore(cleared) : signals;
     }

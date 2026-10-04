@@ -12,6 +12,8 @@ public sealed class RateLimitingOptions
 
     public AppealLimits Appeals { get; set; } = new();
 
+    public BlockLimits Blocks { get; set; } = new();
+
     public sealed class LookupLimits
     {
         private const int DefaultPerHour = 60;
@@ -44,6 +46,14 @@ public sealed class RateLimitingOptions
         /// far lower by the per-number, per-account and per-device quotas.
         /// </summary>
         private const int DefaultPerDay = 10;
+
+        public int PerDay { get; set; } = DefaultPerDay;
+    }
+
+    public sealed class BlockLimits
+    {
+        /// <summary>Blocks and unblocks per user; generous because the app re-sends pending ones after being offline.</summary>
+        private const int DefaultPerDay = 100;
 
         public int PerDay { get; set; } = DefaultPerDay;
     }

@@ -8,6 +8,8 @@ public interface ISpamReportRepository
 
     void Add(SpamReport report);
 
+    void Remove(SpamReport report);
+
     Task<int> CountForContributorAsync(ContributorId contributor, CancellationToken cancellationToken);
 
     Task<int> RemoveAllForContributorAsync(ContributorId contributor, CancellationToken cancellationToken);

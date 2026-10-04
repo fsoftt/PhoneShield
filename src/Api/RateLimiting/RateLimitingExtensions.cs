@@ -10,6 +10,7 @@ public static class RateLimitingExtensions
     public const string ReportPolicy = "report";
     public const string ContactUploadPolicy = "contact-upload";
     public const string AppealPolicy = "appeal";
+    public const string BlockPolicy = "block";
 
     private const string TooManyRequestsTitle = "Too many requests. Try again later.";
 
@@ -51,6 +52,9 @@ public static class RateLimitingExtensions
             limiter.AddPolicy(ContactUploadPolicy, httpContext => RateLimitPartition.Get(
                 UserPartitionKey(httpContext),
                 _ => FixedWindow(options.ContactUploads.BatchesPerDay, day)));
+            limiter.AddPolicy(BlockPolicy, httpContext => RateLimitPartition.Get(
+                UserPartitionKey(httpContext),
+                _ => FixedWindow(options.Blocks.PerDay, day)));
             limiter.AddPolicy(AppealPolicy, httpContext => RateLimitPartition.Get(
                 UserPartitionKey(httpContext),
                 _ => FixedWindow(options.Appeals.PerDay, day)));

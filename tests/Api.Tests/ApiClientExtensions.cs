@@ -15,6 +15,11 @@ public static class ApiClientExtensions
         Converters = { new JsonStringEnumConverter() },
     };
 
+    /// <summary>New accounts that must report a number on the same day to flag it, once bursts are dampened.</summary>
+    public static int SameDaySpamReportersNeeded { get; } = Enumerable.Range(1, 1_000).First(count =>
+        Domain.Reputation.ReputationRules.DampenBurst(count * Domain.Reputation.ReputationRules.NewAccountVoteWeight)
+            >= Domain.Reputation.ReputationRules.MinimumSpamWeight);
+
     public static HttpClient CreateClientFor(this TranquiApiFactory factory, string? token)
     {
         var client = factory.CreateClient();

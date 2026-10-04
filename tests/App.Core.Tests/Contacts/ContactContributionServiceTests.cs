@@ -41,6 +41,25 @@ public sealed class ContactContributionServiceTests
     }
 
     [Fact]
+    public async Task Start_PersonalAndOffensiveNamesNeverLeaveThePhone()
+    {
+        contacts.ReadAll().Returns(
+        [
+            new DeviceContact("3001112233", "Mamá"),
+            new DeviceContact("3001112234", "Gonorrea del banco"),
+            new DeviceContact("3001112235", "Pizzería  Napoli"),
+        ]);
+        UploadContactsRequest? sent = null;
+        api.UploadContactsAsync(Arg.Do<UploadContactsRequest>(request => sent = request), Arg.Any<CancellationToken>())
+            .Returns(new UploadContactsResponse(3, 0));
+
+        await service.StartAsync(CancellationToken.None);
+
+        sent!.Contacts.Select(contact => contact.Name).Should().Equal(null, null, "Pizzería Napoli");
+        sent.Contacts.Should().HaveCount(3, "the numbers still count as saved");
+    }
+
+    [Fact]
     public async Task Stop_WithdrawsEverythingAndForgetsTheState()
     {
         await service.StopAsync(CancellationToken.None);
