@@ -36,8 +36,12 @@ Si decides aportar:
 
 ## Lo que se queda en tu teléfono
 
-- Tu lista de números bloqueados.
-- Tus ajustes de bloqueo.
+- Tu lista de números bloqueados (si compartes tus bloqueos como señal de spam, el servidor recibe solo el código de
+  cada número; puedes apagarlo en Ajustes).
+- Tus ajustes de bloqueo y los prefijos que bloqueas.
+- **Mis reportes**: la lista de lo que reportaste, para que puedas cambiarlo o retirarlo. El servidor no puede
+  listarlos: solo tiene códigos.
+- Lo pendiente de enviar mientras no hay conexión.
 - El historial de llamadas (30 días, máximo 200).
 - Una caché de consultas recientes (24 horas), para identificar más rápido a quien vuelve a llamar.
 

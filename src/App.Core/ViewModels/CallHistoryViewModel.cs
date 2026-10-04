@@ -1,9 +1,9 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
-using Tranqui.App.Core.Api;
 using Tranqui.App.Core.Calls;
 using Tranqui.App.Core.Dialogs;
 using Tranqui.App.Core.History;
+using Tranqui.App.Core.Reports;
 using Tranqui.App.Core.Resources;
 using Tranqui.Contracts.Reports;
 using Tranqui.Domain.PhoneNumbers;
@@ -14,8 +14,8 @@ namespace Tranqui.App.Core.ViewModels;
 /// <summary>Recent screened calls (device only). From here the user reports spam with an optional label, or blocks.</summary>
 public sealed partial class CallHistoryViewModel(
     ICallHistory history,
-    ITranquiApi api,
-    IBlockList blockList,
+    ReportService reports,
+    BlockingService blocking,
     IDialogService dialogs) : FormViewModel
 {
     public ObservableCollection<CallHistoryEntry> Entries { get; } = [];
@@ -51,7 +51,7 @@ public sealed partial class CallHistoryViewModel(
     {
         if (PhoneNumber.TryParse(entry.Record.E164) is { } number)
         {
-            await blockList.AddAsync(number);
+            await blocking.BlockAsync(number);
             InfoMessage = Texts.NumberBlocked;
         }
     }
@@ -63,11 +63,12 @@ public sealed partial class CallHistoryViewModel(
         Entries.Clear();
     }
 
-    private Task ReportAsync(CallHistoryEntry entry, ReportVerdictDto verdict, string? label) => RunAsync(async () =>
+    /// <summary>Saved on the phone first and sent when there is a connection, so it never fails for being offline.</summary>
+    private async Task ReportAsync(CallHistoryEntry entry, ReportVerdictDto verdict, string? label)
     {
-        await api.ReportCallAsync(new ReportCallRequest(entry.Record.E164!, verdict, label), CancellationToken.None);
+        await reports.ReportAsync(entry.Record.E164!, verdict, label);
         await history.SetVerdictAsync(entry.Record.Id, verdict);
         entry.Record = entry.Record with { MyVerdict = verdict };
-        InfoMessage = Texts.ReportSent;
-    });
+        InfoMessage = Texts.ReportQueued;
+    }
 }

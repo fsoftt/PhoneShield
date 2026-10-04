@@ -36,8 +36,12 @@ If you decide to contribute:
 
 ## What stays on your phone
 
-- Your list of blocked numbers.
-- Your blocking settings.
+- Your list of blocked numbers (if you share your blocks as a spam signal, the server only receives each number's
+  code; you can turn it off in Settings).
+- Your blocking settings and the prefixes you block.
+- **My reports**: the list of what you reported, so you can change or withdraw it. The server cannot list them: it
+  only has codes.
+- Whatever is waiting to be sent while you are offline.
 - Call history (30 days, up to 200 calls).
 - A cache of recent lookups (24 hours), to identify repeat callers faster.
 

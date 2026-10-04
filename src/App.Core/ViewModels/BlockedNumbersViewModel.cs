@@ -6,8 +6,8 @@ using Tranqui.Domain.PhoneNumbers;
 
 namespace Tranqui.App.Core.ViewModels;
 
-/// <summary>The user's own block list (stored only on the phone), with the full number since it never leaves the device.</summary>
-public sealed partial class BlockedNumbersViewModel(IBlockList blockList) : ObservableObject
+/// <summary>The user's own block list (stored on the phone), with the full number since it never leaves the device in clear.</summary>
+public sealed partial class BlockedNumbersViewModel(IBlockList blockList, BlockingService blocking) : ObservableObject
 {
     public ObservableCollection<PhoneNumber> Numbers { get; } = [];
 
@@ -29,7 +29,7 @@ public sealed partial class BlockedNumbersViewModel(IBlockList blockList) : Obse
     [RelayCommand]
     private async Task UnblockAsync(PhoneNumber number)
     {
-        await blockList.RemoveAsync(number);
+        await blocking.UnblockAsync(number);
         Numbers.Remove(number);
         IsEmpty = Numbers.Count == 0;
     }
