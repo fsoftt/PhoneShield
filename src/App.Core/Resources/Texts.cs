@@ -333,6 +333,70 @@ public static class Texts
 
     public static string AppealPending => Get(nameof(AppealPending));
 
+    public static string ThemeHeading => Get(nameof(ThemeHeading));
+
+    public static string ThemeSystem => Get(nameof(ThemeSystem));
+
+    public static string ThemeLight => Get(nameof(ThemeLight));
+
+    public static string ThemeDark => Get(nameof(ThemeDark));
+
+    public static string BlockReasonPrefix => Get(nameof(BlockReasonPrefix));
+
+    public static string BlockedBecausePrefix => Get(nameof(BlockedBecausePrefix));
+
+    public static string PrefixesHeading => Get(nameof(PrefixesHeading));
+
+    public static string PrefixesHint => Get(nameof(PrefixesHint));
+
+    public static string PrefixPlaceholder => Get(nameof(PrefixPlaceholder));
+
+    public static string AddPrefix => Get(nameof(AddPrefix));
+
+    public static string RemovePrefix => Get(nameof(RemovePrefix));
+
+    public static string InvalidPrefix => Get(nameof(InvalidPrefix));
+
+    public static string ShareBlocksTitle => Get(nameof(ShareBlocksTitle));
+
+    public static string ShareBlocksDetail => Get(nameof(ShareBlocksDetail));
+
+    public static string MyReportsOpen => Get(nameof(MyReportsOpen));
+
+    public static string MyReportsEmpty => Get(nameof(MyReportsEmpty));
+
+    public static string MyReportsHint => Get(nameof(MyReportsHint));
+
+    public static string MyReportPending => Get(nameof(MyReportPending));
+
+    public static string MyReportSpam => Get(nameof(MyReportSpam));
+
+    public static string MyReportSpamWithLabelFormat => Get(nameof(MyReportSpamWithLabelFormat));
+
+    public static string MyReportNotSpam => Get(nameof(MyReportNotSpam));
+
+    public static string ChangeToSpam => Get(nameof(ChangeToSpam));
+
+    public static string ChangeToNotSpam => Get(nameof(ChangeToNotSpam));
+
+    public static string WithdrawReport => Get(nameof(WithdrawReport));
+
+    public static string WithdrawReportTitle => Get(nameof(WithdrawReportTitle));
+
+    public static string WithdrawReportMessage => Get(nameof(WithdrawReportMessage));
+
+    public static string ReportWithdrawn => Get(nameof(ReportWithdrawn));
+
+    public static string ReportQueued => Get(nameof(ReportQueued));
+
+    public static string FeedbackSpamWithLabel => Get(nameof(FeedbackSpamWithLabel));
+
+    public static string FeedbackLabelHint => Get(nameof(FeedbackLabelHint));
+
+    public static string LateIdentificationTitle => Get(nameof(LateIdentificationTitle));
+
+    public static string LateIdentificationTextFormat => Get(nameof(LateIdentificationTextFormat));
+
     /// <summary>Formats a localized template such as <see cref="SpamSubtitleFormat"/> with the current culture.</summary>
     public static string Format(string template, params object[] arguments) =>
         string.Format(CultureInfo.CurrentCulture, template, arguments);

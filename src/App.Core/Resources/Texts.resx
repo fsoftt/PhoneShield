@@ -34,7 +34,7 @@
   <data name="KnownContactButSpamSubtitle" xml:space="preserve"><value>Está en tus contactos. La comunidad lo reportó como spam.</value></data>
   <data name="SpamTitle" xml:space="preserve"><value>Posible spam</value></data>
   <data name="SpamSubtitleFormat" xml:space="preserve"><value>Reportado por {0} personas.</value></data>
-  <data name="IdentifiedSubtitle" xml:space="preserve"><value>Así lo conoce la comunidad.</value></data>
+  <data name="IdentifiedSubtitle" xml:space="preserve"><value>Nombre según la comunidad; puede no ser exacto.</value></data>
   <data name="UnknownTitle" xml:space="preserve"><value>Número desconocido</value></data>
   <data name="UnknownSubtitle" xml:space="preserve"><value>No tenemos datos de este número.</value></data>
   <data name="OfflineSubtitle" xml:space="preserve"><value>Sin conexión: no pudimos consultar este número.</value></data>
@@ -166,4 +166,36 @@
   <data name="AppealSubmit" xml:space="preserve"><value>Enviar apelación</value></data>
   <data name="AppealApplied" xml:space="preserve"><value>Listo. Ya no mostramos nombres para tu número. Si estaba marcado como spam, eso no cambia.</value></data>
   <data name="AppealPending" xml:space="preserve"><value>Recibimos tu apelación. Una persona la revisará dentro de los plazos de ley; si dejaste un correo, te responderemos ahí.</value></data>
+  <data name="ThemeHeading" xml:space="preserve"><value>Apariencia</value></data>
+  <data name="ThemeSystem" xml:space="preserve"><value>Igual que el teléfono</value></data>
+  <data name="ThemeLight" xml:space="preserve"><value>Claro</value></data>
+  <data name="ThemeDark" xml:space="preserve"><value>Oscuro</value></data>
+  <data name="BlockReasonPrefix" xml:space="preserve"><value>por prefijo</value></data>
+  <data name="BlockedBecausePrefix" xml:space="preserve"><value>El número empieza por un prefijo que bloqueaste.</value></data>
+  <data name="PrefixesHeading" xml:space="preserve"><value>Bloquear por prefijo</value></data>
+  <data name="PrefixesHint" xml:space="preserve"><value>Por ejemplo 601 (fijos de Bogotá) o +1. Sin indicativo, se toma como de Colombia. Tus contactos siempre suenan.</value></data>
+  <data name="PrefixPlaceholder" xml:space="preserve"><value>Prefijo</value></data>
+  <data name="AddPrefix" xml:space="preserve"><value>Agregar</value></data>
+  <data name="RemovePrefix" xml:space="preserve"><value>Quitar</value></data>
+  <data name="InvalidPrefix" xml:space="preserve"><value>Escribe de 2 a 12 dígitos, con + al inicio si es de otro país.</value></data>
+  <data name="ShareBlocksTitle" xml:space="preserve"><value>Contar mis bloqueos como señal de spam</value></data>
+  <data name="ShareBlocksDetail" xml:space="preserve"><value>Cada número que bloqueas suma un poco (un cuarto de reporte) para marcarlo como spam. Se envía solo como código, igual que los reportes.</value></data>
+  <data name="MyReportsOpen" xml:space="preserve"><value>Mis reportes</value></data>
+  <data name="MyReportsEmpty" xml:space="preserve"><value>Aún no has reportado números.</value></data>
+  <data name="MyReportsHint" xml:space="preserve"><value>Se guardan solo en tu teléfono. Puedes cambiarlos o retirarlos cuando quieras.</value></data>
+  <data name="MyReportPending" xml:space="preserve"><value>Pendiente de envío</value></data>
+  <data name="MyReportSpam" xml:space="preserve"><value>Spam</value></data>
+  <data name="MyReportSpamWithLabelFormat" xml:space="preserve"><value>Spam · {0}</value></data>
+  <data name="MyReportNotSpam" xml:space="preserve"><value>No es spam</value></data>
+  <data name="ChangeToSpam" xml:space="preserve"><value>Marcar como spam</value></data>
+  <data name="ChangeToNotSpam" xml:space="preserve"><value>Marcar como no spam</value></data>
+  <data name="WithdrawReport" xml:space="preserve"><value>Retirar</value></data>
+  <data name="WithdrawReportTitle" xml:space="preserve"><value>¿Retirar este reporte?</value></data>
+  <data name="WithdrawReportMessage" xml:space="preserve"><value>Tu voto deja de contar para este número.</value></data>
+  <data name="ReportWithdrawn" xml:space="preserve"><value>Reporte retirado.</value></data>
+  <data name="ReportQueued" xml:space="preserve"><value>Gracias. Si no hay conexión, lo enviamos apenas vuelva.</value></data>
+  <data name="FeedbackSpamWithLabel" xml:space="preserve"><value>Spam con etiqueta…</value></data>
+  <data name="FeedbackLabelHint" xml:space="preserve"><value>Etiqueta, ej. Spam Claro</value></data>
+  <data name="LateIdentificationTitle" xml:space="preserve"><value>Ya sabemos quién te llamó</value></data>
+  <data name="LateIdentificationTextFormat" xml:space="preserve"><value>{0} · {1}</value></data>
 </root>

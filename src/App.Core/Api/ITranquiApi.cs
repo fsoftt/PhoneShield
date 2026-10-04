@@ -1,6 +1,7 @@
 using Refit;
 using Tranqui.Contracts.Accounts;
 using Tranqui.Contracts.Appeals;
+using Tranqui.Contracts.Blocks;
 using Tranqui.Contracts.Contacts;
 using Tranqui.Contracts.Lookups;
 using Tranqui.Contracts.Reports;
@@ -27,6 +28,15 @@ public interface ITranquiApi
 
     [Post("/v1/reports")]
     Task ReportCallAsync([Body] ReportCallRequest request, CancellationToken cancellationToken);
+
+    [Delete("/v1/reports")]
+    Task WithdrawReportAsync([Body] WithdrawReportRequest request, CancellationToken cancellationToken);
+
+    [Post("/v1/blocks")]
+    Task BlockAsync([Body] BlockRequest request, CancellationToken cancellationToken);
+
+    [Delete("/v1/blocks")]
+    Task UnblockAsync([Body] BlockRequest request, CancellationToken cancellationToken);
 
     [Post("/v1/contacts")]
     Task<UploadContactsResponse> UploadContactsAsync([Body] UploadContactsRequest request, CancellationToken cancellationToken);

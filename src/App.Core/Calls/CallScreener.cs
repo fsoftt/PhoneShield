@@ -6,7 +6,7 @@ namespace Tranqui.App.Core.Calls;
 
 /// <summary>
 /// Decides what happens with an incoming call (spec §3.1), in priority order: hidden number, the user's block list,
-/// the phone's own contacts (green, decided locally), international blocking, then the community lookup.
+/// the phone's own contacts (green, decided locally), blocked prefixes, international blocking, then the community lookup.
 /// </summary>
 public sealed class CallScreener(
     IBlockList blockList,
@@ -50,42 +50,22 @@ public sealed class CallScreener(
                 AskForFeedback: false);
         }
 
+        if (settings.BlocksPrefixOf(number.E164))
+        {
+            return new ScreeningDecision(UnknownCard(number.Masked, number), BlockReason.Prefix, AskForFeedback: true);
+        }
+
         if (settings.BlockInternational && number.CountryCode != HomeCountryCode)
         {
             return new ScreeningDecision(UnknownCard(number.Masked, number), BlockReason.International, AskForFeedback: true);
         }
 
         var response = await lookup.LookupAsync(number, cancellationToken);
-        var communityCard = ToCard(response, number);
+        var communityCard = CallerCards.FromLookup(response, number);
         var blockAsSpam = settings.BlockCommunitySpam && communityCard.State == CallerCardState.Spam;
 
         return new ScreeningDecision(communityCard, blockAsSpam ? BlockReason.CommunitySpam : null, AskForFeedback: true);
     }
 
-    private static CallerCard ToCard(LookupResponse? response, PhoneNumber number)
-    {
-        if (response is null)
-        {
-            return new CallerCard(CallerCardState.Offline, number.Masked, Texts.OfflineSubtitle, [], number);
-        }
-
-        var names = response.DisplayName is null ? [] : new[] { response.DisplayName }.Concat(response.OtherNames).ToList();
-
-        return response.Status switch
-        {
-            CallerStatusDto.Spam => new CallerCard(
-                CallerCardState.Spam,
-                response.DisplayName ?? Texts.SpamTitle,
-                Texts.Format(Texts.SpamSubtitleFormat, response.SpamReportCount),
-                names,
-                number,
-                CommunityFlagsAsSpam: true),
-            CallerStatusDto.Identified => new CallerCard(
-                CallerCardState.Identified, response.DisplayName!, Texts.IdentifiedSubtitle, names, number),
-            _ => UnknownCard(number.Masked, number),
-        };
-    }
-
-    private static CallerCard UnknownCard(string title, PhoneNumber? number) =>
-        new(CallerCardState.Unknown, title, Texts.UnknownSubtitle, [], number);
+    private static CallerCard UnknownCard(string title, PhoneNumber? number) => CallerCards.Unknown(title, number);
 }

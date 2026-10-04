@@ -13,7 +13,14 @@ Before your phone rings, Tranqui checks the number and shows a card on top of th
 
 If a number has several names, the card shows the most used one and you can see the others with **Another name**.
 
+::: info Names come from the community
+A name in blue is how other people saved the number in their address books (at least 3 agree), not verified data.
+It may not be accurate: a reassigned number can keep its previous owner's name for a while.
+:::
+
 If nothing answers in time, the call **always rings**: Tranqui never makes you miss a call because of an error.
+If there was no connection, Tranqui keeps trying for a minute after the call and, if the community knows the number,
+tells you who it was.
 
 ## Blocking
 
@@ -21,16 +28,31 @@ If nothing answers in time, the call **always rings**: Tranqui never makes you m
 - **Automatically**, if you turn it on in Settings:
   - spam reported by the community,
   - private numbers,
-  - international calls.
+  - international calls,
+  - numbers starting with a **prefix** you choose, for example 601 for Bogotá landlines or +1 for North America.
+    Your contacts always ring.
 
-Every time we block a call you get a notification with the reason and the time. Your block list stays **only on your phone**.
+Every time we block a call you get a notification with the reason and the time. Your block list is kept on your
+phone. If you leave it on in Settings, each block also counts as a small spam signal (sent only as a code); you can
+turn it off at any time and we withdraw your blocks from the server.
 
 ## After the call
 
-Tranqui asks **"How was this call?"** with two options: **Spam** or **Not spam**.
-In **History** you can report spam with a label, for example "Spam Claro" or "Debt collection".
+Tranqui asks **"How was this call?"** with three options: **Spam**, **Spam with label…** (typed right there, for
+example "Spam Claro" or "Debt collection") or **Not spam**. You can also report from **History**.
 
-Each person has a single vote per number; if you change your mind, your vote is updated.
+Each person has a single vote per number. In **Account → My reports** you see your reports and can change or
+withdraw them.
+
+## Works offline
+
+Reporting, changing or withdrawing a report and blocking work without internet: they are saved on your phone and sent
+automatically as soon as the connection is back, even with the app closed. Knowing who is calling does need a
+connection; for numbers that called you recently, Tranqui remembers the answer for 24 hours.
+
+## Appearance
+
+Light, dark or same as the phone, in **Settings**.
 
 ## How the community decides
 

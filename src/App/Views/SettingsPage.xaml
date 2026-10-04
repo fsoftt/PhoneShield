@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:res="clr-namespace:Tranqui.App.Core.Resources;assembly=Tranqui.App.Core"
              xmlns:vm="clr-namespace:Tranqui.App.Core.ViewModels;assembly=Tranqui.App.Core"
+             xmlns:appearance="clr-namespace:Tranqui.App.Core.Appearance;assembly=Tranqui.App.Core"
              x:Class="Tranqui.App.Views.SettingsPage"
              x:DataType="vm:SettingsViewModel"
              Title="{x:Static res:Texts.TabSettings}">
@@ -38,6 +39,48 @@
         <Switch Grid.Column="1" IsToggled="{Binding BlockInternational}" AutomationId="BlockInternationalSwitch"
                 SemanticProperties.Description="{x:Static res:Texts.BlockInternationalTitle}" />
       </Grid>
+
+      <Label Text="{x:Static res:Texts.PrefixesHeading}" FontAttributes="Bold" Margin="0,8,0,0" SemanticProperties.HeadingLevel="Level2" />
+      <Label Text="{x:Static res:Texts.PrefixesHint}" FontSize="14" />
+      <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+        <Entry Text="{Binding NewPrefix}"
+               Placeholder="{x:Static res:Texts.PrefixPlaceholder}"
+               Keyboard="Telephone"
+               AutomationId="NewPrefixEntry"
+               SemanticProperties.Description="{x:Static res:Texts.PrefixesHeading}" />
+        <Button Grid.Column="1" Text="{x:Static res:Texts.AddPrefix}" Command="{Binding AddPrefixCommand}" AutomationId="AddPrefixButton" />
+      </Grid>
+      <VerticalStackLayout BindableLayout.ItemsSource="{Binding BlockedPrefixes}" Spacing="4">
+        <BindableLayout.ItemTemplate>
+          <DataTemplate x:DataType="x:String">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+              <Label Text="{Binding .}" FontSize="18" VerticalOptions="Center" />
+              <Button Grid.Column="1"
+                      Text="{x:Static res:Texts.RemovePrefix}"
+                      Style="{StaticResource SecondaryButton}"
+                      Command="{Binding RemovePrefixCommand, Source={RelativeSource AncestorType={x:Type vm:SettingsViewModel}}, x:DataType=vm:SettingsViewModel}"
+                      CommandParameter="{Binding .}"
+                      SemanticProperties.Hint="{Binding .}" />
+            </Grid>
+          </DataTemplate>
+        </BindableLayout.ItemTemplate>
+      </VerticalStackLayout>
+
+      <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12" Margin="0,8,0,0">
+        <VerticalStackLayout>
+          <Label Text="{x:Static res:Texts.ShareBlocksTitle}" FontAttributes="Bold" />
+          <Label Text="{x:Static res:Texts.ShareBlocksDetail}" FontSize="14" />
+        </VerticalStackLayout>
+        <Switch Grid.Column="1" IsToggled="{Binding ShareBlocks}" AutomationId="ShareBlocksSwitch"
+                SemanticProperties.Description="{x:Static res:Texts.ShareBlocksTitle}" />
+      </Grid>
+
+      <Label Text="{x:Static res:Texts.ThemeHeading}" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level2" Margin="0,16,0,0" />
+      <Picker ItemsSource="{Binding ThemeOptions}"
+              SelectedItem="{Binding SelectedTheme}"
+              ItemDisplayBinding="{Binding Label, x:DataType=appearance:ThemeOption}"
+              AutomationId="ThemePicker"
+              SemanticProperties.Description="{x:Static res:Texts.ThemeHeading}" />
 
       <Label Text="{x:Static res:Texts.ContributeHeading}" Style="{StaticResource Headline}" SemanticProperties.HeadingLevel="Level2" Margin="0,16,0,0" />
       <Label Text="{x:Static res:Texts.ContributionExplanation}" FontSize="14" />

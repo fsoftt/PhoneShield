@@ -141,6 +141,28 @@ public sealed class CallScreenerTests
     }
 
     [Fact]
+    public async Task NumberWithABlockedPrefix_IsRejectedWithoutLookingItUp()
+    {
+        GivenSettings(ScreeningSettings.Default with { BlockedPrefixes = ["+57300"] });
+
+        var decision = await screener.ScreenAsync(Number, CancellationToken.None);
+
+        decision.BlockReason.Should().Be(BlockReason.Prefix);
+        await lookup.DidNotReceive().LookupAsync(Arg.Any<PhoneNumber>(), Arg.Any<CancellationToken>());
+    }
+
+    [Fact]
+    public async Task ContactWithABlockedPrefix_StillRings()
+    {
+        GivenSettings(ScreeningSettings.Default with { BlockedPrefixes = ["+57300"] });
+        contacts.FindName(Arg.Any<PhoneNumber>()).Returns("Ana");
+
+        var decision = await screener.ScreenAsync(Number, CancellationToken.None);
+
+        decision.Reject.Should().BeFalse();
+    }
+
+    [Fact]
     public async Task InternationalNumber_WhenBlockingInternational_IsRejected()
     {
         GivenSettings(ScreeningSettings.Default with { BlockInternational = true });

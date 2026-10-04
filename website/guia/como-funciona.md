@@ -13,7 +13,14 @@ Antes de que suene el teléfono, Tranqui revisa el número y muestra un aviso en
 
 Si un número tiene varios nombres, el aviso muestra el más usado y puedes ver los demás con **Otro nombre**.
 
+::: info Los nombres vienen de la comunidad
+Un nombre en azul es como lo guardaron otras personas en su agenda (al menos 3 coinciden), no un dato verificado.
+Puede no ser exacto: un número reasignado puede conservar por un tiempo el nombre de su dueño anterior.
+:::
+
 Si nada responde a tiempo, la llamada **siempre suena**: Tranqui nunca te hace perder una llamada por un error.
+Si no hubo conexión, Tranqui sigue intentando durante un minuto después de la llamada y, si la comunidad conoce el
+número, te avisa quién era.
 
 ## Bloquear
 
@@ -21,16 +28,31 @@ Si nada responde a tiempo, la llamada **siempre suena**: Tranqui nunca te hace p
 - **Automáticamente**, si lo activas en Ajustes:
   - el spam reportado por la comunidad,
   - los números privados,
-  - las llamadas internacionales.
+  - las llamadas internacionales,
+  - los números que empiecen por un **prefijo** que elijas, por ejemplo 601 para los fijos de Bogotá o +1 para
+    Norteamérica. Tus contactos siempre suenan.
 
-Cada vez que bloqueamos una llamada te llega una notificación con el motivo y la hora. Tu lista de bloqueados se guarda **solo en tu teléfono**.
+Cada vez que bloqueamos una llamada te llega una notificación con el motivo y la hora. Tu lista de bloqueados se
+guarda en tu teléfono. Si lo dejas activado en Ajustes, cada bloqueo también cuenta como una señal pequeña de spam
+(se envía solo como código); puedes apagarlo cuando quieras y retiramos tus bloqueos del servidor.
 
 ## Después de la llamada
 
-Tranqui te pregunta **"¿Cómo fue esta llamada?"** con dos opciones: **Es spam** o **No es spam**.
-En el **Historial** puedes reportar spam con una etiqueta, por ejemplo "Spam Claro" o "Cobranzas".
+Tranqui te pregunta **"¿Cómo fue esta llamada?"** con tres opciones: **Es spam**, **Spam con etiqueta…** (la escribes
+ahí mismo, por ejemplo "Spam Claro" o "Cobranzas") o **No es spam**. También puedes reportar desde el **Historial**.
 
-Cada persona tiene un solo voto por número; si cambias de opinión, tu voto se actualiza.
+Cada persona tiene un solo voto por número. En **Cuenta → Mis reportes** ves tus reportes y puedes cambiarlos o
+retirarlos.
+
+## Funciona sin conexión
+
+Reportar, cambiar o retirar un reporte y bloquear funcionan aunque no tengas internet: se guardan en tu teléfono y se
+envían solos apenas vuelve la conexión, aunque tengas la app cerrada. Saber quién llama sí necesita conexión; para los
+números que te llamaron hace poco, Tranqui recuerda la respuesta 24 horas.
+
+## Apariencia
+
+Tema claro, oscuro o igual que el teléfono, en **Ajustes**.
 
 ## Cómo decide la comunidad
 
