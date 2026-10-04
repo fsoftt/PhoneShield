@@ -14,6 +14,8 @@ services:
       ContributorIds__Key: ${CONTRIBUTOR_IDS_KEY:?}
       # Optional: without it the appeal endpoints reject every request.
       PlayIntegrity__ServiceAccountKey: ${PLAY_INTEGRITY_SERVICE_ACCOUNT_KEY:-}
+      BackOffice__AdminUids__0: ${BACK_OFFICE_ADMIN_UID:-}
+      BackOffice__FirebaseApiKey: ${FIREBASE_WEB_API_KEY:-}
     depends_on:
       postgres:
         condition: service_healthy

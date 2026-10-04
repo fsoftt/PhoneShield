@@ -16,5 +16,7 @@ public static class ApiErrorCodes
     public const string AppealAccountTooNew = "appeal_account_too_new";
     public const string DeviceNotTrusted = "device_not_trusted";
     public const string PhoneNotVerified = "phone_not_verified";
+    public const string AppealNotFound = "appeal_not_found";
+    public const string AppealAlreadyResolved = "appeal_already_resolved";
     public const string UnexpectedError = "unexpected_error";
 }

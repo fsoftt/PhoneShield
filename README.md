@@ -67,6 +67,9 @@ Logs estructurados en Seq: http://localhost:8081.
 | `RateLimiting:ContactUploads:BatchesPerDay` | Opcional. Lotes de contactos por usuario (por defecto 20/día, de hasta 500 contactos) | `appsettings.json` / variables de entorno |
 | `RateLimiting:Appeals:PerDay` | Opcional. Llamadas de apelación por usuario, fallidas incluidas (por defecto 10/día); las exitosas las limitan las cuotas por número, cuenta y dispositivo | `appsettings.json` / variables de entorno |
 | `PlayIntegrity:ServiceAccountKey` | **Secreto.** Base64 del JSON de la cuenta de servicio de Google Cloud que decodifica los tokens de Play Integrity. Sin él, las apelaciones se rechazan | user-secrets / variable de entorno `PlayIntegrity__ServiceAccountKey` |
+| `BackOffice:AdminUids:<n>` | Uids de Firebase con acceso al back office (`/admin`). Sin ninguno, nadie entra | user-secrets / variable de entorno `BackOffice__AdminUids__0` |
+| `BackOffice:FirebaseApiKey` | Clave web de Firebase con la que inicia sesión la página del back office (no es secreta) | `appsettings.json` / variable de entorno `BackOffice__FirebaseApiKey` |
+| `BackOffice:AutomaticPurge` | Opcional. Borrado diario de datos vencidos (por defecto `true`) | `appsettings.json` / variables de entorno |
 | `PlayIntegrity:PackageName` | Opcional. Paquete de la app (por defecto `com.fsoftt.tranqui`) | `appsettings.json` / variables de entorno |
 | `PhoneHashing:CurrentKeyVersion` | Versión vigente de la clave de hash (empieza en `1`) | user-secrets / variable de entorno `PhoneHashing__CurrentKeyVersion` |
 | `PhoneHashing:Keys:<versión>` | **Secreto.** Clave HMAC en Base64, mínimo 32 bytes. Todas las versiones desde la 1 deben seguir configuradas. Si se pierde, todos los hashes quedan inservibles: guarda una copia cifrada fuera del servidor | user-secrets / variable de entorno `PhoneHashing__Keys__1` |
@@ -98,6 +101,14 @@ terminar. Para activarlo:
 Como Play Integrity solo reconoce la app instalada desde Google Play, las compilaciones de desarrollo y otras tiendas no
 pueden apelar desde la app; para ellas queda el canal manual. Las apelaciones `ReviewSpam` quedan pendientes en la tabla
 `appeals` para revisión manual en la v1.
+
+### Back office
+
+`https://<tu-api>/admin` (servido por el mismo API, con una política de seguridad de contenido estricta): resumen de
+totales, revisión de apelaciones "no es spam" (aprobar hace que los reportes anteriores dejen de contar; aprobar o
+rechazar borra el motivo y el correo) y borrado de datos vencidos. Los datos vencidos también se borran solos cada día
+según `Domain/Retention/RetentionRules`. Entran solo las cuentas de Firebase con correo verificado cuyo uid esté en
+`BackOffice:AdminUids`; el uid se ve en la consola de Firebase → Authentication.
 
 ## Despliegue
 

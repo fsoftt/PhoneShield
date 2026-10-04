@@ -9,7 +9,8 @@ In the app, go to **Account → Is your number shown wrongly?**. You prove the n
 
 - hiding the names is applied right away;
 - the spam review is done by a person, within the deadlines of Colombian law (inquiries within 10 business days,
-  complaints within 15 business days).
+  complaints within 15 business days). The reviewer never sees your number: only your reason and how many reports it
+  has. If approved, earlier spam reports stop counting; new ones still count.
 
 To prevent abuse, such as switching SIM cards again and again, each number, each account and each phone gets **one SMS
 and one appeal per month**, and the account and the phone **three per year**. The account must be at least a week old,

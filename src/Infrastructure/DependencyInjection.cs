@@ -4,12 +4,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Tranqui.Application.Features.LookupNumber;
 using Tranqui.Application.Abstractions;
+using Tranqui.Application.Features.GetBackOfficeOverview;
+using Tranqui.Application.Features.PurgeExpiredData;
 using Tranqui.Domain.Abstractions;
 using Tranqui.Domain.Appeals;
 using Tranqui.Domain.PhoneNumbers;
 using Tranqui.Domain.Reputation;
 using Tranqui.Domain.Users;
 using Tranqui.Infrastructure.Appeals;
+using Tranqui.Infrastructure.BackOffice;
 using Tranqui.Infrastructure.Integrity;
 using Tranqui.Infrastructure.Persistence;
 using Tranqui.Infrastructure.PhoneNumbers;
@@ -83,5 +86,7 @@ public static class DependencyInjection
         services.AddScoped<ISpamReportRepository, SpamReportRepository>();
         services.AddScoped<IContactContributionRepository, ContactContributionRepository>();
         services.AddScoped<IAppealRepository, AppealRepository>();
+        services.AddScoped<IExpiredDataPurger, ExpiredDataPurger>();
+        services.AddScoped<IBackOfficeStatistics, BackOfficeStatistics>();
     }
 }

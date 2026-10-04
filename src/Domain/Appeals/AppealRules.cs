@@ -27,6 +27,9 @@ public static class AppealRules
     /// <summary>The SMS sign-in that proves the number must be this recent.</summary>
     public static readonly TimeSpan PhoneProofMaxAge = TimeSpan.FromMinutes(15);
 
+    /// <summary>Ley 1581 de 2012: complaints are answered within 15 business days.</summary>
+    public const int ReviewDeadlineBusinessDays = 15;
+
     public const int ReasonMaxLength = 500;
 
     public const int ContactEmailMaxLength = 254;

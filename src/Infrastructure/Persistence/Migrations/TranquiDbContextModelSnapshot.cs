@@ -37,6 +37,12 @@ namespace Tranqui.Infrastructure.Persistence.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
+                    b.Property<int>("HashKeyVersion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(1)
+                        .HasColumnName("hash_key_version");
+
                     b.Property<string>("Kind")
                         .IsRequired()
                         .HasMaxLength(16)
@@ -53,6 +59,10 @@ namespace Tranqui.Infrastructure.Persistence.Migrations
                         .HasColumnType("character varying(500)")
                         .HasColumnName("reason");
 
+                    b.Property<DateTimeOffset?>("ResolvedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("resolved_at");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(16)
@@ -64,6 +74,9 @@ namespace Tranqui.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("PhoneHash", "CreatedAt")
                         .HasDatabaseName("ix_appeals_phone_hash_created_at");
+
+                    b.HasIndex("Status", "CreatedAt")
+                        .HasDatabaseName("ix_appeals_status_created_at");
 
                     b.ToTable("appeals", (string)null);
                 });
@@ -102,6 +115,22 @@ namespace Tranqui.Infrastructure.Persistence.Migrations
                         .HasDatabaseName("ix_appeal_quota_usages_subject_kind_subject_key_action_used_at");
 
                     b.ToTable("appeal_quota_usages", (string)null);
+                });
+
+            modelBuilder.Entity("Tranqui.Domain.Appeals.ClearedNumber", b =>
+                {
+                    b.Property<byte[]>("PhoneHash")
+                        .HasColumnType("bytea")
+                        .HasColumnName("phone_hash");
+
+                    b.Property<DateTimeOffset>("ClearedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("cleared_at");
+
+                    b.HasKey("PhoneHash")
+                        .HasName("pk_cleared_numbers");
+
+                    b.ToTable("cleared_numbers", (string)null);
                 });
 
             modelBuilder.Entity("Tranqui.Domain.Appeals.HiddenNumber", b =>
