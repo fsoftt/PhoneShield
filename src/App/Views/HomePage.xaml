@@ -16,6 +16,20 @@
              SemanticProperties.HeadingLevel="Level1"
              AutomationId="ProtectionStatus" />
 
+      <Border Padding="16" StrokeShape="RoundRectangle 12" IsVisible="{Binding ShowBlockSharingNotice}" AutomationId="BlockSharingNotice">
+        <VerticalStackLayout Spacing="8">
+          <Label Text="{x:Static res:Texts.BlockSharingNoticeTitle}" FontAttributes="Bold" FontSize="16" SemanticProperties.HeadingLevel="Level2" />
+          <Label Text="{x:Static res:Texts.BlockSharingNoticeText}" FontSize="14" />
+          <FlexLayout Wrap="Wrap">
+            <Button Text="{x:Static res:Texts.Understood}" Command="{Binding DismissBlockSharingNoticeCommand}" Margin="0,0,8,8" />
+            <Button Text="{x:Static res:Texts.ChangeInSettings}"
+                    Style="{StaticResource SecondaryButton}"
+                    Command="{Binding OpenSettingsCommand}"
+                    Margin="0,0,8,8" />
+          </FlexLayout>
+        </VerticalStackLayout>
+      </Border>
+
       <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Steps}">
         <BindableLayout.ItemTemplate>
           <DataTemplate x:DataType="protection:ProtectionStep">

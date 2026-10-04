@@ -50,7 +50,8 @@ Si decides aportar:
 Puedes conocer, actualizar, rectificar y suprimir tus datos, y revocar tu autorización. Desde la app:
 
 - **Cuenta → Ver qué datos guardamos.**
-- **Cuenta → Borrar mi cuenta**: borra tu cuenta, tus reportes y tus aportes.
+- **Cuenta → Borrar mi cuenta**: borra tu cuenta, tus reportes y tus aportes. Los bloqueos que compartiste se conservan
+  como señal de spam sin ningún vínculo contigo, salvo que marques **Borrar también los bloqueos que compartí**.
 
 Si no tienes cuenta y tu número aparece mal identificado, mira [¿Tu número aparece mal?](/guia/apelacion).
 

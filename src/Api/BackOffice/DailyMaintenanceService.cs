@@ -36,7 +36,7 @@ internal sealed partial class DailyMaintenanceService(IServiceScopeFactory scope
             await using var scope = scopes.CreateAsyncScope();
             var sender = scope.ServiceProvider.GetRequiredService<ISender>();
             var purged = await sender.Send(new PurgeExpiredDataCommand(), cancellationToken);
-            LogPurged(purged.AppealQuotaUsages, purged.ResolvedAppeals, purged.SpamReports);
+            LogPurged(purged.AppealQuotaUsages, purged.ResolvedAppeals, purged.SpamReports, purged.BlockSignals);
             var rated = await sender.Send(new RecalculateReporterReputationCommand(), cancellationToken);
             LogReputationRecalculated(rated);
         }
@@ -46,8 +46,8 @@ internal sealed partial class DailyMaintenanceService(IServiceScopeFactory scope
         }
     }
 
-    [LoggerMessage(Level = LogLevel.Information, Message = "Purged {QuotaUsages} quota uses, {Appeals} appeals and {Reports} reports")]
-    private partial void LogPurged(int quotaUsages, int appeals, int reports);
+    [LoggerMessage(Level = LogLevel.Information, Message = "Purged {QuotaUsages} quota uses, {Appeals} appeals, {Reports} reports and {Blocks} blocks")]
+    private partial void LogPurged(int quotaUsages, int appeals, int reports, int blocks);
 
     [LoggerMessage(Level = LogLevel.Information, Message = "Reporter reputation recalculated: {Rated} reporters rated")]
     private partial void LogReputationRecalculated(int rated);

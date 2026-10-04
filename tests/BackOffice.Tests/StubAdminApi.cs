@@ -50,7 +50,7 @@ internal sealed class StubAdminApi : HttpMessageHandler
             return Json(new AppealResponse(AppealStatusDto.Approved));
         }
 
-        return path == "/v1/admin/purges" ? Json(new PurgeResponse(4, 5, 6)) : new HttpResponseMessage(HttpStatusCode.NotFound);
+        return path == "/v1/admin/purges" ? Json(new PurgeResponse(4, 5, 6, 7)) : new HttpResponseMessage(HttpStatusCode.NotFound);
     }
 
     private static HttpResponseMessage Json<T>(T body) =>

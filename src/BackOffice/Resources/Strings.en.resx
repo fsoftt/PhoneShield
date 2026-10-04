@@ -25,10 +25,10 @@
   <data name="HiddenNumbers" xml:space="preserve"><value>Numbers with hidden names</value></data>
   <data name="ClearedNumbers" xml:space="preserve"><value>Cleared numbers</value></data>
   <data name="RetentionTitle" xml:space="preserve"><value>Expired data</value></data>
-  <data name="RetentionText" xml:space="preserve"><value>Deleted automatically every day. Delete now quota uses older than a year, appeals resolved over a year ago and reports older than two years.</value></data>
+  <data name="RetentionText" xml:space="preserve"><value>Deleted automatically every day. Delete now quota uses older than a year, appeals resolved over a year ago and reports and blocks older than two years.</value></data>
   <data name="Purge" xml:space="preserve"><value>Delete expired data now</value></data>
   <data name="PurgeConfirm" xml:space="preserve"><value>Delete expired data now? This cannot be undone.</value></data>
-  <data name="Purged" xml:space="preserve"><value>Deleted: {0} quota uses, {1} appeals and {2} reports.</value></data>
+  <data name="Purged" xml:space="preserve"><value>Deleted: {0} quota uses, {1} appeals, {2} reports and {3} blocks.</value></data>
   <data name="Resolved" xml:space="preserve"><value>Done. The appeal's reason and email were erased.</value></data>
   <data name="Pending" xml:space="preserve"><value>Pending</value></data>
   <data name="Approved" xml:space="preserve"><value>Approved</value></data>

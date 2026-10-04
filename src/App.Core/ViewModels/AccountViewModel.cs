@@ -20,6 +20,10 @@ public sealed partial class AccountViewModel(
     [ObservableProperty]
     public partial string? MyDataSummary { get; set; }
 
+    /// <summary>Ticked: shared blocks are deleted with the account. Unticked (default): kept with no link to the user.</summary>
+    [ObservableProperty]
+    public partial bool RemoveSharedBlocks { get; set; }
+
     [RelayCommand]
     private Task ShowMyDataAsync() => RunAsync(async () =>
     {
@@ -51,7 +55,7 @@ public sealed partial class AccountViewModel(
 
         await RunAsync(async () =>
         {
-            await api.DeleteAccountAsync(CancellationToken.None);
+            await api.DeleteAccountAsync(RemoveSharedBlocks, CancellationToken.None);
             await authService.DeleteIdentityAsync(CancellationToken.None);
             await navigation.GoToAsync(Routes.SignIn);
         });

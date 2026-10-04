@@ -11,6 +11,7 @@ using Tranqui.App.Core.Calls;
 using Tranqui.App.Core.Contacts;
 using Tranqui.App.Core.Dialogs;
 using Tranqui.App.Core.Navigation;
+using Tranqui.App.Core.Onboarding;
 using Tranqui.App.Core.Protection;
 using Tranqui.App.Core.Sync;
 using Tranqui.App.Services;
@@ -45,6 +46,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IDeviceIntegrity, PlayDeviceIntegrity>();
         builder.Services.AddSingleton<IBackgroundSync, AndroidBackgroundSync>();
         builder.Services.AddSingleton<IThemeService, MauiThemeService>();
+        builder.Services.AddSingleton<IOnboardingState, PreferencesOnboardingState>();
 
         builder.Services.AddTransient<StartupPage>();
         builder.Services.AddTransient<SignInPage>();

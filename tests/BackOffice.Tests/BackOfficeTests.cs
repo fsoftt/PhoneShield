@@ -94,8 +94,8 @@ public sealed class BackOfficeTests(BackOfficeFactory factory) : IClassFixture<B
 
         var response = await client.PostFormAsync("/", "/purges");
 
-        response.RedirectTarget().Should().Be("/?notice=purged&quotaUses=4&appeals=5&reports=6");
-        (await client.GetPageAsync(response.RedirectTarget())).Should().Contain("4 usos de cuota, 5 apelaciones y 6 reportes");
+        response.RedirectTarget().Should().Be("/?notice=purged&quotaUses=4&appeals=5&reports=6&blocks=7");
+        (await client.GetPageAsync(response.RedirectTarget())).Should().Contain("4 usos de cuota, 5 apelaciones, 6 reportes y 7 bloqueos");
     }
 
     [Fact]

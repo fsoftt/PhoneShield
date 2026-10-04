@@ -51,7 +51,7 @@
   <data name="Done" xml:space="preserve"><value>Listo</value></data>
   <data name="Enable" xml:space="preserve"><value>Activar</value></data>
   <data name="DeleteAccountTitle" xml:space="preserve"><value>¿Borrar tu cuenta?</value></data>
-  <data name="DeleteAccountMessage" xml:space="preserve"><value>Borraremos tu cuenta, tus reportes y los contactos que aportaste. No se puede deshacer.</value></data>
+  <data name="DeleteAccountMessage" xml:space="preserve"><value>Borraremos tu cuenta, tus reportes y los contactos que aportaste. Tus bloqueos compartidos se conservan sin vínculo contigo, salvo que marques la casilla. No se puede deshacer.</value></data>
   <data name="DeleteAccountAccept" xml:space="preserve"><value>Borrar</value></data>
   <data name="Cancel" xml:space="preserve"><value>Cancelar</value></data>
   <data name="MyDataSummaryFormat" xml:space="preserve"><value>Cuenta creada el {0:d}. Reportes enviados: {1}. Contactos aportados: {2}. Números bloqueados que cuentan como señal de spam: {3}.</value></data>
@@ -198,4 +198,9 @@
   <data name="FeedbackLabelHint" xml:space="preserve"><value>Etiqueta, ej. Spam Claro</value></data>
   <data name="LateIdentificationTitle" xml:space="preserve"><value>Ya sabemos quién te llamó</value></data>
   <data name="LateIdentificationTextFormat" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="BlockSharingNoticeTitle" xml:space="preserve"><value>Tus bloqueos ayudan a otros</value></data>
+  <data name="BlockSharingNoticeText" xml:space="preserve"><value>Cuando bloqueas un número, eso suma un poco para marcarlo como spam para la comunidad. Se envía solo como código, nunca el número. Puedes apagarlo cuando quieras en Ajustes.</value></data>
+  <data name="Understood" xml:space="preserve"><value>Entendido</value></data>
+  <data name="ChangeInSettings" xml:space="preserve"><value>Cambiar en Ajustes</value></data>
+  <data name="DeleteAlsoSharedBlocks" xml:space="preserve"><value>Borrar también los bloqueos que compartí. Si no lo marcas, se conservan como señal de spam sin ningún vínculo contigo.</value></data>
 </root>

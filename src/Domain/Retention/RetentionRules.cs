@@ -12,6 +12,9 @@ public static class RetentionRules
     /// <summary>Resolved appeals (already without reason or email) are kept a year as a record, then deleted.</summary>
     public static readonly TimeSpan ResolvedAppeals = TimeSpan.FromDays(365);
 
-    /// <summary>After eight half-lives a vote weighs under 0.4 % of a fresh one: it no longer changes any verdict.</summary>
+    /// <summary>
+    /// Reports and shared blocks. After eight half-lives a vote weighs under 0.4 % of a fresh one: it no longer changes
+    /// any verdict.
+    /// </summary>
     public static readonly TimeSpan Votes = ReputationRules.VoteHalfLife * 8;
 }

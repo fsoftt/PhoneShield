@@ -45,7 +45,7 @@ public sealed class AccountViewModelTests
     {
         await viewModel.DeleteAccountCommand.ExecuteAsync(null);
 
-        await api.DidNotReceive().DeleteAccountAsync(Arg.Any<CancellationToken>());
+        await api.DidNotReceive().DeleteAccountAsync(Arg.Any<bool>(), Arg.Any<CancellationToken>());
         await authService.DidNotReceive().DeleteIdentityAsync(Arg.Any<CancellationToken>());
     }
 
@@ -58,10 +58,21 @@ public sealed class AccountViewModelTests
 
         Received.InOrder(() =>
         {
-            api.DeleteAccountAsync(Arg.Any<CancellationToken>());
+            api.DeleteAccountAsync(false, Arg.Any<CancellationToken>());
             authService.DeleteIdentityAsync(Arg.Any<CancellationToken>());
             navigation.GoToAsync(Routes.SignIn);
         });
+    }
+
+    [Fact]
+    public async Task DeleteAccount_WithTheBoxTicked_AlsoRemovesSharedBlocks()
+    {
+        dialogs.ConfirmAsync(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>(), Arg.Any<string>()).Returns(true);
+        viewModel.RemoveSharedBlocks = true;
+
+        await viewModel.DeleteAccountCommand.ExecuteAsync(null);
+
+        await api.Received(1).DeleteAccountAsync(true, Arg.Any<CancellationToken>());
     }
 
     [Fact]

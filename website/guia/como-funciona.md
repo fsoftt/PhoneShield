@@ -66,7 +66,8 @@ Tema claro, oscuro o igual que el teléfono, en **Ajustes**.
 - **Ráfagas frenadas.** Los votos de un mismo día cuentan completos solo hasta cierto punto; por encima, valen mucho
   menos. Así, una campaña organizada contra (o a favor de) un número no lo marca de la noche a la mañana.
 - **Bloquear también cuenta, pero poco.** Cuando bloqueas un número, eso suma una señal pequeña de spam (un cuarto de
-  un reporte), porque también se bloquea a conocidos.
+  un reporte), porque también se bloquea a conocidos. Viene activado y la app te lo explica la primera vez que la abres;
+  puedes apagarlo en Ajustes.
 - Un nombre solo se muestra si **al menos 3 personas distintas** lo usaron.
 - **Sin groserías ni nombres personales.** Los nombres ofensivos y los de relación ("Mamá", "Amor") nunca salen de tu
   teléfono: solo se aporta que tienes el número guardado. Si alguien reporta spam con una etiqueta ofensiva, el reporte

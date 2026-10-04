@@ -21,7 +21,11 @@ internal sealed class DeleteAccountHandler(
         var contributor = contributorIds.FromFirebaseUid(currentUser.FirebaseUid);
         await reports.RemoveAllForContributorAsync(contributor, cancellationToken);
         await contributions.RemoveAllForContributorAsync(contributor, cancellationToken);
-        await blocks.RemoveAllForContributorAsync(contributor, cancellationToken);
+        if (request.RemoveSharedBlocks)
+        {
+            await blocks.RemoveAllForContributorAsync(contributor, cancellationToken);
+        }
+
         await reputations.RemoveAsync(contributor, cancellationToken);
 
         var user = await users.GetByFirebaseUidAsync(currentUser.FirebaseUid, cancellationToken);

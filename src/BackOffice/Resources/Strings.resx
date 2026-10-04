@@ -25,10 +25,10 @@
   <data name="HiddenNumbers" xml:space="preserve"><value>Números con nombres ocultos</value></data>
   <data name="ClearedNumbers" xml:space="preserve"><value>Números despejados</value></data>
   <data name="RetentionTitle" xml:space="preserve"><value>Datos vencidos</value></data>
-  <data name="RetentionText" xml:space="preserve"><value>Se borran solos cada día. Borra ahora los usos de cuota de más de un año, las apelaciones resueltas hace más de un año y los reportes de más de dos años.</value></data>
+  <data name="RetentionText" xml:space="preserve"><value>Se borran solos cada día. Borra ahora los usos de cuota de más de un año, las apelaciones resueltas hace más de un año y los reportes y bloqueos de más de dos años.</value></data>
   <data name="Purge" xml:space="preserve"><value>Borrar datos vencidos ahora</value></data>
   <data name="PurgeConfirm" xml:space="preserve"><value>¿Borrar ahora los datos vencidos? No se puede deshacer.</value></data>
-  <data name="Purged" xml:space="preserve"><value>Borrados: {0} usos de cuota, {1} apelaciones y {2} reportes.</value></data>
+  <data name="Purged" xml:space="preserve"><value>Borrados: {0} usos de cuota, {1} apelaciones, {2} reportes y {3} bloqueos.</value></data>
   <data name="Resolved" xml:space="preserve"><value>Listo. Se borraron el motivo y el correo de la apelación.</value></data>
   <data name="Pending" xml:space="preserve"><value>Pendientes</value></data>
   <data name="Approved" xml:space="preserve"><value>Aprobadas</value></data>

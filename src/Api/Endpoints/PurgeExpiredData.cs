@@ -15,7 +15,7 @@ public static class PurgeExpiredData
             {
                 var result = await sender.Send(new PurgeExpiredDataCommand(), cancellationToken);
 
-                return TypedResults.Ok(new PurgeResponse(result.AppealQuotaUsages, result.ResolvedAppeals, result.SpamReports));
+                return TypedResults.Ok(new PurgeResponse(result.AppealQuotaUsages, result.ResolvedAppeals, result.SpamReports, result.BlockSignals));
             })
             .RequireAuthorization(BackOfficeExtensions.AdminPolicy)
             .WithName(nameof(PurgeExpiredData));
