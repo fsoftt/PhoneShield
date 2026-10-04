@@ -28,6 +28,18 @@ Esta política cumple la Ley 1581 de 2012 y el Decreto 1377 de 2013 (compilado e
 
 **No** usamos los datos para publicidad, **no** los vendemos y **no** creamos perfiles.
 
+### Cuánto tiempo los guardamos
+
+Un proceso automático borra cada día lo que ya no hace falta:
+
+| Dato | Se borra |
+|---|---|
+| Reportes de spam y "no es spam" | A los 2 años (su peso se reduce a la mitad cada 90 días, así que a esa edad ya no influyen) |
+| Registro de límites de apelación (número, cuenta y teléfono, cada uno como código) | Al año |
+| Motivo y correo de una apelación | Al resolverla |
+| Apelación resuelta (sin motivo ni correo) | Al año de resolverla |
+| Cuenta, aportes de agenda y reportes propios | Cuando borras tu cuenta o retiras tu aporte |
+
 ## 3. Datos de personas sin cuenta
 
 Cuando un usuario aporta su agenda, se tratan datos de terceros (números y nombres). Para reducir el impacto sobre ellos:

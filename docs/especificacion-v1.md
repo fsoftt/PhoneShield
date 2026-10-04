@@ -154,6 +154,12 @@ Un número guardado como "Mamá" por muchas personas **no** es spam por defecto 
 - Ocultar nombres **no** borra los reportes de spam; un spammer no puede limpiar su número así.
 - Plazos legales en Colombia: consultas 10 días hábiles, reclamos 15 días hábiles (ver `docs/legal-colombia.md`).
 
+### 5.4 Back office
+
+- Página en `/admin` del mismo API (sin CORS, con CSP estricta). Acceso: cuenta de Firebase con correo verificado y uid en `BackOffice:AdminUids`.
+- Revisión de "no es spam": quien revisa ve el motivo, el correo y los agregados (estado, reportes, guardados), nunca el número. Aprobar despeja el número (`cleared_numbers`): los reportes de spam hasta ese momento dejan de contar. Aprobar o rechazar borra el motivo y el correo. Muestra el vencimiento legal (15 días hábiles, sin festivos).
+- Retención (`Domain/Retention/RetentionRules`), borrada cada día y a demanda: reportes a los 2 años (8 vidas medias), registros de cuotas de apelación al año, apelaciones resueltas al año de resolverse. Las pendientes nunca se borran solas.
+
 ---
 
 ## 6. Seguridad

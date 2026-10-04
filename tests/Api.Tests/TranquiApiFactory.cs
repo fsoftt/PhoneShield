@@ -16,6 +16,7 @@ namespace Tranqui.Api.Tests;
 public class TranquiApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     public const int LookupLimitPerHour = 5;
+    public const string AdminUid = "back-office-admin";
 
     private readonly PostgreSqlContainer database = new PostgreSqlBuilder("postgres:17-alpine").Build();
 
@@ -36,6 +37,9 @@ public class TranquiApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
         builder.UseSetting("PhoneHashing:Keys:1", Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)));
         builder.UseSetting("ContributorIds:Key", Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)));
         builder.UseSetting("NameProtection:Key", Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)));
+        builder.UseSetting("BackOffice:AdminUids:0", AdminUid);
+        builder.UseSetting("BackOffice:FirebaseApiKey", "public-web-key");
+        builder.UseSetting("BackOffice:AutomaticPurge", "false");
         builder.UseSetting("RateLimiting:Lookup:PerHour", LookupLimitPerHour.ToString(CultureInfo.InvariantCulture));
 
         builder.ConfigureServices(services =>

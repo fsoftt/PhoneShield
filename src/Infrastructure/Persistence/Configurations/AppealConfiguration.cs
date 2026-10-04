@@ -16,6 +16,10 @@ internal sealed class AppealConfiguration : IEntityTypeConfiguration<Appeal>
         builder.Property(appeal => appeal.Status).HasConversion<string>().HasMaxLength(EnumMaxLength);
         builder.Property(appeal => appeal.Reason).HasMaxLength(AppealRules.ReasonMaxLength);
         builder.Property(appeal => appeal.ContactEmail).HasMaxLength(AppealRules.ContactEmailMaxLength);
+        builder.Property(appeal => appeal.HashKeyVersion).HasDefaultValue(1);
+        builder.Ignore(appeal => appeal.Hash);
+        builder.Ignore(appeal => appeal.DueAt);
         builder.HasIndex(appeal => new { appeal.PhoneHash, appeal.CreatedAt });
+        builder.HasIndex(appeal => new { appeal.Status, appeal.CreatedAt });
     }
 }

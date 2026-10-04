@@ -19,6 +19,10 @@ internal sealed class ReputationSignalsReader(TranquiDbContext dbContext) : IRep
             .Where(contribution => contribution.PhoneHash == hash)
             .ToListAsync(cancellationToken);
         var namesHidden = await dbContext.HiddenNumbers.AnyAsync(hidden => hidden.PhoneHash == hash, cancellationToken);
+        var clearedAt = await dbContext.ClearedNumbers.AsNoTracking()
+            .Where(cleared => cleared.PhoneHash == hash)
+            .Select(cleared => (DateTimeOffset?)cleared.ClearedAt)
+            .FirstOrDefaultAsync(cancellationToken);
 
         var spamVotes = reports.Select(report => new SpamVote(report.Verdict, report.Weight, report.ReportedAt)).ToList();
         // The owner asked to hide names: they are never shown, but spam votes and the saved-by count still apply.
@@ -31,6 +35,8 @@ internal sealed class ReputationSignalsReader(TranquiDbContext dbContext) : IRep
                 .Select(report => new NameVote(new ContributorId(report.ContributorId), report.Label!, report.ReportedAt)))
             .ToList();
 
-        return new ReputationSignals(spamVotes, nameVotes, contributions.Count);
+        var signals = new ReputationSignals(spamVotes, nameVotes, contributions.Count);
+
+        return clearedAt is { } cleared ? signals.WithSpamClearedBefore(cleared) : signals;
     }
 }

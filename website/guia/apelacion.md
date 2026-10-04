@@ -10,7 +10,8 @@ En la app, ve a **Cuenta → ¿Tu número aparece mal?**. Demuestras que el núm
 
 - ocultar los nombres se aplica de inmediato;
 - la revisión del marcado como spam la hace una persona, dentro de los plazos de la ley colombiana (consultas en 10
-  días hábiles y reclamos en 15 días hábiles).
+  días hábiles y reclamos en 15 días hábiles). La persona que revisa nunca ve tu número: solo tu motivo y cuántos
+  reportes tiene. Si aprueba, los reportes de spam anteriores dejan de contar; los nuevos sí cuentan.
 
 Para evitar abusos, por ejemplo cambiar de SIM una y otra vez, cada número, cada cuenta y cada teléfono tiene **un SMS y
 una apelación al mes**, y la cuenta y el teléfono, **tres al año**. La cuenta debe tener al menos una semana, y la app

@@ -22,6 +22,8 @@ public sealed partial class GlobalExceptionHandler(
     private const string AppealAccountTooNewTitle = "The account is too new to appeal.";
     private const string DeviceNotTrustedTitle = "The device integrity check failed.";
     private const string PhoneNotVerifiedTitle = "The phone number was not verified.";
+    private const string AppealNotFoundTitle = "The appeal does not exist.";
+    private const string AppealAlreadyResolvedTitle = "The appeal is not pending.";
 
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
@@ -61,6 +63,16 @@ public sealed partial class GlobalExceptionHandler(
         if (exception is PhoneNotVerifiedException)
         {
             return await WriteProblemAsync(httpContext, StatusCodes.Status400BadRequest, PhoneNotVerifiedTitle, ApiErrorCodes.PhoneNotVerified);
+        }
+
+        if (exception is AppealNotFoundException)
+        {
+            return await WriteProblemAsync(httpContext, StatusCodes.Status404NotFound, AppealNotFoundTitle, ApiErrorCodes.AppealNotFound);
+        }
+
+        if (exception is AppealAlreadyResolvedException)
+        {
+            return await WriteProblemAsync(httpContext, StatusCodes.Status409Conflict, AppealAlreadyResolvedTitle, ApiErrorCodes.AppealAlreadyResolved);
         }
 
         LogUnhandledException(exception.GetType().Name);

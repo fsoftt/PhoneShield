@@ -10,7 +10,15 @@ public interface IAppealRepository
 
     void AddAppeal(Appeal appeal);
 
+    Task<Appeal?> GetAppealAsync(Guid id, CancellationToken cancellationToken);
+
+    Task<IReadOnlyList<Appeal>> ListAppealsAsync(AppealStatus status, int limit, CancellationToken cancellationToken);
+
     Task<bool> IsHiddenAsync(PhoneHash phoneHash, CancellationToken cancellationToken);
 
     void Hide(HiddenNumber hiddenNumber);
+
+    Task<ClearedNumber?> GetClearedAsync(PhoneHash phoneHash, CancellationToken cancellationToken);
+
+    void Clear(ClearedNumber clearedNumber);
 }

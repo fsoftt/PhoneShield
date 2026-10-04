@@ -29,6 +29,18 @@ This policy complies with Colombia's Law 1581 of 2012 and Decree 1377 of 2013 (c
 
 We do **not** use the data for advertising, do **not** sell it and do **not** build profiles.
 
+### How long we keep it
+
+An automatic process deletes every day what is no longer needed:
+
+| Data | Deleted |
+|---|---|
+| Spam and "not spam" reports | After 2 years (their weight halves every 90 days, so by then they no longer matter) |
+| Appeal limit records (number, account and phone, each as a code) | After a year |
+| Reason and email of an appeal | When it is resolved |
+| Resolved appeal (without reason or email) | A year after it is resolved |
+| Account, contributed contacts and your own reports | When you delete your account or withdraw your contribution |
+
 ## 3. Data about people without an account
 
 When a user contributes their address book, data about third parties (numbers and names) is processed. To reduce the impact on them:

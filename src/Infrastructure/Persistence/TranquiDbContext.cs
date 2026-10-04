@@ -20,6 +20,8 @@ public sealed class TranquiDbContext(DbContextOptions<TranquiDbContext> options)
 
     public DbSet<HiddenNumber> HiddenNumbers => Set<HiddenNumber>();
 
+    public DbSet<ClearedNumber> ClearedNumbers => Set<ClearedNumber>();
+
     async Task IUnitOfWork.SaveChangesAsync(CancellationToken cancellationToken) =>
         await SaveChangesAsync(cancellationToken);
 

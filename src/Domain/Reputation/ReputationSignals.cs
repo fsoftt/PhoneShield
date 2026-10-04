@@ -12,4 +12,10 @@ public sealed record ReputationSignals(
     int SavedByCount)
 {
     public static ReputationSignals None { get; } = new([], [], 0);
+
+    /// <summary>After an approved spam review: spam votes cast up to <paramref name="clearedAt"/> stop counting.</summary>
+    public ReputationSignals WithSpamClearedBefore(DateTimeOffset clearedAt) => this with
+    {
+        SpamVotes = SpamVotes.Where(vote => vote.Verdict != ReportVerdict.Spam || vote.CastAt > clearedAt).ToList(),
+    };
 }

@@ -28,6 +28,16 @@ internal sealed class AppealRepository(TranquiDbContext dbContext) : IAppealRepo
 
     public void AddAppeal(Appeal appeal) => dbContext.Appeals.Add(appeal);
 
+    public Task<Appeal?> GetAppealAsync(Guid id, CancellationToken cancellationToken) =>
+        dbContext.Appeals.FirstOrDefaultAsync(appeal => appeal.Id == id, cancellationToken);
+
+    public async Task<IReadOnlyList<Appeal>> ListAppealsAsync(AppealStatus status, int limit, CancellationToken cancellationToken) =>
+        await dbContext.Appeals.AsNoTracking()
+            .Where(appeal => appeal.Status == status)
+            .OrderBy(appeal => appeal.CreatedAt)
+            .Take(limit)
+            .ToListAsync(cancellationToken);
+
     public Task<bool> IsHiddenAsync(PhoneHash phoneHash, CancellationToken cancellationToken)
     {
         var hash = phoneHash.Value.ToArray();
@@ -36,4 +46,13 @@ internal sealed class AppealRepository(TranquiDbContext dbContext) : IAppealRepo
     }
 
     public void Hide(HiddenNumber hiddenNumber) => dbContext.HiddenNumbers.Add(hiddenNumber);
+
+    public Task<ClearedNumber?> GetClearedAsync(PhoneHash phoneHash, CancellationToken cancellationToken)
+    {
+        var hash = phoneHash.Value.ToArray();
+
+        return dbContext.ClearedNumbers.FirstOrDefaultAsync(cleared => cleared.PhoneHash == hash, cancellationToken);
+    }
+
+    public void Clear(ClearedNumber clearedNumber) => dbContext.ClearedNumbers.Add(clearedNumber);
 }
