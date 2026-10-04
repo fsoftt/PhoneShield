@@ -14,6 +14,7 @@ public sealed class LayerDependencyTests
     private static readonly Assembly applicationAssembly = typeof(Application.AssemblyReference).Assembly;
     private static readonly Assembly contractsAssembly = typeof(Contracts.AssemblyReference).Assembly;
     private static readonly Assembly appCoreAssembly = typeof(App.Core.DependencyInjection).Assembly;
+    private static readonly Assembly backOfficeAssembly = typeof(BackOffice.Strings).Assembly;
 
     private static readonly string[] frameworkNamespaces =
     [
@@ -74,6 +75,18 @@ public sealed class LayerDependencyTests
         var result = Types.InAssembly(appCoreAssembly)
             .ShouldNot()
             .HaveDependencyOnAny(ApplicationNamespace, InfrastructureNamespace, ApiNamespace)
+            .GetResult();
+
+        result.IsSuccessful.Should().BeTrue(FailingTypes(result));
+    }
+
+    /// <summary>The back office is a client of the API like the app: it only shares the contracts.</summary>
+    [Fact]
+    public void BackOffice_OnlyTalksToTheApi()
+    {
+        var result = Types.InAssembly(backOfficeAssembly)
+            .ShouldNot()
+            .HaveDependencyOnAny("Tranqui.Domain", ApplicationNamespace, InfrastructureNamespace, ApiNamespace)
             .GetResult();
 
         result.IsSuccessful.Should().BeTrue(FailingTypes(result));

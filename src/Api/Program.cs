@@ -41,7 +41,6 @@ try
 
     app.UseExceptionHandler();
     app.UseSerilogRequestLogging();
-    app.UseBackOfficePage();
     app.UseAuthentication();
     app.UseAuthorization();
     app.UseRateLimiter();
@@ -60,7 +59,6 @@ try
     app.MapDeleteAccount();
     app.MapRequestAppealVerification();
     app.MapSubmitAppeal();
-    app.MapGetBackOfficeConfig();
     app.MapGetBackOfficeOverview();
     app.MapListAppeals();
     app.MapResolveAppeal();

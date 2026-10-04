@@ -13,28 +13,6 @@ namespace Tranqui.Api.Tests.Endpoints;
 
 public sealed class BackOfficeTests(AppealApiFactory factory) : IClassFixture<AppealApiFactory>
 {
-    [Fact]
-    public async Task Config_IsAnonymous()
-    {
-        using var client = factory.CreateClientFor(token: null);
-
-        var config = await client.GetFromJsonAsync<BackOfficeConfigResponse>(GetBackOfficeConfig.Route, TestContext.Current.CancellationToken);
-
-        config!.FirebaseApiKey.Should().Be("public-web-key");
-    }
-
-    [Fact]
-    public async Task Page_IsServedWithAStrictContentSecurityPolicy()
-    {
-        using var client = factory.CreateClientFor(token: null);
-
-        var response = await client.GetAsync(new Uri("/admin/", UriKind.Relative), TestContext.Current.CancellationToken);
-
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        response.Content.Headers.ContentType!.MediaType.Should().Be("text/html");
-        response.Headers.GetValues("Content-Security-Policy").Single().Should().StartWith("default-src 'self'");
-    }
-
     [Theory]
     [InlineData(GetBackOfficeOverview.Route)]
     [InlineData(ListAppeals.Route)]

@@ -4,13 +4,8 @@ namespace Tranqui.Api.BackOffice;
 
 public static class BackOfficeExtensions
 {
+    /// <summary>The back office (a separate app, src/BackOffice) calls the /v1/admin endpoints with an admin's token.</summary>
     public const string AdminPolicy = "back-office";
-    public const string PagePath = "/admin";
-
-    /// <summary>The page only talks to this API and to Firebase Authentication's REST endpoints.</summary>
-    private const string PageContentSecurityPolicy =
-        "default-src 'self'; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; "
-        + "frame-ancestors 'none'; base-uri 'none'; form-action 'none'";
 
     public static IServiceCollection AddBackOffice(this IServiceCollection services, IConfiguration configuration)
     {
@@ -29,23 +24,5 @@ public static class BackOfficeExtensions
         }
 
         return services;
-    }
-
-    /// <summary>Serves the static page at /admin with a strict content security policy.</summary>
-    public static WebApplication UseBackOfficePage(this WebApplication app)
-    {
-        app.Use(async (context, next) =>
-        {
-            if (context.Request.Path.StartsWithSegments(PagePath))
-            {
-                context.Response.Headers.ContentSecurityPolicy = PageContentSecurityPolicy;
-            }
-
-            await next(context);
-        });
-        app.UseDefaultFiles();
-        app.UseStaticFiles();
-
-        return app;
     }
 }

@@ -1,0 +1,66 @@
+@page "/appeals"
+@inject AdminApiClient Api
+
+<PageTitle>@T["Appeals"] · Tranqui</PageTitle>
+
+<h1>@T["Appeals"]</h1>
+<NoticeBanner />
+
+<nav class="tabs" aria-label="@T["Appeals"]">
+    @foreach (var (status, label) in tabs)
+    {
+        <a href="@($"{BackOfficeRoutes.Appeals}?status={status}")" aria-current="@(status == Current ? "page" : null)">@T[label]</a>
+    }
+</nav>
+<p class="hint">@T["PrivacyHint"]</p>
+
+@if (Problem is not null)
+{
+    <p class="notice problem" role="alert">@Problem</p>
+}
+else if (Items is { Count: 0 })
+{
+    <p class="muted">@T["Empty"]</p>
+}
+else if (Items is not null)
+{
+    @foreach (var appeal in Items)
+    {
+        <AppealCard Appeal="appeal" ReturnStatus="Current" />
+    }
+}
+
+@code {
+    private static readonly (AppealStatusDto Status, string Label)[] tabs =
+    [
+        (AppealStatusDto.Pending, "Pending"),
+        (AppealStatusDto.Approved, "Approved"),
+        (AppealStatusDto.Rejected, "Rejected"),
+        (AppealStatusDto.Applied, "Applied"),
+    ];
+
+    [SupplyParameterFromQuery(Name = "status")]
+    private string? Status { get; set; }
+
+    private AppealStatusDto Current => Enum.TryParse<AppealStatusDto>(Status, out var status) ? status : AppealStatusDto.Pending;
+
+    private List<AppealReviewResponse>? Items { get; set; }
+
+    private string? Problem { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Items = await Api.ListAppealsAsync(Current, CancellationToken.None);
+        }
+        catch (AdminApiException exception)
+        {
+            Problem = exception.IsForbidden ? T["Forbidden"] : T["Error"];
+        }
+        catch (HttpRequestException)
+        {
+            Problem = T["Error"];
+        }
+    }
+}

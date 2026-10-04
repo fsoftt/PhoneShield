@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>Back office</value></data>
+  <data name="Navigation" xml:space="preserve"><value>Navegación</value></data>
+  <data name="Overview" xml:space="preserve"><value>Resumen</value></data>
+  <data name="Appeals" xml:space="preserve"><value>Apelaciones</value></data>
+  <data name="SignOut" xml:space="preserve"><value>Cerrar sesión</value></data>
+  <data name="SignInTitle" xml:space="preserve"><value>Iniciar sesión</value></data>
+  <data name="Email" xml:space="preserve"><value>Correo</value></data>
+  <data name="Password" xml:space="preserve"><value>Contraseña</value></data>
+  <data name="SignIn" xml:space="preserve"><value>Entrar</value></data>
+  <data name="WrongCredentials" xml:space="preserve"><value>Correo o contraseña incorrectos.</value></data>
+  <data name="Forbidden" xml:space="preserve"><value>Esta cuenta no tiene acceso al back office.</value></data>
+  <data name="Error" xml:space="preserve"><value>Algo falló. Inténtalo de nuevo.</value></data>
+  <data name="NotFound" xml:space="preserve"><value>Esta página no existe.</value></data>
+  <data name="Accounts" xml:space="preserve"><value>Cuentas</value></data>
+  <data name="SpamReports" xml:space="preserve"><value>Reportes</value></data>
+  <data name="ContactContributions" xml:space="preserve"><value>Contactos aportados</value></data>
+  <data name="PendingAppeals" xml:space="preserve"><value>Apelaciones pendientes</value></data>
+  <data name="OverdueAppeals" xml:space="preserve"><value>Vencidas</value></data>
+  <data name="HiddenNumbers" xml:space="preserve"><value>Números con nombres ocultos</value></data>
+  <data name="ClearedNumbers" xml:space="preserve"><value>Números despejados</value></data>
+  <data name="RetentionTitle" xml:space="preserve"><value>Datos vencidos</value></data>
+  <data name="RetentionText" xml:space="preserve"><value>Se borran solos cada día. Borra ahora los usos de cuota de más de un año, las apelaciones resueltas hace más de un año y los reportes de más de dos años.</value></data>
+  <data name="Purge" xml:space="preserve"><value>Borrar datos vencidos ahora</value></data>
+  <data name="PurgeConfirm" xml:space="preserve"><value>¿Borrar ahora los datos vencidos? No se puede deshacer.</value></data>
+  <data name="Purged" xml:space="preserve"><value>Borrados: {0} usos de cuota, {1} apelaciones y {2} reportes.</value></data>
+  <data name="Resolved" xml:space="preserve"><value>Listo. Se borraron el motivo y el correo de la apelación.</value></data>
+  <data name="Pending" xml:space="preserve"><value>Pendientes</value></data>
+  <data name="Approved" xml:space="preserve"><value>Aprobadas</value></data>
+  <data name="Rejected" xml:space="preserve"><value>Rechazadas</value></data>
+  <data name="Applied" xml:space="preserve"><value>Nombres ocultados</value></data>
+  <data name="PrivacyHint" xml:space="preserve"><value>El número nunca se muestra: solo guardamos su código. Decide con el motivo y lo que dice la comunidad. Responde por correo antes de resolver: al resolver se borran el motivo y el correo.</value></data>
+  <data name="Empty" xml:space="preserve"><value>No hay apelaciones aquí.</value></data>
+  <data name="HideNames" xml:space="preserve"><value>Ocultar nombres</value></data>
+  <data name="ReviewSpam" xml:space="preserve"><value>Revisar spam</value></data>
+  <data name="DueBy" xml:space="preserve"><value>Responder antes de</value></data>
+  <data name="ResolvedAt" xml:space="preserve"><value>Resuelta</value></data>
+  <data name="Overdue" xml:space="preserve"><value>Vencida</value></data>
+  <data name="NoReason" xml:space="preserve"><value>(sin motivo)</value></data>
+  <data name="NoEmail" xml:space="preserve"><value>Sin correo de contacto</value></data>
+  <data name="Reply" xml:space="preserve"><value>Responder por correo</value></data>
+  <data name="Community" xml:space="preserve"><value>Comunidad</value></data>
+  <data name="Signals" xml:space="preserve"><value>{0} reportes de spam, {1} de “no es spam”, {2} lo tienen guardado</value></data>
+  <data name="Spam" xml:space="preserve"><value>Spam</value></data>
+  <data name="Identified" xml:space="preserve"><value>Identificado</value></data>
+  <data name="Unknown" xml:space="preserve"><value>Sin datos</value></data>
+  <data name="Approve" xml:space="preserve"><value>Aprobar: no es spam</value></data>
+  <data name="Reject" xml:space="preserve"><value>Rechazar</value></data>
+  <data name="ApproveConfirm" xml:space="preserve"><value>¿Aprobar? Los reportes de spam anteriores dejarán de contar y se borrarán el motivo y el correo.</value></data>
+  <data name="RejectConfirm" xml:space="preserve"><value>¿Rechazar? Los reportes se mantienen y se borrarán el motivo y el correo.</value></data>
+</root>

@@ -1,0 +1,30 @@
+@* Shows the outcome of the last form post, passed back in the query string (post/redirect/get). *@
+@if (Message is not null)
+{
+    <p class="notice @(IsProblem ? "problem" : string.Empty)" role="status">@Message</p>
+}
+
+@code {
+    [SupplyParameterFromQuery(Name = "notice")]
+    private string? Notice { get; set; }
+
+    [SupplyParameterFromQuery(Name = "quotaUses")]
+    private int QuotaUses { get; set; }
+
+    [SupplyParameterFromQuery(Name = "appeals")]
+    private int Appeals { get; set; }
+
+    [SupplyParameterFromQuery(Name = "reports")]
+    private int Reports { get; set; }
+
+    private bool IsProblem => Notice is Notices.Error or Notices.Forbidden;
+
+    private string? Message => Notice switch
+    {
+        Notices.Resolved => T["Resolved"].Value,
+        Notices.Purged => T["Purged", QuotaUses, Appeals, Reports].Value,
+        Notices.Forbidden => T["Forbidden"].Value,
+        Notices.Error => T["Error"].Value,
+        _ => null,
+    };
+}

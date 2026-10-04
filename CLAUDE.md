@@ -40,9 +40,13 @@ Open-source, privacy-first caller ID and spam blocker: a .NET MAUI Android app +
   then shows `CallerOverlay` (native views over the call screen) or a notification, and the post-call feedback notification.
   Platform code uses the `Tranqui.App.*` namespaces (not `...Platforms.Android`) to avoid clashing with the global `Android` namespace,
   and aliases Android types that collide with MAUI ones (`AColor`, `AView`).
+- `src/BackOffice` — the back office: a separate Blazor app with static server rendering (no WebAssembly, no SignalR).
+  It depends only on `Contracts` and calls the API's `/v1/admin` endpoints; the API decides who is an admin. Actions
+  are antiforgery-checked form posts with post/redirect/get. Texts in `Resources/Strings.resx` (es) and `Strings.en.resx`.
 - `tests/` — one project per `src` project, mirroring its structure, plus architecture tests.
 
-Dependency direction: `Api` → `Application`/`Infrastructure` → `Domain`; `App` → `App.Core` → `Contracts` + `Domain`. `Domain` and `Application` never reference EF Core, ASP.NET Core, Redis or Firebase types.
+Dependency direction: `Api` → `Application`/`Infrastructure` → `Domain`; `App` → `App.Core` → `Contracts` + `Domain`;
+`BackOffice` → `Contracts`. `Domain` and `Application` never reference EF Core, ASP.NET Core, Redis or Firebase types.
 
 ## Privacy non-negotiables
 

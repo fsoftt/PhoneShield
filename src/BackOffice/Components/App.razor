@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <base href="/" />
+    <link rel="stylesheet" href="@Assets["app.css"]" />
+    <script src="@Assets["confirm.js"]" defer></script>
+    <HeadOutlet />
+</head>
+
+<body>
+    @* Static server rendering only: no Blazor script, no WebAssembly, no SignalR circuit. *@
+    <Routes />
+</body>
+
+</html>

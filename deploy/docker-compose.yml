@@ -15,10 +15,23 @@ services:
       # Optional: without it the appeal endpoints reject every request.
       PlayIntegrity__ServiceAccountKey: ${PLAY_INTEGRITY_SERVICE_ACCOUNT_KEY:-}
       BackOffice__AdminUids__0: ${BACK_OFFICE_ADMIN_UID:-}
-      BackOffice__FirebaseApiKey: ${FIREBASE_WEB_API_KEY:-}
     depends_on:
       postgres:
         condition: service_healthy
+
+  # Back office (Blazor, server-rendered). Talks to the API over the internal network; reachable only through Caddy.
+  backoffice:
+    build:
+      context: ..
+      dockerfile: src/BackOffice/Dockerfile
+    restart: unless-stopped
+    environment:
+      BackOffice__ApiBaseUrl: http://api:8080/
+      BackOffice__FirebaseApiKey: ${FIREBASE_WEB_API_KEY:?}
+    volumes:
+      - backoffice-keys:/data-protection
+    depends_on:
+      - api
 
   postgres:
     image: postgres:17-alpine
@@ -42,12 +55,15 @@ services:
       - "443:443"
     environment:
       TRANQUI_DOMAIN: ${TRANQUI_DOMAIN:?}
+      TRANQUI_ADMIN_DOMAIN: ${TRANQUI_ADMIN_DOMAIN:?}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
     depends_on:
       - api
+      - backoffice
 
 volumes:
   postgres-data:
   caddy-data:
+  backoffice-keys:

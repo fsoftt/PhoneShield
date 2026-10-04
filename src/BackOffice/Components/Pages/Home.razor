@@ -1,0 +1,55 @@
+@page "/"
+@inject AdminApiClient Api
+
+<PageTitle>@T["Overview"] · Tranqui</PageTitle>
+
+<h1>@T["Overview"]</h1>
+<NoticeBanner />
+
+@if (Overview is { } overview)
+{
+    <dl class="stats">
+        <div><dt>@T["Accounts"]</dt><dd>@overview.Accounts</dd></div>
+        <div><dt>@T["SpamReports"]</dt><dd>@overview.SpamReports</dd></div>
+        <div><dt>@T["ContactContributions"]</dt><dd>@overview.ContactContributions</dd></div>
+        <div><dt>@T["PendingAppeals"]</dt><dd>@overview.PendingAppeals</dd></div>
+        <div class="@(overview.OverdueAppeals > 0 ? "alert" : string.Empty)"><dt>@T["OverdueAppeals"]</dt><dd>@overview.OverdueAppeals</dd></div>
+        <div><dt>@T["HiddenNumbers"]</dt><dd>@overview.HiddenNumbers</dd></div>
+        <div><dt>@T["ClearedNumbers"]</dt><dd>@overview.ClearedNumbers</dd></div>
+    </dl>
+}
+else
+{
+    <p class="notice problem" role="alert">@Problem</p>
+}
+
+<section class="card">
+    <h2>@T["RetentionTitle"]</h2>
+    <p>@T["RetentionText"]</p>
+    <form method="post" action="@BackOfficeRoutes.Purge" data-confirm="@T["PurgeConfirm"]">
+        <AntiforgeryToken />
+        <button type="submit">@T["Purge"]</button>
+    </form>
+</section>
+
+@code {
+    private BackOfficeOverviewResponse? Overview { get; set; }
+
+    private string? Problem { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Overview = await Api.GetOverviewAsync(CancellationToken.None);
+        }
+        catch (AdminApiException exception)
+        {
+            Problem = exception.IsForbidden ? T["Forbidden"] : T["Error"];
+        }
+        catch (HttpRequestException)
+        {
+            Problem = T["Error"];
+        }
+    }
+}
