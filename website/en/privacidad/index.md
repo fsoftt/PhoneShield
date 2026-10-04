@@ -50,7 +50,8 @@ If you decide to contribute:
 You can access, update, correct and delete your data, and revoke your authorization. From the app:
 
 - **Account → See what data we keep.**
-- **Account → Delete my account**: deletes your account, your reports and your contributions.
+- **Account → Delete my account**: deletes your account, your reports and your contributions. The blocks you shared
+  are kept as a spam signal with no link to you, unless you tick **Also delete the blocks I shared**.
 
 If you do not have an account and your number is shown wrongly, see [Is your number shown wrongly?](/en/guia/apelacion).
 

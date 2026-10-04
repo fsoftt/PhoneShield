@@ -26,6 +26,11 @@ internal sealed class ExpiredDataPurger(TranquiDbContext dbContext) : IExpiredDa
             .Where(report => report.ReportedAt < cutoffs.Votes)
             .ExecuteDeleteAsync(cancellationToken);
 
-        return new PurgeResult(quotaUsages, resolvedAppeals, spamReports);
+        // Blocks decay like reports; this also bounds how long the blocks of deleted accounts are kept.
+        var blockSignals = await dbContext.BlockSignals
+            .Where(block => block.BlockedAt < cutoffs.Votes)
+            .ExecuteDeleteAsync(cancellationToken);
+
+        return new PurgeResult(quotaUsages, resolvedAppeals, spamReports, blockSignals);
     }
 }

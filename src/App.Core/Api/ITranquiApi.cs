@@ -14,8 +14,9 @@ public interface ITranquiApi
     [Post("/v1/account")]
     Task<AccountResponse> RegisterAccountAsync([Body] RegisterAccountRequest request, CancellationToken cancellationToken);
 
+    /// <summary>Deletes the account. Shared blocks are kept, unlinked, unless <c>removeSharedBlocks</c> is true.</summary>
     [Delete("/v1/account")]
-    Task DeleteAccountAsync(CancellationToken cancellationToken);
+    Task DeleteAccountAsync([Query] bool removeSharedBlocks, CancellationToken cancellationToken);
 
     [Get("/v1/account/export")]
     Task<MyDataResponse> ExportMyDataAsync(CancellationToken cancellationToken);

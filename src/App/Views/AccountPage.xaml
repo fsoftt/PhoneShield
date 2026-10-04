@@ -32,6 +32,16 @@
               Command="{Binding OpenAppealCommand}"
               AutomationId="OpenAppealButton" />
       <Button Text="{x:Static res:Texts.SignOut}" Style="{StaticResource SecondaryButton}" Command="{Binding SignOutCommand}" />
+      <HorizontalStackLayout Spacing="8">
+        <CheckBox IsChecked="{Binding RemoveSharedBlocks}"
+                  AutomationId="RemoveSharedBlocksCheckBox"
+                  SemanticProperties.Description="{x:Static res:Texts.DeleteAlsoSharedBlocks}" />
+        <Label Text="{x:Static res:Texts.DeleteAlsoSharedBlocks}"
+               VerticalOptions="Center"
+               LineBreakMode="WordWrap"
+               MaximumWidthRequest="320"
+               FontSize="14" />
+      </HorizontalStackLayout>
       <Button Text="{x:Static res:Texts.DeleteMyAccount}"
               BackgroundColor="{StaticResource StateSpam}"
               TextColor="White"

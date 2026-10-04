@@ -397,6 +397,16 @@ public static class Texts
 
     public static string LateIdentificationTextFormat => Get(nameof(LateIdentificationTextFormat));
 
+    public static string BlockSharingNoticeTitle => Get(nameof(BlockSharingNoticeTitle));
+
+    public static string BlockSharingNoticeText => Get(nameof(BlockSharingNoticeText));
+
+    public static string Understood => Get(nameof(Understood));
+
+    public static string ChangeInSettings => Get(nameof(ChangeInSettings));
+
+    public static string DeleteAlsoSharedBlocks => Get(nameof(DeleteAlsoSharedBlocks));
+
     /// <summary>Formats a localized template such as <see cref="SpamSubtitleFormat"/> with the current culture.</summary>
     public static string Format(string template, params object[] arguments) =>
         string.Format(CultureInfo.CurrentCulture, template, arguments);

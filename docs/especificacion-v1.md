@@ -134,7 +134,8 @@ Un número guardado como "Mamá" por muchas personas **no** es spam por defecto 
 
 - Registro e inicio de sesión con Firebase (email/contraseña con verificación de correo, Google). Apple llega con la versión iOS.
 - El servidor valida el JWT de Firebase en cada petición; el usuario se identifica por el `uid` del token, nunca por un valor enviado por el cliente.
-- Borrar cuenta: borra la cuenta de Firebase, los aportes y los reportes (los agregados se recalculan).
+- Borrar cuenta: borra la cuenta de Firebase, los aportes y los reportes (los agregados se recalculan). Los bloqueos compartidos se conservan como señal de spam sin vínculo con nadie (su identificador de aportante deriva de un uid que deja de existir), salvo que el usuario marque "Borrar también los bloqueos que compartí" (`DELETE /v1/account?removeSharedBlocks=true`); en todo caso vencen a los 2 años.
+- Compartir bloqueos como señal viene activado; la primera vez que se abre la app, Inicio lo explica con "Entendido" y "Cambiar en Ajustes".
 
 ### 5.2 Gestión (en la app)
 

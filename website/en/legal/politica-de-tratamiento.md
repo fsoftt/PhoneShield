@@ -23,7 +23,7 @@ This policy complies with Colombia's Law 1581 of 2012 and Decree 1377 of 2013 (c
 | Email and password | Managed by Firebase Authentication (Google); we only keep an account identifier | Create and protect your account |
 | Acceptance of the terms and of contributing contacts | Date and version of the accepted text | Prove your authorization |
 | Phone numbers looked up or reported | Only as a code (hash) with a secret key; never the number | Identify calls and detect spam |
-| Blocks (only if you share them; on by default and can be turned off in Settings) | Only as a code, with a contributor identifier; deleted when you unblock, turn the option off or delete your account | Low-weight spam signal |
+| Blocks (only if you share them; on by default and can be turned off in Settings) | Only as a code, with a contributor identifier; deleted when you unblock or turn the option off; when you delete your account they are kept with no link to you, unless you tick the box to delete them; in any case they expire after 2 years | Low-weight spam signal |
 | Names and spam labels | Encrypted with a key derived from each number | Show who is calling |
 | Address book (only if you choose to contribute) | Numbers as codes and encrypted names; personal names ("Mom") are discarded | Identify calls for the community |
 | Appeals for a number ([how](/en/guia/apelacion)) | The number only as a code; Firebase (Google) processes it to send the SMS code and we delete that verification once confirmed; a phone identifier (ANDROID_ID) and the account, each only as a code and separately; the reason and optional email are deleted once the request is resolved | Verify the number is yours, handle the request and limit use per number, account and phone |
@@ -41,6 +41,7 @@ An automatic process deletes every day what is no longer needed:
 | Reason and email of an appeal | When it is resolved |
 | Resolved appeal (without reason or email) | A year after it is resolved |
 | Account, contributed contacts and your own reports | When you delete your account or withdraw your contribution |
+| Shared blocks | After 2 years, or earlier if you unblock, turn the option off or ask for it when deleting your account |
 
 ## 3. Data about people without an account
 

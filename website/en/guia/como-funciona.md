@@ -66,7 +66,8 @@ Light, dark or same as the phone, in **Settings**.
 - **Bursts are slowed down.** Votes from the same day count in full only up to a point; beyond it they are worth much
   less. An organized campaign against (or in favor of) a number cannot flag it overnight.
 - **Blocking counts too, but little.** When you block a number it adds a small spam signal (a quarter of a report),
-  because people also block acquaintances.
+  because people also block acquaintances. It is on by default and the app explains it the first time you open it;
+  you can turn it off in Settings.
 - A name is only shown when **at least 3 different people** used it.
 - **No insults or personal names.** Offensive names and relationship names ("Mom", "Honey") never leave your phone:
   only the fact that you have the number saved is contributed. If someone reports spam with an offensive label, the

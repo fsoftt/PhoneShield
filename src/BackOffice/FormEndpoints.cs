@@ -50,7 +50,7 @@ internal static class FormEndpoints
             PurgeResponse? result = null;
             var notice = await RunAsync(async () => result = await api.PurgeAsync(cancellationToken), Notices.Purged);
             var counts = result is null ? string.Empty
-                : $"&quotaUses={result.AppealQuotaUsages}&appeals={result.ResolvedAppeals}&reports={result.SpamReports}";
+                : $"&quotaUses={result.AppealQuotaUsages}&appeals={result.ResolvedAppeals}&reports={result.SpamReports}&blocks={result.BlockSignals}";
 
             return Results.LocalRedirect($"{BackOfficeRoutes.Home}?notice={notice}{counts}");
         });

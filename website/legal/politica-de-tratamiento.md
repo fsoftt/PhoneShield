@@ -22,7 +22,7 @@ Esta política cumple la Ley 1581 de 2012 y el Decreto 1377 de 2013 (compilado e
 | Correo electrónico y contraseña | Los administra Firebase Authentication (Google); nosotros solo guardamos un identificador de la cuenta | Crear y proteger tu cuenta |
 | Aceptación de términos y del aporte de agenda | Fecha y versión del texto aceptado | Demostrar tu autorización |
 | Números de teléfono consultados o reportados | Solo como código (hash) con clave secreta; nunca el número | Identificar llamadas y detectar spam |
-| Bloqueos (solo si los compartes, activado por defecto y desactivable en Ajustes) | Solo como código, con un identificador de aportante; se borran al desbloquear, al apagar la opción o al borrar tu cuenta | Señal de spam de bajo peso |
+| Bloqueos (solo si los compartes, activado por defecto y desactivable en Ajustes) | Solo como código, con un identificador de aportante; se borran al desbloquear o al apagar la opción; al borrar tu cuenta se conservan sin vínculo contigo, salvo que marques la casilla para borrarlos; en todo caso vencen a los 2 años | Señal de spam de bajo peso |
 | Nombres y etiquetas de spam | Cifrados con una clave derivada de cada número | Mostrar quién llama |
 | Agenda de contactos (solo si decides aportarla) | Números como código y nombres cifrados; los nombres personales ("Mamá") se descartan | Identificar llamadas para la comunidad |
 | Apelaciones por un número ([cómo](/guia/apelacion)) | El número solo como código; Firebase (Google) lo procesa para enviar el código por SMS y borramos esa verificación al confirmarla; un identificador del teléfono (ANDROID_ID) y la cuenta, cada uno solo como código y por separado; el motivo y el correo opcional se borran al resolver la solicitud | Verificar que el número es tuyo, atender la solicitud y limitar el uso por número, cuenta y teléfono |
@@ -40,6 +40,7 @@ Un proceso automático borra cada día lo que ya no hace falta:
 | Motivo y correo de una apelación | Al resolverla |
 | Apelación resuelta (sin motivo ni correo) | Al año de resolverla |
 | Cuenta, aportes de agenda y reportes propios | Cuando borras tu cuenta o retiras tu aporte |
+| Bloqueos compartidos | A los 2 años, o antes si desbloqueas, apagas la opción o lo pides al borrar tu cuenta |
 
 ## 3. Datos de personas sin cuenta
 

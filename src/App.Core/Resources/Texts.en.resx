@@ -51,7 +51,7 @@
   <data name="Done" xml:space="preserve"><value>Done</value></data>
   <data name="Enable" xml:space="preserve"><value>Turn on</value></data>
   <data name="DeleteAccountTitle" xml:space="preserve"><value>Delete your account?</value></data>
-  <data name="DeleteAccountMessage" xml:space="preserve"><value>We will delete your account, your reports and the contacts you contributed. This cannot be undone.</value></data>
+  <data name="DeleteAccountMessage" xml:space="preserve"><value>We will delete your account, your reports and the contacts you contributed. Your shared blocks are kept with no link to you, unless you tick the box. This cannot be undone.</value></data>
   <data name="DeleteAccountAccept" xml:space="preserve"><value>Delete</value></data>
   <data name="Cancel" xml:space="preserve"><value>Cancel</value></data>
   <data name="MyDataSummaryFormat" xml:space="preserve"><value>Account created on {0:d}. Reports sent: {1}. Contacts contributed: {2}. Blocked numbers counted as a spam signal: {3}.</value></data>
@@ -198,4 +198,9 @@
   <data name="FeedbackLabelHint" xml:space="preserve"><value>Label, e.g. Spam Claro</value></data>
   <data name="LateIdentificationTitle" xml:space="preserve"><value>We now know who called you</value></data>
   <data name="LateIdentificationTextFormat" xml:space="preserve"><value>{0} · {1}</value></data>
+  <data name="BlockSharingNoticeTitle" xml:space="preserve"><value>Your blocks help others</value></data>
+  <data name="BlockSharingNoticeText" xml:space="preserve"><value>When you block a number, it adds a little toward marking it as spam for the community. Only a code is sent, never the number. You can turn it off at any time in Settings.</value></data>
+  <data name="Understood" xml:space="preserve"><value>Got it</value></data>
+  <data name="ChangeInSettings" xml:space="preserve"><value>Change in Settings</value></data>
+  <data name="DeleteAlsoSharedBlocks" xml:space="preserve"><value>Also delete the blocks I shared. If you leave it unticked, they are kept as a spam signal with no link to you.</value></data>
 </root>

@@ -17,12 +17,15 @@
     [SupplyParameterFromQuery(Name = "reports")]
     private int Reports { get; set; }
 
+    [SupplyParameterFromQuery(Name = "blocks")]
+    private int Blocks { get; set; }
+
     private bool IsProblem => Notice is Notices.Error or Notices.Forbidden;
 
     private string? Message => Notice switch
     {
         Notices.Resolved => T["Resolved"].Value,
-        Notices.Purged => T["Purged", QuotaUses, Appeals, Reports].Value,
+        Notices.Purged => T["Purged", QuotaUses, Appeals, Reports, Blocks].Value,
         Notices.Forbidden => T["Forbidden"].Value,
         Notices.Error => T["Error"].Value,
         _ => null,
