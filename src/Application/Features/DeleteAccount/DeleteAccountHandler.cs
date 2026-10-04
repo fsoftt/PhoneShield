@@ -12,6 +12,8 @@ internal sealed class DeleteAccountHandler(
     IContributorIdProvider contributorIds,
     ISpamReportRepository reports,
     IContactContributionRepository contributions,
+    IBlockSignalRepository blocks,
+    IContributorReputationRepository reputations,
     IUnitOfWork unitOfWork) : IRequestHandler<DeleteAccountCommand>
 {
     public async Task Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
@@ -19,6 +21,8 @@ internal sealed class DeleteAccountHandler(
         var contributor = contributorIds.FromFirebaseUid(currentUser.FirebaseUid);
         await reports.RemoveAllForContributorAsync(contributor, cancellationToken);
         await contributions.RemoveAllForContributorAsync(contributor, cancellationToken);
+        await blocks.RemoveAllForContributorAsync(contributor, cancellationToken);
+        await reputations.RemoveAsync(contributor, cancellationToken);
 
         var user = await users.GetByFirebaseUidAsync(currentUser.FirebaseUid, cancellationToken);
         if (user is not null)

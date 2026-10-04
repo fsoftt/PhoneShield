@@ -6,6 +6,7 @@ using Tranqui.Application.Features.LookupNumber;
 using Tranqui.Application.Abstractions;
 using Tranqui.Application.Features.GetBackOfficeOverview;
 using Tranqui.Application.Features.PurgeExpiredData;
+using Tranqui.Application.Features.RecalculateReporterReputation;
 using Tranqui.Domain.Abstractions;
 using Tranqui.Domain.Appeals;
 using Tranqui.Domain.PhoneNumbers;
@@ -87,6 +88,9 @@ public static class DependencyInjection
         services.AddScoped<IContactContributionRepository, ContactContributionRepository>();
         services.AddScoped<IAppealRepository, AppealRepository>();
         services.AddScoped<IExpiredDataPurger, ExpiredDataPurger>();
+        services.AddScoped<IBlockSignalRepository, BlockSignalRepository>();
+        services.AddScoped<IContributorReputationRepository, ContributorReputationRepository>();
+        services.AddScoped<IReporterEvidenceReader, ReporterEvidenceReader>();
         services.AddScoped<IBackOfficeStatistics, BackOfficeStatistics>();
     }
 }

@@ -54,20 +54,21 @@ public sealed class LookupNumberTests(TranquiApiFactory factory) : IClassFixture
         await SeedAsync(number, (scope, phoneNumber, hash) =>
         {
             var protector = scope.GetRequiredService<INameProtector>();
-            return Enumerable.Range(0, 5).Select(index => (object)SpamReport.Create(
+            // Spread over two days, as real reports are: a single-day burst is dampened.
+            return Enumerable.Range(0, 6).Select(index => (object)SpamReport.Create(
                 hash,
                 NewContributor(),
                 ReportVerdict.Spam,
                 1,
                 index < 3 ? protector.Protect(phoneNumber, CallerName.TryCreate("Spam Claro")!) : null,
-                DateTimeOffset.UtcNow));
+                DateTimeOffset.UtcNow.AddDays(-(index % 2))));
         });
 
         var result = await LookupAsync("300 222 3344");
 
         result.Status.Should().Be(CallerStatusDto.Spam);
         result.DisplayName.Should().Be("Spam Claro");
-        result.SpamReportCount.Should().Be(5);
+        result.SpamReportCount.Should().Be(6);
     }
 
     [Fact]

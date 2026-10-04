@@ -25,7 +25,7 @@ public static class BackOfficeExtensions
 
         if (section.Get<BackOfficeOptions>()?.AutomaticPurge ?? true)
         {
-            services.AddHostedService<DailyPurgeService>();
+            services.AddHostedService<DailyMaintenanceService>();
         }
 
         return services;

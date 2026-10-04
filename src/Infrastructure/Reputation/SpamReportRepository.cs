@@ -19,6 +19,8 @@ internal sealed class SpamReportRepository(TranquiDbContext dbContext) : ISpamRe
 
     public void Add(SpamReport report) => dbContext.SpamReports.Add(report);
 
+    public void Remove(SpamReport report) => dbContext.SpamReports.Remove(report);
+
     public Task<int> CountForContributorAsync(ContributorId contributor, CancellationToken cancellationToken)
     {
         var contributorId = contributor.Value.ToArray();

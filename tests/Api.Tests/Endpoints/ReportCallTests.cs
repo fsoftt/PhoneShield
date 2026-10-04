@@ -4,7 +4,6 @@ using Tranqui.Api.Endpoints;
 using Tranqui.Contracts.Errors;
 using Tranqui.Contracts.Lookups;
 using Tranqui.Contracts.Reports;
-using Tranqui.Domain.Reputation;
 
 namespace Tranqui.Api.Tests.Endpoints;
 
@@ -45,7 +44,7 @@ public sealed class ReportCallTests(TranquiApiFactory factory) : IClassFixture<T
     public async Task Post_EnoughNewAccountsReportSpam_LookupShowsSpamWithTheLabel()
     {
         const string number = "3006667788";
-        var reportersNeeded = (int)Math.Ceiling(ReputationRules.MinimumSpamWeight / ReputationRules.NewAccountVoteWeight);
+        var reportersNeeded = ApiClientExtensions.SameDaySpamReportersNeeded;
 
         for (var i = 0; i < reportersNeeded; i++)
         {

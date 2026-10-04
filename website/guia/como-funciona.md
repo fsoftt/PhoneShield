@@ -38,7 +38,18 @@ Cada persona tiene un solo voto por número; si cambias de opinión, tu voto se 
 - Un número guardado en la agenda de muchas personas es más difícil de marcar como spam, porque eso indica que es alguien conocido.
 - Los votos pierden peso con el tiempo, porque los números se reasignan.
 - Las cuentas creadas hace menos de 7 días votan con la mitad del peso, para frenar campañas con cuentas falsas.
+- **Quien suele acertar pesa más.** Cada día comparamos los reportes de cada persona con lo que la comunidad ya
+  decidió: quien coincide casi siempre vota con hasta 1,5 veces el peso normal, y quien casi nunca coincide, con un
+  cuarto.
+- **Ráfagas frenadas.** Los votos de un mismo día cuentan completos solo hasta cierto punto; por encima, valen mucho
+  menos. Así, una campaña organizada contra (o a favor de) un número no lo marca de la noche a la mañana.
+- **Bloquear también cuenta, pero poco.** Cuando bloqueas un número, eso suma una señal pequeña de spam (un cuarto de
+  un reporte), porque también se bloquea a conocidos.
 - Un nombre solo se muestra si **al menos 3 personas distintas** lo usaron.
+- **Sin groserías ni nombres personales.** Los nombres ofensivos y los de relación ("Mamá", "Amor") nunca salen de tu
+  teléfono: solo se aporta que tienes el número guardado. Si alguien reporta spam con una etiqueta ofensiva, el reporte
+  cuenta pero la etiqueta se descarta.
+- Puedes **retirar un reporte** cuando quieras.
 
 ## Lo que necesita en tu teléfono
 

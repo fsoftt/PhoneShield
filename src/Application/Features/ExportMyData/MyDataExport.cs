@@ -5,6 +5,7 @@ public sealed record MyDataExport(
     DateTimeOffset CreatedAt,
     IReadOnlyList<ConsentExport> Consents,
     int SpamReportCount,
-    int ContactContributionCount);
+    int ContactContributionCount,
+    int BlockCount);
 
 public sealed record ConsentExport(string Type, string Version, DateTimeOffset AcceptedAt, DateTimeOffset? RevokedAt);

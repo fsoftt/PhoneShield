@@ -25,7 +25,7 @@ public sealed partial class AccountViewModel(
     {
         var data = await api.ExportMyDataAsync(CancellationToken.None);
         MyDataSummary = Texts.Format(
-            Texts.MyDataSummaryFormat, data.CreatedAt.LocalDateTime, data.SpamReportCount, data.ContactContributionCount);
+            Texts.MyDataSummaryFormat, data.CreatedAt.LocalDateTime, data.SpamReportCount, data.ContactContributionCount, data.BlockCount);
     });
 
     [RelayCommand]

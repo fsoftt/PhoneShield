@@ -35,4 +35,22 @@ public static class ReputationRules
 
         return elapsedDays <= 0 ? 1 : Math.Pow(0.5, elapsedDays / VoteHalfLife.TotalDays);
     }
+
+    /// <summary>A block is a weak spam signal: people also block exes and pushy relatives.</summary>
+    public const double BlockVoteFactor = 0.25;
+
+    /// <summary>
+    /// Votes cast on the same day count in full up to this weight; beyond it only <see cref="BurstOverflowFactor"/>.
+    /// A coordinated burst against (or in favor of) a number therefore needs many more voters, or several days.
+    /// </summary>
+    public const double DailyVoteCap = 4;
+
+    public const double BurstOverflowFactor = 0.25;
+
+    /// <summary>A number is settled as legitimate when "not spam" votes plus saved-by trust reach this.</summary>
+    public const double MinimumLegitimateEvidence = 3;
+
+    /// <summary>The effective weight of one day's votes after damping bursts.</summary>
+    public static double DampenBurst(double dailyWeight) =>
+        dailyWeight <= DailyVoteCap ? dailyWeight : DailyVoteCap + ((dailyWeight - DailyVoteCap) * BurstOverflowFactor);
 }

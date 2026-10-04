@@ -11,7 +11,8 @@ internal sealed class ExportMyDataHandler(
     IUserRepository users,
     IContributorIdProvider contributorIds,
     ISpamReportRepository reports,
-    IContactContributionRepository contributions) : IRequestHandler<ExportMyDataQuery, MyDataExport>
+    IContactContributionRepository contributions,
+    IBlockSignalRepository blocks) : IRequestHandler<ExportMyDataQuery, MyDataExport>
 {
     public async Task<MyDataExport> Handle(ExportMyDataQuery request, CancellationToken cancellationToken)
     {
@@ -29,6 +30,7 @@ internal sealed class ExportMyDataHandler(
             user.CreatedAt,
             consents,
             await reports.CountForContributorAsync(contributor, cancellationToken),
-            await contributions.CountForContributorAsync(contributor, cancellationToken));
+            await contributions.CountForContributorAsync(contributor, cancellationToken),
+            await blocks.CountForContributorAsync(contributor, cancellationToken));
     }
 }

@@ -61,11 +61,15 @@ public sealed class ContactContributionService(
         var accepted = 0;
         foreach (var batch in contacts.ReadAll().Chunk(ContactUploadRules.MaxContactsPerBatch))
         {
-            var request = new UploadContactsRequest(batch.Select(contact => new ContactDto(contact.PhoneNumber, contact.Name)).ToList());
+            var request = new UploadContactsRequest(batch.Select(contact => new ContactDto(contact.PhoneNumber, ShareableName(contact.Name))).ToList());
             accepted += (await api.UploadContactsAsync(request, cancellationToken)).Accepted;
         }
 
         state.LastSyncedAt = timeProvider.GetUtcNow();
         return accepted;
     }
+
+    /// <summary>Personal ("Mamá") and offensive names never leave the phone; the number is still contributed.</summary>
+    private static string? ShareableName(string? name) =>
+        CallerName.TryCreate(name) is { } callerName && CallerNameFilter.IsShareable(callerName) ? callerName.DisplayValue : null;
 }

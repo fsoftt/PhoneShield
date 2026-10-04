@@ -1,0 +1,50 @@
+# Words that make a caller name or spam label offensive. One canonical form per line: lowercase, no accents.
+# A name is rejected when any of its words is listed here, or contains a listed word of 5 or more letters.
+# Spanish (Colombia)
+hp
+hpta
+hijueputa
+hijuepucha
+gonorrea
+malparido
+malparida
+marica
+maricon
+puta
+puto
+putas
+mierda
+verga
+careverga
+pirobo
+piroba
+zorra
+perra
+culo
+culicagado
+chupamela
+cabron
+pendejo
+pendeja
+imbecil
+estupido
+estupida
+idiota
+mamaguevo
+mamahuevo
+guevon
+huevon
+# English
+fuck
+fucker
+fucking
+shit
+bitch
+asshole
+bastard
+cunt
+dick
+whore
+slut
+retard
+motherfucker

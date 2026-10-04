@@ -149,6 +149,33 @@ namespace Tranqui.Infrastructure.Persistence.Migrations
                     b.ToTable("hidden_numbers", (string)null);
                 });
 
+            modelBuilder.Entity("Tranqui.Domain.Reputation.BlockSignal", b =>
+                {
+                    b.Property<byte[]>("PhoneHash")
+                        .HasColumnType("bytea")
+                        .HasColumnName("phone_hash");
+
+                    b.Property<byte[]>("ContributorId")
+                        .HasColumnType("bytea")
+                        .HasColumnName("contributor_id");
+
+                    b.Property<DateTimeOffset>("BlockedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("blocked_at");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("double precision")
+                        .HasColumnName("weight");
+
+                    b.HasKey("PhoneHash", "ContributorId")
+                        .HasName("pk_block_signals");
+
+                    b.HasIndex("ContributorId")
+                        .HasDatabaseName("ix_block_signals_contributor_id");
+
+                    b.ToTable("block_signals", (string)null);
+                });
+
             modelBuilder.Entity("Tranqui.Domain.Reputation.ContactContribution", b =>
                 {
                     b.Property<Guid>("Id")
@@ -189,6 +216,26 @@ namespace Tranqui.Infrastructure.Persistence.Migrations
                         .HasDatabaseName("ix_contact_contributions_phone_hash_contributor_id");
 
                     b.ToTable("contact_contributions", (string)null);
+                });
+
+            modelBuilder.Entity("Tranqui.Domain.Reputation.ContributorReputation", b =>
+                {
+                    b.Property<byte[]>("ContributorId")
+                        .HasColumnType("bytea")
+                        .HasColumnName("contributor_id");
+
+                    b.Property<DateTimeOffset>("ComputedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("computed_at");
+
+                    b.Property<double>("Multiplier")
+                        .HasColumnType("double precision")
+                        .HasColumnName("multiplier");
+
+                    b.HasKey("ContributorId")
+                        .HasName("pk_contributor_reputations");
+
+                    b.ToTable("contributor_reputations", (string)null);
                 });
 
             modelBuilder.Entity("Tranqui.Domain.Reputation.SpamReport", b =>
