@@ -23,14 +23,4 @@ internal sealed class JsonPreferences<T>(string key, Func<T> empty)
             Preferences.Default.Set(key, JsonSerializer.Serialize(value));
         }
     }
-
-    public void Update(Func<T, T> change)
-    {
-        lock (gate)
-        {
-            var json = Preferences.Default.Get<string?>(key, null);
-            var current = json is null ? empty() : JsonSerializer.Deserialize<T>(json) ?? empty();
-            Preferences.Default.Set(key, JsonSerializer.Serialize(change(current)));
-        }
-    }
 }

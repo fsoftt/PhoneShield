@@ -10,10 +10,8 @@ using Tranqui.App.Core.Authentication;
 using Tranqui.App.Core.Calls;
 using Tranqui.App.Core.Contacts;
 using Tranqui.App.Core.Dialogs;
-using Tranqui.App.Core.History;
 using Tranqui.App.Core.Navigation;
 using Tranqui.App.Core.Protection;
-using Tranqui.App.Core.Reports;
 using Tranqui.App.Core.Sync;
 using Tranqui.App.Services;
 using Tranqui.App.Sync;
@@ -34,21 +32,18 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        builder.Services.AddTranquiCore(AppSettings.ApiBaseAddress, AppSettings.FirebaseApiKey);
+        builder.Services.AddTranquiCore(
+            AppSettings.ApiBaseAddress, AppSettings.FirebaseApiKey, Path.Combine(FileSystem.AppDataDirectory, "tranqui.db"));
         builder.Services.AddSingleton<ISecureStore, MauiSecureStore>();
         builder.Services.AddSingleton<INavigationService, ShellNavigationService>();
-        builder.Services.AddSingleton<IBlockList, PreferencesBlockList>();
         builder.Services.AddSingleton<IScreeningSettingsStore, PreferencesScreeningSettingsStore>();
         builder.Services.AddSingleton<IDeviceContacts, AndroidDeviceContacts>();
         builder.Services.AddSingleton<IProtectionPermissions, AndroidProtectionPermissions>();
         builder.Services.AddSingleton<IDialogService, ShellDialogService>();
         builder.Services.AddSingleton<IDeviceContactSource, AndroidDeviceContactSource>();
         builder.Services.AddSingleton<IContributionState, PreferencesContributionState>();
-        builder.Services.AddSingleton<ICallHistory, PreferencesCallHistory>();
         builder.Services.AddSingleton<IDeviceIntegrity, PlayDeviceIntegrity>();
-        builder.Services.AddSingleton<IOutboxStore, PreferencesOutboxStore>();
         builder.Services.AddSingleton<IBackgroundSync, AndroidBackgroundSync>();
-        builder.Services.AddSingleton<IMyReports, PreferencesMyReports>();
         builder.Services.AddSingleton<IThemeService, MauiThemeService>();
 
         builder.Services.AddTransient<StartupPage>();

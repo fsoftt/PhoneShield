@@ -16,15 +16,20 @@ public static class DependencyInjection
 {
     /// <summary>
     /// Registers everything except platform services, which the app provides: <see cref="ISecureStore"/>, navigation,
-    /// <see cref="IBlockList"/>, <see cref="IDeviceContacts"/>, <see cref="IScreeningSettingsStore"/>,
-    /// <see cref="Protection.IProtectionPermissions"/>, <see cref="Dialogs.IDialogService"/>,
-    /// <see cref="IDeviceContactSource"/>, <see cref="IContributionState"/>, <see cref="History.ICallHistory"/> and
-    /// <see cref="IDeviceIntegrity"/>, <see cref="Sync.IOutboxStore"/>, <see cref="Sync.IBackgroundSync"/>,
-    /// <see cref="Reports.IMyReports"/> and <see cref="Appearance.IThemeService"/>.
+    /// <see cref="IDeviceContacts"/>, <see cref="IScreeningSettingsStore"/>, <see cref="Protection.IProtectionPermissions"/>,
+    /// <see cref="Dialogs.IDialogService"/>, <see cref="IDeviceContactSource"/>, <see cref="IContributionState"/>,
+    /// <see cref="IDeviceIntegrity"/>, <see cref="Sync.IBackgroundSync"/> and <see cref="Appearance.IThemeService"/>.
+    /// Local data (history, blocks, my reports, outbox) lives in the SQLite database at the given path.
     /// </summary>
-    public static IServiceCollection AddTranquiCore(this IServiceCollection services, Uri apiBaseAddress, string firebaseApiKey)
+    public static IServiceCollection AddTranquiCore(
+        this IServiceCollection services, Uri apiBaseAddress, string firebaseApiKey, string databasePath)
     {
         services.AddSingleton(TimeProvider.System);
+        services.AddSingleton(new Storage.LocalDatabase(databasePath));
+        services.AddSingleton<History.ICallHistory, Storage.SqliteCallHistory>();
+        services.AddSingleton<IBlockList, Storage.SqliteBlockList>();
+        services.AddSingleton<Reports.IMyReports, Storage.SqliteMyReports>();
+        services.AddSingleton<Sync.IOutboxStore, Storage.SqliteOutboxStore>();
         services.Configure<FirebaseOptions>(options => options.ApiKey = firebaseApiKey);
         services.AddHttpClient<IFirebaseAuthClient, FirebaseAuthClient>();
         services.AddSingleton<IAuthService, AuthService>();
