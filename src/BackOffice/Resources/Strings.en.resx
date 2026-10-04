@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Title" xml:space="preserve"><value>Back office</value></data>
+  <data name="Navigation" xml:space="preserve"><value>Navigation</value></data>
+  <data name="Overview" xml:space="preserve"><value>Overview</value></data>
+  <data name="Appeals" xml:space="preserve"><value>Appeals</value></data>
+  <data name="SignOut" xml:space="preserve"><value>Sign out</value></data>
+  <data name="SignInTitle" xml:space="preserve"><value>Sign in</value></data>
+  <data name="Email" xml:space="preserve"><value>Email</value></data>
+  <data name="Password" xml:space="preserve"><value>Password</value></data>
+  <data name="SignIn" xml:space="preserve"><value>Sign in</value></data>
+  <data name="WrongCredentials" xml:space="preserve"><value>Wrong email or password.</value></data>
+  <data name="Forbidden" xml:space="preserve"><value>This account has no access to the back office.</value></data>
+  <data name="Error" xml:space="preserve"><value>Something went wrong. Try again.</value></data>
+  <data name="NotFound" xml:space="preserve"><value>This page does not exist.</value></data>
+  <data name="Accounts" xml:space="preserve"><value>Accounts</value></data>
+  <data name="SpamReports" xml:space="preserve"><value>Reports</value></data>
+  <data name="ContactContributions" xml:space="preserve"><value>Contributed contacts</value></data>
+  <data name="PendingAppeals" xml:space="preserve"><value>Pending appeals</value></data>
+  <data name="OverdueAppeals" xml:space="preserve"><value>Overdue</value></data>
+  <data name="HiddenNumbers" xml:space="preserve"><value>Numbers with hidden names</value></data>
+  <data name="ClearedNumbers" xml:space="preserve"><value>Cleared numbers</value></data>
+  <data name="RetentionTitle" xml:space="preserve"><value>Expired data</value></data>
+  <data name="RetentionText" xml:space="preserve"><value>Deleted automatically every day. Delete now quota uses older than a year, appeals resolved over a year ago and reports older than two years.</value></data>
+  <data name="Purge" xml:space="preserve"><value>Delete expired data now</value></data>
+  <data name="PurgeConfirm" xml:space="preserve"><value>Delete expired data now? This cannot be undone.</value></data>
+  <data name="Purged" xml:space="preserve"><value>Deleted: {0} quota uses, {1} appeals and {2} reports.</value></data>
+  <data name="Resolved" xml:space="preserve"><value>Done. The appeal's reason and email were erased.</value></data>
+  <data name="Pending" xml:space="preserve"><value>Pending</value></data>
+  <data name="Approved" xml:space="preserve"><value>Approved</value></data>
+  <data name="Rejected" xml:space="preserve"><value>Rejected</value></data>
+  <data name="Applied" xml:space="preserve"><value>Names hidden</value></data>
+  <data name="PrivacyHint" xml:space="preserve"><value>The number is never shown: only its code is stored. Decide from the reason and what the community says. Reply by email before resolving: resolving erases the reason and the email.</value></data>
+  <data name="Empty" xml:space="preserve"><value>No appeals here.</value></data>
+  <data name="HideNames" xml:space="preserve"><value>Hide names</value></data>
+  <data name="ReviewSpam" xml:space="preserve"><value>Spam review</value></data>
+  <data name="DueBy" xml:space="preserve"><value>Answer by</value></data>
+  <data name="ResolvedAt" xml:space="preserve"><value>Resolved</value></data>
+  <data name="Overdue" xml:space="preserve"><value>Overdue</value></data>
+  <data name="NoReason" xml:space="preserve"><value>(no reason)</value></data>
+  <data name="NoEmail" xml:space="preserve"><value>No contact email</value></data>
+  <data name="Reply" xml:space="preserve"><value>Reply by email</value></data>
+  <data name="Community" xml:space="preserve"><value>Community</value></data>
+  <data name="Signals" xml:space="preserve"><value>{0} spam reports, {1} “not spam”, {2} have it saved</value></data>
+  <data name="Spam" xml:space="preserve"><value>Spam</value></data>
+  <data name="Identified" xml:space="preserve"><value>Identified</value></data>
+  <data name="Unknown" xml:space="preserve"><value>No data</value></data>
+  <data name="Approve" xml:space="preserve"><value>Approve: not spam</value></data>
+  <data name="Reject" xml:space="preserve"><value>Reject</value></data>
+  <data name="ApproveConfirm" xml:space="preserve"><value>Approve? Earlier spam reports will stop counting and the reason and email will be erased.</value></data>
+  <data name="RejectConfirm" xml:space="preserve"><value>Reject? The reports stand and the reason and email will be erased.</value></data>
+</root>

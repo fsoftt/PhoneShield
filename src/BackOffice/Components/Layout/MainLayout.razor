@@ -1,0 +1,19 @@
+@inherits LayoutComponentBase
+
+<header class="bar">
+    <strong>Tranqui</strong> <span>@T["Title"]</span>
+    <AuthorizeView>
+        <nav aria-label="@T["Navigation"]">
+            <a href="@BackOfficeRoutes.Home">@T["Overview"]</a>
+            <a href="@BackOfficeRoutes.Appeals">@T["Appeals"]</a>
+        </nav>
+        <form method="post" action="@BackOfficeRoutes.Logout" class="sign-out">
+            <AntiforgeryToken />
+            <button type="submit" class="link">@T["SignOut"]</button>
+        </form>
+    </AuthorizeView>
+</header>
+
+<main>
+    @Body
+</main>

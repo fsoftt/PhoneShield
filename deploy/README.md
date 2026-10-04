@@ -1,12 +1,13 @@
 # Despliegue de la API
 
-Un VPS pequeño (por ejemplo Hetzner CX22, ~US$5/mes) con Docker corre todo: la API, PostgreSQL y Caddy, que obtiene
+Un VPS pequeño (por ejemplo Hetzner CX22, ~US$5/mes) con Docker corre todo: la API, el back office, PostgreSQL y Caddy, que obtiene
 y renueva el certificado HTTPS automáticamente (Let's Encrypt, gratis).
 
 ## Primera vez
 
 1. **Servidor:** Ubuntu 24.04, con Docker instalado (`curl -fsSL https://get.docker.com | sh`). Abre solo los puertos 22, 80 y 443.
-2. **Dominio:** crea un registro DNS `A` (por ejemplo `api.tudominio.com`) que apunte a la IP del servidor.
+2. **Dominio:** crea dos registros DNS `A` que apunten a la IP del servidor: uno para el API (por ejemplo
+   `api.tudominio.com`) y otro para el back office (por ejemplo `admin.tudominio.com`).
    Con Cloudflare (gratis) puedes además ocultar la IP y frenar ataques; usa el modo SSL "Full (strict)".
 3. **Código:** `git clone https://github.com/fsoftt/Tranqui.git && cd Tranqui/deploy`
 4. **Secretos:** `cp .env.example .env` y completa cada valor. Genera cada clave con `openssl rand -base64 32`.

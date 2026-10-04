@@ -22,11 +22,12 @@ jobs:
       - run: dotnet test Tranqui.Backend.slnf --no-build --configuration Release
 
   docker:
-    name: API Docker image
+    name: Docker images
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       - run: docker build --file src/Api/Dockerfile --tag tranqui-api:ci .
+      - run: docker build --file src/BackOffice/Dockerfile --tag tranqui-backoffice:ci .
 
   android:
     name: Android app build (${{ matrix.configuration }})

@@ -5,6 +5,7 @@
       "src/Api/Tranqui.Api.csproj",
       "src/App.Core/Tranqui.App.Core.csproj",
       "src/Application/Tranqui.Application.csproj",
+      "src/BackOffice/Tranqui.BackOffice.csproj",
       "src/Contracts/Tranqui.Contracts.csproj",
       "src/Domain/Tranqui.Domain.csproj",
       "src/Infrastructure/Tranqui.Infrastructure.csproj",
@@ -12,6 +13,7 @@
       "tests/App.Core.Tests/Tranqui.App.Core.Tests.csproj",
       "tests/Application.Tests/Tranqui.Application.Tests.csproj",
       "tests/Architecture.Tests/Tranqui.Architecture.Tests.csproj",
+      "tests/BackOffice.Tests/Tranqui.BackOffice.Tests.csproj",
       "tests/Domain.Tests/Tranqui.Domain.Tests.csproj",
       "tests/Infrastructure.Tests/Tranqui.Infrastructure.Tests.csproj"
     ]

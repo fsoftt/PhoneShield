@@ -7,9 +7,6 @@ public sealed class BackOfficeOptions
     /// <summary>Firebase uids allowed into the back office. Empty: nobody (the default).</summary>
     public IReadOnlyList<string> AdminUids { get; set; } = [];
 
-    /// <summary>Firebase Web API key the back office page signs in with. Public, not a secret.</summary>
-    public string FirebaseApiKey { get; set; } = string.Empty;
-
     /// <summary>Run the daily maintenance: expired-data purge and reporter reputation.</summary>
     public bool AutomaticPurge { get; set; } = true;
 }

@@ -1,0 +1,59 @@
+@* One appeal. The number is never shown: only its hash is stored. Everything is rendered as text. *@
+<article class="card">
+    <h3>@T[Appeal.Kind == AppealKindDto.HideNames ? "HideNames" : "ReviewSpam"] · @Appeal.CreatedAt.LocalDateTime.ToString("g", CultureInfo.CurrentCulture)</h3>
+
+    @if (Appeal.IsOverdue)
+    {
+        <span class="badge overdue">@T["Overdue"]</span>
+    }
+
+    @if (Appeal.Status == AppealStatusDto.Pending)
+    {
+        <p class="muted">@T["DueBy"]: @Appeal.DueAt.LocalDateTime.ToString("g", CultureInfo.CurrentCulture)</p>
+        <p class="reason">@(Appeal.Reason ?? T["NoReason"])</p>
+        @if (Appeal.ContactEmail is { } email)
+        {
+            <a href="mailto:@email">@T["Reply"]: @email</a>
+        }
+        else
+        {
+            <p class="muted">@T["NoEmail"]</p>
+        }
+    }
+    else
+    {
+        <p class="muted">@T["ResolvedAt"]: @((Appeal.ResolvedAt ?? Appeal.CreatedAt).LocalDateTime.ToString("g", CultureInfo.CurrentCulture))</p>
+    }
+
+    <p>
+        <strong>@T["Community"]:</strong>
+        <span class="badge @Appeal.NumberStatus">@T[Appeal.NumberStatus.ToString()]</span>
+        @T["Signals", Appeal.SpamReportCount, Appeal.NotSpamReportCount, Appeal.SavedByCount]
+    </p>
+
+    @if (Appeal.Status == AppealStatusDto.Pending)
+    {
+        <div class="actions">
+            <form method="post" action="@BackOfficeRoutes.Resolution(Appeal.Id)" data-confirm="@T["ApproveConfirm"]">
+                <AntiforgeryToken />
+                <input type="hidden" name="decision" value="@AppealDecisionDto.Approve" />
+                <input type="hidden" name="returnStatus" value="@ReturnStatus" />
+                <button type="submit">@T["Approve"]</button>
+            </form>
+            <form method="post" action="@BackOfficeRoutes.Resolution(Appeal.Id)" data-confirm="@T["RejectConfirm"]">
+                <AntiforgeryToken />
+                <input type="hidden" name="decision" value="@AppealDecisionDto.Reject" />
+                <input type="hidden" name="returnStatus" value="@ReturnStatus" />
+                <button type="submit" class="secondary">@T["Reject"]</button>
+            </form>
+        </div>
+    }
+</article>
+
+@code {
+    [Parameter, EditorRequired]
+    public AppealReviewResponse Appeal { get; set; } = default!;
+
+    [Parameter]
+    public AppealStatusDto ReturnStatus { get; set; } = AppealStatusDto.Pending;
+}

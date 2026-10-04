@@ -12,3 +12,15 @@
 	# Access logs would record client IPs and paths; numbers never travel in paths, but keep logs off anyway.
 	reverse_proxy api:8080
 }
+
+# Back office: its own site, so its cookies and policies never mix with the API's.
+{$TRANQUI_ADMIN_DOMAIN} {
+	encode zstd gzip
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		-Server
+	}
+
+	reverse_proxy backoffice:8080
+}

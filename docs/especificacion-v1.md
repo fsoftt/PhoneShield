@@ -157,7 +157,7 @@ Un número guardado como "Mamá" por muchas personas **no** es spam por defecto 
 
 ### 5.4 Back office
 
-- Página en `/admin` del mismo API (sin CORS, con CSP estricta). Acceso: cuenta de Firebase con correo verificado y uid en `BackOffice:AdminUids`.
+- Aplicación aparte (`src/BackOffice`, Blazor con renderizado estático en el servidor) en su propio subdominio, que llama a los endpoints `/v1/admin` del API por la red interna. Sin WebAssembly ni SignalR; los tokens de Firebase viven en una cookie cifrada `HttpOnly`; formularios con antifalsificación y post/redirect/get; CSP estricta. Acceso: cuenta de Firebase con correo verificado y uid en `BackOffice:AdminUids` del API, que es quien decide.
 - Revisión de "no es spam": quien revisa ve el motivo, el correo y los agregados (estado, reportes, guardados), nunca el número. Aprobar despeja el número (`cleared_numbers`): los reportes de spam hasta ese momento dejan de contar. Aprobar o rechazar borra el motivo y el correo. Muestra el vencimiento legal (15 días hábiles, sin festivos).
 - Mantenimiento diario: recálculo de la reputación de reportantes (§4.3) y retención (`Domain/Retention/RetentionRules`), también a demanda: reportes a los 2 años (8 vidas medias), registros de cuotas de apelación al año, apelaciones resueltas al año de resolverse. Las pendientes nunca se borran solas.
 

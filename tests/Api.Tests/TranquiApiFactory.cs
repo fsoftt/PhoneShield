@@ -38,7 +38,6 @@ public class TranquiApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
         builder.UseSetting("ContributorIds:Key", Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)));
         builder.UseSetting("NameProtection:Key", Convert.ToBase64String(RandomNumberGenerator.GetBytes(32)));
         builder.UseSetting("BackOffice:AdminUids:0", AdminUid);
-        builder.UseSetting("BackOffice:FirebaseApiKey", "public-web-key");
         builder.UseSetting("BackOffice:AutomaticPurge", "false");
         builder.UseSetting("RateLimiting:Lookup:PerHour", LookupLimitPerHour.ToString(CultureInfo.InvariantCulture));
 
